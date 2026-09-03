@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distance Calculator | Bike, Bus, Train & Flight</title>
+<meta name="description" content="Calculate distance, estimated travel time and optional fuel cost between any two places worldwide.">
+<link rel="preconnect" href="https://nominatim.openstreetmap.org">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--blue:#1565c0;--dark:#0b1f33;--muted:#60758a;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--green:#0d9f6e}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
+header{background:linear-gradient(135deg,#0b1f33,#1565c0);color:#fff;padding:18px 0}
+.wrap{max-width:1180px;margin:auto;padding:0 18px}.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}.brand span{font-size:28px}
+.hero{text-align:center;padding:42px 10px 28px}.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 10px}.hero p{margin:0;color:var(--muted);font-size:17px}
+.grid{display:grid;grid-template-columns:410px 1fr;gap:18px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 30px rgba(20,45,70,.06)}
+.panel{padding:22px}.label{display:block;font-size:13px;font-weight:700;margin:15px 0 7px}.inputrow{position:relative}
+input,select{width:100%;padding:14px 14px;border:1px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:#102438}
+input:focus,select:focus{outline:3px solid rgba(21,101,192,.14);border-color:var(--blue)}
+.suggestions{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:10px;z-index:9999;max-height:220px;overflow:auto;display:none}
+.suggestion{padding:11px 12px;border-bottom:1px solid #eef2f5;cursor:pointer;font-size:13px}.suggestion:hover{background:#f4f8fd}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mode{border:1px solid var(--line);border-radius:11px;padding:11px 5px;text-align:center;cursor:pointer;font-size:12px;font-weight:700}.mode.active{border-color:var(--blue);background:#edf5ff;color:var(--blue)}
+.mode .ico{font-size:23px;display:block;margin-bottom:4px}
+.advanced{margin-top:17px;border-top:1px solid var(--line);padding-top:14px}.toggle{display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:14px}.toggle input{width:44px;height:23px;accent-color:var(--blue)}
+.fuel-box{display:none;margin-top:12px;padding:12px;background:#f7fafc;border-radius:10px}.fuel-box.show{display:block}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+button{width:100%;border:0;border-radius:11px;padding:15px;background:var(--blue);color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin-top:18px}button:hover{filter:brightness(.95)}button:disabled{opacity:.65;cursor:wait}
+.mapcard{overflow:hidden;min-height:620px}#map{height:620px;width:100%}.results{padding:18px;border-top:1px solid var(--line)}
+.result-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.distance{font-size:32px;font-weight:900;color:var(--blue)}.route-note{color:var(--muted);font-size:13px;margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.stat{background:#f7fafc;border:1px solid #e9eef3;border-radius:12px;padding:12px}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.fuel-result{display:none;margin-top:12px;background:#ecfdf5;border:1px solid #c8f3dd;padding:12px;border-radius:11px;color:#075d3e}.fuel-result.show{display:block}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:30px 15px}
+.seo-section{margin-top:18px}.seo-card{padding:24px}.seo-card h2{margin-top:0;font-size:24px}.seo-card h3{margin-bottom:6px}.seo-card p{color:var(--muted);line-height:1.7}.popular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.route-chip{margin:0;padding:13px;background:#f7fafc;color:var(--dark);border:1px solid var(--line);font-size:14px}.route-chip:hover{background:#edf5ff;color:var(--blue)}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}details{border-top:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:700}details p{margin-bottom:0}.result-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}.small-btn{width:auto;margin:0;padding:8px 11px;font-size:12px;background:#eef5ff;color:var(--blue);border:1px solid #cfe0f5}.unit-toggle{display:flex;gap:5px}.unit-toggle button{width:auto;margin:0;padding:7px 10px;font-size:12px}.unit-toggle .selected{background:var(--dark)}@media(max-width:850px){.grid{grid-template-columns:1fr}.mapcard{min-height:480px}#map{height:480px}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.popular-grid,.info-grid{grid-template-columns:1fr}.panel{padding:16px}.mode-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:1fr}.hero{padding-top:30px}}
+
+.currency-wrap{position:relative}
+.currency-wrap:after{content:"⌄";position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--blue);font-size:18px}
+#currency{appearance:none;padding-right:42px;font-weight:700;cursor:pointer}
+.currency-help{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.4}
+
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"World Distance Calculator","applicationCategory":"TravelApplication","operatingSystem":"Web","description":"Calculate worldwide distance, travel time and optional fuel cost for bicycle, motorbike, bus, train and flight."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How is the distance calculated?","acceptedAnswer":{"@type":"Answer","text":"The calculator uses geographical coordinates and routing data when available."}},
+{"@type":"Question","name":"Can I calculate fuel cost?","acceptedAnswer":{"@type":"Answer","text":"Yes. Enable the fuel calculator and enter vehicle efficiency and fuel price."}}
+]}
+</script>
+</head>
+<body>
+<header><div class="wrap"><div class="brand"><span>🌍</span> World Distance Calculator</div></div></header>
+
+<main class="wrap">
+<section class="hero">
+<h1>Calculate Distance Anywhere</h1>
+<p>Compare bicycle, motorbike, bus, train and flight distance with estimated travel time and optional fuel cost.</p>
+</section>
+
+<section class="grid">
+<div class="card panel">
+<label class="label">From</label>
+<div class="inputrow">
+<input id="from" placeholder="Enter city, airport or place" autocomplete="off">
+<div class="suggestions" id="fromSuggestions"></div>
+</div>
+
+<label class="label">To</label>
+<div class="inputrow">
+<input id="to" placeholder="Enter destination" autocomplete="off">
+<div class="suggestions" id="toSuggestions"></div>
+</div>
+
+<label class="label">Travel mode</label>
+<div class="mode-grid">
+<div class="mode active" data-mode="bicycle"><span class="ico">🚲</span>Bicycle</div>
+<div class="mode" data-mode="motorbike"><span class="ico">🏍️</span>Motorbike</div>
+<div class="mode" data-mode="bus"><span class="ico">🚌</span>Bus</div>
+<div class="mode" data-mode="train"><span class="ico">🚆</span>Train</div>
+<div class="mode" data-mode="flight"><span class="ico">✈️</span>Flight</div>
+</div>
+
+<div class="advanced">
+<div class="toggle">Include fuel / energy cost <input type="checkbox" id="fuelToggle"></div>
+<div class="fuel-box" id="fuelBox">
+<div class="two">
+<div><label class="label">Efficiency (km/L)</label><input id="efficiency" type="number" min="0.1" step="0.1" value="15"></div>
+<div><label class="label">Fuel price / L</label><input id="fuelPrice" type="number" min="0" step="0.01" value="1.50"></div>
+</div>
+<label class="label">Currency</label>
+<div class="currency-wrap">
+  <select id="currency" aria-label="Select currency">
+    <option value="PKR" selected>PKR — Pakistani Rupee (Pakistan)</option>
+<option value="USD">USD — US Dollar (United States)</option>
+<option value="USDT">USDT — Tether USD (Cryptocurrency)</option>
+<option value="EUR">EUR — Euro (Eurozone)</option>
+<option value="GBP">GBP — British Pound (United Kingdom)</option>
+<option value="INR">INR — Indian Rupee (India)</option>
+<option value="AED">AED — UAE Dirham (United Arab Emirates)</option>
+<option value="SAR">SAR — Saudi Riyal (Saudi Arabia)</option>
+<option value="CAD">CAD — Canadian Dollar (Canada)</option>
+<option value="AUD">AUD — Australian Dollar (Australia)</option>
+<option value="NZD">NZD — New Zealand Dollar (New Zealand)</option>
+<option value="JPY">JPY — Japanese Yen (Japan)</option>
+<option value="CNY">CNY — Chinese Yuan (China)</option>
+<option value="HKD">HKD — Hong Kong Dollar (Hong Kong)</option>
+<option value="SGD">SGD — Singapore Dollar (Singapore)</option>
+<option value="MYR">MYR — Malaysian Ringgit (Malaysia)</option>
+<option value="IDR">IDR — Indonesian Rupiah (Indonesia)</option>
+<option value="THB">THB — Thai Baht (Thailand)</option>
+<option value="BDT">BDT — Bangladeshi Taka (Bangladesh)</option>
+<option value="LKR">LKR — Sri Lankan Rupee (Sri Lanka)</option>
+<option value="NPR">NPR — Nepalese Rupee (Nepal)</option>
+<option value="AFN">AFN — Afghan Afghani (Afghanistan)</option>
+<option value="TRY">TRY — Turkish Lira (Türkiye)</option>
+<option value="IRR">IRR — Iranian Rial (Iran)</option>
+<option value="IQD">IQD — Iraqi Dinar (Iraq)</option>
+<option value="QAR">QAR — Qatari Riyal (Qatar)</option>
+<option value="KWD">KWD — Kuwaiti Dinar (Kuwait)</option>
+<option value="BHD">BHD — Bahraini Dinar (Bahrain)</option>
+<option value="OMR">OMR — Omani Rial (Oman)</option>
+<option value="JOD">JOD — Jordanian Dinar (Jordan)</option>
+<option value="EGP">EGP — Egyptian Pound (Egypt)</option>
+<option value="ZAR">ZAR — South African Rand (South Africa)</option>
+<option value="NGN">NGN — Nigerian Naira (Nigeria)</option>
+<option value="KES">KES — Kenyan Shilling (Kenya)</option>
+<option value="MAD">MAD — Moroccan Dirham (Morocco)</option>
+<option value="DZD">DZD — Algerian Dinar (Algeria)</option>
+<option value="TND">TND — Tunisian Dinar (Tunisia)</option>
+<option value="GHS">GHS — Ghanaian Cedi (Ghana)</option>
+<option value="ETB">ETB — Ethiopian Birr (Ethiopia)</option>
+<option value="UGX">UGX — Ugandan Shilling (Uganda)</option>
+<option value="TZS">TZS — Tanzanian Shilling (Tanzania)</option>
+<option value="RWF">RWF — Rwandan Franc (Rwanda)</option>
+<option value="BRL">BRL — Brazilian Real (Brazil)</option>
+<option value="ARS">ARS — Argentine Peso (Argentina)</option>
+<option value="CLP">CLP — Chilean Peso (Chile)</option>
+<option value="COP">COP — Colombian Peso (Colombia)</option>
+<option value="PEN">PEN — Peruvian Sol (Peru)</option>
+<option value="MXN">MXN — Mexican Peso (Mexico)</option>
+<option value="UYU">UYU — Uruguayan Peso (Uruguay)</option>
+<option value="BOB">BOB — Bolivian Boliviano (Bolivia)</option>
+<option value="VES">VES — Venezuelan Bolívar (Venezuela)</option>
+<option value="CHF">CHF — Swiss Franc (Switzerland)</option>
+<option value="SEK">SEK — Swedish Krona (Sweden)</option>
+<option value="NOK">NOK — Norwegian Krone (Norway)</option>
+<option value="DKK">DKK — Danish Krone (Denmark)</option>
+<option value="PLN">PLN — Polish Złoty (Poland)</option>
+<option value="CZK">CZK — Czech Koruna (Czechia)</option>
+<option value="HUF">HUF — Hungarian Forint (Hungary)</option>
+<option value="RON">RON — Romanian Leu (Romania)</option>
+<option value="BGN">BGN — Bulgarian Lev (Bulgaria)</option>
+<option value="HRK">HRK — Croatian Kuna (Croatia)</option>
+<option value="RSD">RSD — Serbian Dinar (Serbia)</option>
+<option value="UAH">UAH — Ukrainian Hryvnia (Ukraine)</option>
+<option value="RUB">RUB — Russian Ruble (Russia)</option>
+<option value="ISK">ISK — Icelandic Króna (Iceland)</option>
+<option value="KRW">KRW — South Korean Won (South Korea)</option>
+<option value="VND">VND — Vietnamese Đồng (Vietnam)</option>
+<option value="PHP">PHP — Philippine Peso (Philippines)</option>
+<option value="TWD">TWD — New Taiwan Dollar (Taiwan)</option>
+<option value="BND">BND — Brunei Dollar (Brunei)</option>
+<option value="KZT">KZT — Kazakhstani Tenge (Kazakhstan)</option>
+<option value="UZS">UZS — Uzbekistani So'm (Uzbekistan)</option>
+<option value="GEL">GEL — Georgian Lari (Georgia)</option>
+<option value="AMD">AMD — Armenian Dram (Armenia)</option>
+<option value="AZN">AZN — Azerbaijani Manat (Azerbaijan)</option>
+<option value="ILS">ILS — Israeli New Shekel (Israel)</option>
+<option value="ALL">ALL — Albanian Lek (Albania)</option>
+<option value="BAM">BAM — Bosnia-Herzegovina Mark (Bosnia and Herzegovina)</option>
+<option value="MKD">MKD — Macedonian Denar (North Macedonia)</option>
+<option value="MDL">MDL — Moldovan Leu (Moldova)</option>
+<option value="BYN">BYN — Belarusian Ruble (Belarus)</option>
+<option value="DOP">DOP — Dominican Peso (Dominican Republic)</option>
+<option value="JMD">JMD — Jamaican Dollar (Jamaica)</option>
+<option value="TTD">TTD — Trinidad and Tobago Dollar (Trinidad and Tobago)</option>
+<option value="BBD">BBD — Barbadian Dollar (Barbados)</option>
+<option value="BSD">BSD — Bahamian Dollar (Bahamas)</option>
+<option value="BZD">BZD — Belize Dollar (Belize)</option>
+<option value="GTQ">GTQ — Guatemalan Quetzal (Guatemala)</option>
+<option value="HNL">HNL — Honduran Lempira (Honduras)</option>
+<option value="CRC">CRC — Costa Rican Colón (Costa Rica)</option>
+<option value="PAB">PAB — Panamanian Balboa (Panama)</option>
+<option value="PYG">PYG — Paraguayan Guaraní (Paraguay)</option>
+<option value="GYD">GYD — Guyanese Dollar (Guyana)</option>
+<option value="SRD">SRD — Surinamese Dollar (Suriname)</option>
+<option value="FJD">FJD — Fijian Dollar (Fiji)</option>
+<option value="PGK">PGK — Papua New Guinean Kina (Papua New Guinea)</option>
+<option value="WST">WST — Samoan Tala (Samoa)</option>
+<option value="TOP">TOP — Tongan Paʻanga (Tonga)</option>
+<option value="XOF">XOF — West African CFA Franc (West Africa)</option>
+<option value="XAF">XAF — Central African CFA Franc (Central Africa)</option>
+<option value="XCD">XCD — East Caribbean Dollar (Eastern Caribbean)</option>
+<option value="BWP">BWP — Botswana Pula (Botswana)</option>
+<option value="MUR">MUR — Mauritian Rupee (Mauritius)</option>
+<option value="SCR">SCR — Seychellois Rupee (Seychelles)</option>
+<option value="MGA">MGA — Malagasy Ariary (Madagascar)</option>
+<option value="MZN">MZN — Mozambican Metical (Mozambique)</option>
+<option value="AOA">AOA — Angolan Kwanza (Angola)</option>
+<option value="ZMW">ZMW — Zambian Kwacha (Zambia)</option>
+<option value="MWK">MWK — Malawian Kwacha (Malawi)</option>
+<option value="SLL">SLL — Sierra Leonean Leone (Sierra Leone)</option>
+<option value="LRD">LRD — Liberian Dollar (Liberia)</option>
+<option value="SDG">SDG — Sudanese Pound (Sudan)</option>
+<option value="LYD">LYD — Libyan Dinar (Libya)</option>
+<option value="YER">YER — Yemeni Rial (Yemen)</option>
+  </select>
+</div>
+<div class="currency-help">Select your country currency, including PKR, INR, USD, USDT and many more.</div>
+</div>
+</div>
+
+<button id="calculate">Calculate Distance</button>
+</div>
+
+<div class="card mapcard">
+<div id="map"></div>
+<div class="results">
+<div class="result-top"><div><div class="distance" id="distance">—</div><div class="route-note" id="routeNote">Choose two places to calculate</div></div><div id="modeBadge">🚲 Bicycle</div></div>
+<div class="result-actions"><div class="unit-toggle"><button id="kmBtn" class="selected">KM</button><button id="miBtn">Miles</button></div><button class="small-btn" id="shareBtn">Share Result</button></div>
+<div class="stats">
+<div class="stat"><span>Estimated time</span><b id="time">—</b></div>
+<div class="stat"><span>Straight-line</span><b id="airDistance">—</b></div>
+<div class="stat"><span>Route type</span><b id="routeType">—</b></div>
+</div>
+<div class="fuel-result" id="fuelResult"></div>
+</div>
+</div>
+
+<section class="seo-section">
+  <div class="card seo-card">
+    <h2>Popular Distance Routes</h2>
+    <p>Quickly calculate distance between popular cities. Select a route and press Calculate Distance.</p>
+    <div class="popular-grid">
+      <button class="route-chip" data-from="Multan, Pakistan" data-to="Lahore, Pakistan">Multan → Lahore</button>
+      <button class="route-chip" data-from="Lahore, Pakistan" data-to="Islamabad, Pakistan">Lahore → Islamabad</button>
+      <button class="route-chip" data-from="Karachi, Pakistan" data-to="Lahore, Pakistan">Karachi → Lahore</button>
+      <button class="route-chip" data-from="London, United Kingdom" data-to="Paris, France">London → Paris</button>
+      <button class="route-chip" data-from="New York, USA" data-to="Los Angeles, USA">New York → Los Angeles</button>
+      <button class="route-chip" data-from="Dubai, United Arab Emirates" data-to="London, United Kingdom">Dubai → London</button>
+    </div>
+  </div>
+</section>
+
+<section class="seo-section info-grid">
+  <article class="card seo-card">
+    <h2>Distance Calculator</h2>
+    <p>Enter any two cities, towns, airports or places worldwide. The calculator shows route distance, straight-line distance and estimated travel time.</p>
+    <h3>Choose your transport</h3>
+    <p>Compare estimates for bicycle, motorbike, bus, train and flight. Road-based transport uses route data when available, while flight uses a straight-line great-circle estimate.</p>
+  </article>
+  <article class="card seo-card">
+    <h2>How Fuel Cost Works</h2>
+    <p>Enable fuel cost, enter your vehicle efficiency and fuel price, and the calculator estimates the total fuel needed and journey cost.</p>
+    <h3>Kilometers and miles</h3>
+    <p>Switch between kilometers and miles directly from the results area to compare distances in your preferred unit.</p>
+  </article>
+</section>
+
+<section class="seo-section">
+  <div class="card seo-card">
+    <h2>Frequently Asked Questions</h2>
+    <details><summary>How is the distance calculated?</summary><p>The tool uses geographical coordinates. For supported road journeys it attempts to retrieve a route; otherwise it shows a practical estimate.</p></details>
+    <details><summary>Are flight distances exact?</summary><p>Flight distance is based on the great-circle distance between the selected locations. Actual flight paths can vary.</p></details>
+    <details><summary>Can I calculate fuel cost?</summary><p>Yes. Enable the optional fuel calculator and enter fuel efficiency, price and currency.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 World Distance Calculator · Map data © OpenStreetMap contributors</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map=L.map('map',{worldCopyJump:true}).setView([25,20],2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+
+let selectedMode='bicycle', fromPoint=null, toPoint=null, routeLine=null, fromMarker=null, toMarker=null, lastKm=null, lastAirKm=null, unit='km';
+const speeds={bicycle:16,motorbike:55,bus:50,train:80,flight:800};
+const labels={bicycle:'🚲 Bicycle',motorbike:'🏍️ Motorbike',bus:'🚌 Bus',train:'🚆 Train',flight:'✈️ Flight'};
+const ids={from:document.getElementById('from'),to:document.getElementById('to')};
+
+document.querySelectorAll('.mode').forEach(el=>el.onclick=()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));el.classList.add('active');selectedMode=el.dataset.mode;document.getElementById('modeBadge').textContent=labels[selectedMode]});
+document.getElementById('fuelToggle').onchange=e=>document.getElementById('fuelBox').classList.toggle('show',e.target.checked);
+
+function debounce(fn,wait=400){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()=>fn(...args),wait)}}
+function setupSearch(which){
+ const input=ids[which], box=document.getElementById(which+'Suggestions');
+ input.addEventListener('input',debounce(async()=>{
+   const q=input.value.trim(); box.innerHTML='';
+   if(q.length<2){box.style.display='none';return}
+   try{
+     const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&q='+encodeURIComponent(q),{headers:{'Accept-Language':'en'}});
+     const data=await r.json();
+     box.innerHTML=data.map((p,i)=>`<div class="suggestion" data-i="${i}">${p.display_name}</div>`).join('');
+     box.style.display=data.length?'block':'none';
+     [...box.children].forEach((el,i)=>el.onclick=()=>{const p=data[i];input.value=p.display_name;setPoint(which,{lat:+p.lat,lon:+p.lon,name:p.display_name});box.style.display='none'});
+   }catch(e){box.style.display='none'}
+ },350));
+ document.addEventListener('click',e=>{if(!e.target.closest('.inputrow'))box.style.display='none'});
+}
+setupSearch('from');setupSearch('to');
+
+function setPoint(which,p){
+ if(which==='from'){fromPoint=p;if(fromMarker)map.removeLayer(fromMarker);fromMarker=L.marker([p.lat,p.lon]).addTo(map).bindPopup('From').openPopup()}
+ else{toPoint=p;if(toMarker)map.removeLayer(toMarker);toMarker=L.marker([p.lat,p.lon]).addTo(map).bindPopup('To').openPopup()}
+ if(fromPoint&&toPoint)map.fitBounds([[fromPoint.lat,fromPoint.lon],[toPoint.lat,toPoint.lon]],{padding:[50,50]});
+}
+function haversine(a,b){
+ const R=6371,rad=x=>x*Math.PI/180, dLat=rad(b.lat-a.lat),dLon=rad(b.lon-a.lon);
+ const x=Math.sin(dLat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLon/2)**2;
+ return 2*R*Math.asin(Math.sqrt(x));
+}
+function fmtKm(km){
+ const value=unit==='mi'?km*0.621371:km, suffix=unit==='mi'?' mi':' km';
+ return value>=1000?value.toLocaleString(undefined,{maximumFractionDigits:0})+suffix:value.toFixed(1)+suffix
+}
+function renderUnits(){
+ if(lastKm===null)return;
+ document.getElementById('distance').textContent=fmtKm(lastKm);
+ document.getElementById('airDistance').textContent=fmtKm(lastAirKm);
+}
+function fmtTime(hours){
+ if(!isFinite(hours))return '—'; if(hours<1)return Math.max(1,Math.round(hours*60))+' min';
+ const h=Math.floor(hours),m=Math.round((hours-h)*60);return m?h+' h '+m+' min':h+' h';
+}
+async function geocodeIfNeeded(which){
+ if(which==='from'&&fromPoint||which==='to'&&toPoint)return;
+ const q=ids[which].value.trim(); if(!q)throw new Error('Please enter both locations');
+ const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(q));
+ const d=await r.json();if(!d.length)throw new Error('Location not found: '+q);
+ setPoint(which,{lat:+d[0].lat,lon:+d[0].lon,name:d[0].display_name});
+}
+async function getOSRM(a,b){
+ const url=`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`;
+ const r=await fetch(url);if(!r.ok)throw new Error('Routing service unavailable');const d=await r.json();
+ if(!d.routes?.length)throw new Error('No route found');return d.routes[0];
+}
+function draw(coords){
+ if(routeLine)map.removeLayer(routeLine);
+ routeLine=L.geoJSON({type:'LineString',coordinates:coords}).addTo(map);
+ map.fitBounds(routeLine.getBounds(),{padding:[40,40]});
+}
+document.getElementById('calculate').onclick=async()=>{
+ const btn=document.getElementById('calculate');btn.disabled=true;btn.textContent='Calculating…';
+ try{
+  await geocodeIfNeeded('from');await geocodeIfNeeded('to');
+  const air=haversine(fromPoint,toPoint); let km=air, hours=air/speeds[selectedMode], type='Straight line', note='';
+  if(selectedMode==='flight'){draw([[fromPoint.lon,fromPoint.lat],[toPoint.lon,toPoint.lat]]);note='Great-circle estimate for flight distance.'}
+  else{
+    try{
+      const route=await getOSRM(fromPoint,toPoint);
+      let factor=1;
+      if(selectedMode==='bicycle')factor=1.05;
+      if(selectedMode==='bus')factor=1.08;
+      if(selectedMode==='train')factor=0.92;
+      km=(route.distance/1000)*factor;
+      hours=km/speeds[selectedMode];
+      if(selectedMode==='bicycle'||selectedMode==='motorbike'||selectedMode==='bus')type='Road estimate';
+      else type='Rail estimate';
+      draw(route.geometry.coordinates);
+      note=selectedMode==='train'?'Estimated using road corridor because a global public rail-routing API is not included.': 'Route geometry uses public road routing; mode adjustments are estimates.';
+    }catch(e){
+      draw([[fromPoint.lon,fromPoint.lat],[toPoint.lon,toPoint.lat]]);
+      const mult={bicycle:1.25,motorbike:1.18,bus:1.25,train:1.10}[selectedMode]||1;
+      km=air*mult;hours=km/speeds[selectedMode];type='Estimated';note='Live road route unavailable, so a distance estimate is shown.';
+    }
+  }
+  lastKm=km;lastAirKm=air;renderUnits();
+  document.getElementById('time').textContent=fmtTime(hours);
+  document.getElementById('routeType').textContent=type;
+  document.getElementById('routeNote').textContent=note;
+  const fr=document.getElementById('fuelResult');
+  if(document.getElementById('fuelToggle').checked){
+    const eff=+document.getElementById('efficiency').value, price=+document.getElementById('fuelPrice').value, cur=document.getElementById('currency').value.trim()||'USD';
+    if(eff>0&&price>=0){const liters=km/eff,cost=liters*price;fr.textContent=`Estimated fuel cost: ${liters.toFixed(1)} L × ${price.toFixed(2)} = ${cur} ${cost.toFixed(2)}`;fr.classList.add('show')}
+    else fr.classList.remove('show');
+  }else fr.classList.remove('show');
+ }catch(e){alert(e.message)}
+ finally{btn.disabled=false;btn.textContent='Calculate Distance'}
+};
+
+document.getElementById('kmBtn').onclick=()=>{unit='km';document.getElementById('kmBtn').classList.add('selected');document.getElementById('miBtn').classList.remove('selected');renderUnits()};
+document.getElementById('miBtn').onclick=()=>{unit='mi';document.getElementById('miBtn').classList.add('selected');document.getElementById('kmBtn').classList.remove('selected');renderUnits()};
+document.querySelectorAll('.route-chip').forEach(b=>b.onclick=()=>{ids.from.value=b.dataset.from;ids.to.value=b.dataset.to;fromPoint=null;toPoint=null;document.querySelector('.grid').scrollIntoView({behavior:'smooth',block:'start'});});
+document.getElementById('shareBtn').onclick=async()=>{
+ if(lastKm===null){alert('Calculate a distance first');return}
+ const text=`Distance from ${ids.from.value} to ${ids.to.value}: ${fmtKm(lastKm)} by ${selectedMode}.`;
+ const url=location.href.split('?')[0]+`?from=${encodeURIComponent(ids.from.value)}&to=${encodeURIComponent(ids.to.value)}&mode=${selectedMode}`;
+ try{if(navigator.share)await navigator.share({title:'Distance Calculator Result',text,url});else{await navigator.clipboard.writeText(url);alert('Share link copied!')}}catch(e){}
+};
+const params=new URLSearchParams(location.search);
+if(params.get('from'))ids.from.value=params.get('from');
+if(params.get('to'))ids.to.value=params.get('to');
+if(params.get('mode')&&labels[params.get('mode')]){const m=params.get('mode');document.querySelector(`.mode[data-mode="${m}"]`).click()}
+</script>
+</body>
+</html>
