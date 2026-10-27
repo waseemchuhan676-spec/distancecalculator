@@ -3,43 +3,1053 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
-<title>Distance Calculator: Calculate Distance Between Cities & Places</title>
-<meta name="description" content="Calculate distance between cities, countries and places worldwide. Get route and straight-line distance, travel time and fuel cost estimates.">
+
+<title>Distance Calculator – Calculate Driving, Flight & Road Distance Between Cities</title>
+<meta name="description" content="Free online distance calculator. Calculate driving, flight, and road distance between cities worldwide. Compare travel time, straight-line distance, and fuel cost estimates.">
+<meta name="keywords" content="distance calculator, driving distance between cities, calculate distance, mileage calculator, road trip travel time, fuel cost calculator">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="https://distancecalculator-theta.vercel.app/">
-<meta property="og:type" content="website"><meta property="og:url" content="https://distancecalculator-theta.vercel.app/"><meta property="og:title" content="Distance Calculator: Calculate Distance Between Cities & Places"><meta property="og:description" content="Calculate distance between cities, countries and places worldwide with travel time and fuel cost estimates."><meta property="og:site_name" content="World Distance Calculator">
-<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Distance Calculator: Calculate Distance Between Cities & Places"><meta name="twitter:description" content="Calculate worldwide distance between cities and places, with travel time and fuel cost estimates.">
-<link rel="preconnect" href="https://nominatim.openstreetmap.org"><link rel="preconnect" href="https://router.project-osrm.org"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<style>:root{--blue:#1565c0;--dark:#0b1f33;--muted:#60758a;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--dark);line-height:1.55}header{background:linear-gradient(135deg,#0b1f33,#1565c0);color:#fff;padding:18px 0}.wrap{max-width:1180px;margin:auto;padding:0 18px}.brand{font-size:22px;font-weight:800}.hero{text-align:center;padding:42px 10px 28px}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0 0 10px}.hero p,.seo-card p{color:var(--muted);font-size:16px}.grid{display:grid;grid-template-columns:410px 1fr;gap:18px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 30px #142d4610}.panel,.seo-card{padding:22px}.label{display:block;font-size:13px;font-weight:700;margin:15px 0 7px}.inputrow{position:relative}input,select{width:100%;padding:14px;border:1px solid #ccd8e4;border-radius:10px;font-size:15px}.suggestions{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1px solid var(--line);border-radius:10px;z-index:9999;max-height:220px;overflow:auto;display:none}.suggestion{padding:11px 12px;border-bottom:1px solid #eef2f5;cursor:pointer}.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mode{border:1px solid var(--line);border-radius:11px;padding:11px 5px;text-align:center;cursor:pointer;font-size:12px;font-weight:700}.mode.active{border-color:var(--blue);background:#edf5ff;color:var(--blue)}.ico{font-size:23px;display:block}.advanced{margin-top:17px;border-top:1px solid var(--line);padding-top:14px}.toggle{display:flex;justify-content:space-between;font-weight:700}.toggle input{width:44px}.fuel-box{display:none;margin-top:12px;padding:12px;background:#f7fafc;border-radius:10px}.fuel-box.show{display:block}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}button{width:100%;border:0;border-radius:11px;padding:15px;background:var(--blue);color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin-top:18px}.mapcard{overflow:hidden;min-height:620px}#map{height:620px;width:100%}.results{padding:18px;border-top:1px solid var(--line)}.result-top{display:flex;justify-content:space-between;gap:12px}.distance{font-size:32px;font-weight:900;color:var(--blue)}.route-note{color:var(--muted);font-size:13px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.stat{background:#f7fafc;border:1px solid #e9eef3;border-radius:12px;padding:12px}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted);text-transform:uppercase}.fuel-result{display:none;margin-top:12px;background:#ecfdf5;padding:12px;border-radius:11px}.fuel-result.show{display:block}.seo-section{margin-top:18px}.popular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.route-chip{margin:0;padding:13px;background:#f7fafc;color:var(--dark);border:1px solid var(--line);font-size:14px}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}details{border-top:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:700}.result-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}.small-btn,.unit-toggle button{width:auto;margin:0;padding:8px 11px;font-size:12px;background:#eef5ff;color:var(--blue)}.unit-toggle{display:flex;gap:5px}.unit-toggle .selected{background:var(--dark);color:#fff}@media(max-width:850px){.grid{grid-template-columns:1fr}#map{height:480px}.stats{grid-template-columns:1fr 1fr}}@media(max-width:480px){.popular-grid,.info-grid,.two{grid-template-columns:1fr}.mode-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:1fr}}</style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"World Distance Calculator","url":"https://distancecalculator-theta.vercel.app/","applicationCategory":"TravelApplication","operatingSystem":"Web","description":"A free online distance calculator for calculating distance between cities, countries, airports and places worldwide, including travel time and optional fuel cost estimates."}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"World Distance Calculator","url":"https://distancecalculator-theta.vercel.app/"}</script>
-</head><body>
-<header><div class="wrap"><div class="brand">🌍 World Distance Calculator</div></div></header>
-<main class="wrap"><section class="hero"><h1>Distance Calculator – Calculate Distance Between Any Two Places</h1><p>Calculate distance between cities, countries, airports and places worldwide. Compare travel distance, straight-line distance, travel time and optional fuel cost estimates.</p></section>
-<section class="grid"><div class="card panel">
-<label class="label" for="from">From</label><div class="inputrow"><input id="from" placeholder="Enter city, airport or place" autocomplete="off"><div class="suggestions" id="fromSuggestions"></div></div>
-<label class="label" for="to">To</label><div class="inputrow"><input id="to" placeholder="Enter destination" autocomplete="off"><div class="suggestions" id="toSuggestions"></div></div>
-<div class="label">Travel mode</div><div class="mode-grid"><div class="mode active" data-mode="bicycle"><span class="ico">🚲</span>Bicycle</div><div class="mode" data-mode="motorbike"><span class="ico">🏍️</span>Motorbike</div><div class="mode" data-mode="bus"><span class="ico">🚌</span>Bus</div><div class="mode" data-mode="train"><span class="ico">🚆</span>Train</div><div class="mode" data-mode="flight"><span class="ico">✈️</span>Flight</div></div>
-<div class="advanced"><label class="toggle" for="fuelToggle">Include fuel / energy cost <input type="checkbox" id="fuelToggle"></label><div class="fuel-box" id="fuelBox"><div class="two"><div><label class="label" for="efficiency">Efficiency (km/L)</label><input id="efficiency" type="number" min="0.1" step="0.1" value="15"></div><div><label class="label" for="fuelPrice">Fuel price / L</label><input id="fuelPrice" type="number" min="0" step="0.01" value="1.50"></div></div><label class="label" for="currency">Currency</label><select id="currency"><option value="PKR" selected>PKR — Pakistani Rupee</option><option value="USD">USD — US Dollar</option><option value="USDT">USDT — Tether USD</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option><option value="INR">INR — Indian Rupee</option><option value="AED">AED — UAE Dirham</option><option value="SAR">SAR — Saudi Riyal</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="JPY">JPY — Japanese Yen</option><option value="CNY">CNY — Chinese Yuan</option><option value="BDT">BDT — Bangladeshi Taka</option><option value="TRY">TRY — Turkish Lira</option><option value="ZAR">ZAR — South African Rand</option><option value="BRL">BRL — Brazilian Real</option><option value="MXN">MXN — Mexican Peso</option><option value="CHF">CHF — Swiss Franc</option><option value="SEK">SEK — Swedish Krona</option><option value="NOK">NOK — Norwegian Krone</option><option value="KRW">KRW — South Korean Won</option><option value="PHP">PHP — Philippine Peso</option></select></div></div><button id="calculate">Calculate Distance</button></div>
-<div class="card mapcard"><div id="map" role="region" aria-label="Interactive world map showing selected locations and calculated route"></div><div class="results"><div class="result-top"><div><div class="distance" id="distance">—</div><div class="route-note" id="routeNote">Choose two places to calculate</div></div><div id="modeBadge">🚲 Bicycle</div></div><div class="result-actions"><div class="unit-toggle"><button id="kmBtn" class="selected">KM</button><button id="miBtn">Miles</button></div><button class="small-btn" id="shareBtn">Share Result</button></div><div class="stats"><div class="stat"><span>Estimated time</span><b id="time">—</b></div><div class="stat"><span>Straight-line</span><b id="airDistance">—</b></div><div class="stat"><span>Route type</span><b id="routeType">—</b></div></div><div class="fuel-result" id="fuelResult"></div></div></div></section>
-<section class="seo-section"><div class="card seo-card"><h2>Popular Distance Routes</h2><p>Use these popular routes as quick calculator shortcuts. The calculator determines the result after you select Calculate Distance.</p><div class="popular-grid"><button class="route-chip" data-from="Multan, Pakistan" data-to="Lahore, Pakistan">Multan → Lahore</button><button class="route-chip" data-from="Lahore, Pakistan" data-to="Islamabad, Pakistan">Lahore → Islamabad</button><button class="route-chip" data-from="Karachi, Pakistan" data-to="Lahore, Pakistan">Karachi → Lahore</button><button class="route-chip" data-from="London, United Kingdom" data-to="Paris, France">London → Paris</button><button class="route-chip" data-from="New York, USA" data-to="Los Angeles, USA">New York → Los Angeles</button><button class="route-chip" data-from="Dubai, United Arab Emirates" data-to="London, United Kingdom">Dubai → London</button></div></div></section>
-<section class="seo-section info-grid"><article class="card seo-card"><h2>How to Calculate Distance Between Two Places</h2><p>Enter your starting point and destination, choose a travel mode and select Calculate Distance. Search for cities, countries, airports and places worldwide.</p><h3>Distance Between Cities and Countries</h3><p>Compare locations in the same country or international locations with this world distance calculator.</p><h3>Straight-Line Distance vs Route Distance</h3><p>Straight-line distance is the shortest geographical path between two points. Route distance follows available route data or an estimate and is usually longer.</p></article><article class="card seo-card"><h2>Distance by Travel Mode</h2><p>Compare bicycle, motorbike, bus, train and flight distance estimates. Flight distance uses a great-circle calculation.</p><h3>Travel Time Calculator</h3><p>Travel time is estimated from distance and typical average speeds. Actual time can vary because of traffic, weather, stops and schedules.</p><h3>How Fuel Cost Works</h3><p>Enter vehicle efficiency, fuel price and currency to estimate fuel required and journey cost.</p><h3>Kilometers and Miles</h3><p>Switch between KM and Miles in the results area.</p></article></section>
-<section class="seo-section"><div class="card seo-card"><h2>Frequently Asked Questions</h2><details><summary>How do I calculate distance between two places?</summary><p>Enter a starting location and destination, choose a travel mode, then select Calculate Distance to see distance, straight-line distance and estimated travel time.</p></details><details><summary>What is the difference between route distance and straight-line distance?</summary><p>Straight-line distance is the shortest geographical path. Route distance follows an available travel corridor or estimate.</p></details><details><summary>Can I calculate distance between cities in different countries?</summary><p>Yes. Search for cities, countries, airports and other places worldwide.</p></details><details><summary>How is flight distance calculated?</summary><p>Flight distance is based on a great-circle estimate between geographical coordinates. Actual flight paths can vary.</p></details><details><summary>Can I calculate driving or road distance?</summary><p>The calculator attempts to retrieve public road routing data for supported non-flight journeys and uses an estimate if routing is unavailable.</p></details><details><summary>Can I estimate fuel cost for a trip?</summary><p>Yes. Enable fuel cost, enter efficiency, fuel price and currency to estimate fuel needed and total cost.</p></details><details><summary>Can I switch between kilometers and miles?</summary><p>Yes. Use the KM and Miles buttons in the results area.</p></details><details><summary>Are travel times exact?</summary><p>No. Travel times are estimates and can change because of traffic, routes, weather and schedules.</p></details></div></section></main>
-<footer>© 2026 World Distance Calculator · Map data © OpenStreetMap contributors</footer>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://distancecalculator-theta.vercel.app/">
+<meta property="og:title" content="Distance Calculator – Driving, Road & Flight Distance Between Cities">
+<meta property="og:description" content="Calculate accurate driving and flight distance between any two cities or places worldwide. Includes live interactive map, travel time, and fuel cost estimator.">
+<meta property="og:site_name" content="World Distance Calculator">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Distance Calculator – Calculate Distance Between Cities & Places">
+<meta name="twitter:description" content="Calculate worldwide distance between cities and places with driving time and fuel cost estimates.">
+
+<link rel="preconnect" href="https://nominatim.openstreetmap.org">
+<link rel="preconnect" href="https://router.project-osrm.org">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+:root{
+  --blue:#1565c0;
+  --blue-hover:#0d47a1;
+  --dark:#0b1f33;
+  --muted:#576b80;
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --line:#dfe7ef;
+  --accent:#00a86b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+  line-height:1.6;
+}
+header{
+  background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);
+  color:#fff;
+  padding:16px 0;
+  box-shadow:0 4px 20px rgba(11,31,51,0.15);
+}
+.wrap{max-width:1200px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:22px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none}
+.badge-tag{background:rgba(255,255,255,0.18);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.hero{text-align:center;padding:36px 12px 24px}
+.hero h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;margin:0 0 12px;font-weight:800;color:var(--dark);letter-spacing:-0.5px}
+.hero p{color:var(--muted);font-size:17px;max-width:760px;margin:0 auto}
+.grid{display:grid;grid-template-columns:420px 1fr;gap:22px;align-items:start;margin-bottom:30px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 35px rgba(20,45,70,0.06);transition:transform 0.2s,box-shadow 0.2s}
+.panel,.seo-card{padding:24px}
+.label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+.inputrow{position:relative}
+input,select{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid #ccd8e4;
+  border-radius:12px;
+  font-size:15px;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  background:#fff;
+  color:var(--dark);
+}
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(21,101,192,0.15);
+}
+.swap-container{display:flex;justify-content:center;margin:-4px 0}
+.swap-btn{
+  background:#edf5ff;
+  border:1.5px solid #c9ddf5;
+  color:var(--blue);
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  font-size:16px;
+  padding:0;
+  box-shadow:0 2px 6px rgba(21,101,192,0.12);
+}
+.swap-btn:hover{
+  background:var(--blue);
+  color:#fff;
+  transform:rotate(180deg);
+}
+.suggestions{
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(100% + 4px);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  z-index:99999;
+  max-height:240px;
+  overflow-y:auto;
+  display:none;
+  box-shadow:0 12px 30px rgba(0,0,0,0.12);
+}
+.suggestion{
+  padding:11px 14px;
+  border-bottom:1px solid #f0f4f8;
+  cursor:pointer;
+  font-size:13.5px;
+  transition:background 0.15s;
+}
+.suggestion:hover{background:#edf5ff;color:var(--blue)}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.mode{
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  padding:12px 6px;
+  text-align:center;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  transition:all 0.2s;
+  background:#fbfcfe;
+}
+.mode:hover{border-color:#b5cde7;background:#f3f8fe}
+.mode.active{border-color:var(--blue);background:#edf5ff;color:var(--blue);box-shadow:0 2px 8px rgba(21,101,192,0.15)}
+.ico{font-size:22px;display:block;margin-bottom:3px}
+.advanced{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.toggle{display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;font-size:14px}
+.toggle input{width:42px;height:22px;accent-color:var(--blue);cursor:pointer}
+.fuel-box{display:none;margin-top:12px;padding:14px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0}
+.fuel-box.show{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button#calculate{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:16px;
+  background:linear-gradient(135deg,#1565c0,#0d47a1);
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:18px;
+  box-shadow:0 8px 24px rgba(21,101,192,0.3);
+  transition:all 0.2s;
+}
+button#calculate:hover{opacity:0.95;transform:translateY(-1px);box-shadow:0 10px 28px rgba(21,101,192,0.35)}
+button#calculate:active{transform:translateY(0)}
+.mapcard{overflow:hidden;min-height:640px;display:flex;flex-direction:column}
+#map{height:460px;width:100%;background:#e5edf5}
+.results{padding:22px;border-top:1px solid var(--line);background:#fff;flex-grow:1}
+.result-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.distance{font-size:36px;font-weight:900;color:var(--blue);letter-spacing:-0.5px}
+.route-note{color:var(--muted);font-size:13.5px;margin-top:2px}
+#modeBadge{background:#edf5ff;color:var(--blue);padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:inline-block;white-space:nowrap}
+.result-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.small-btn{
+  width:auto;
+  margin:0;
+  padding:8px 14px;
+  font-size:13px;
+  font-weight:700;
+  background:#edf5ff;
+  color:var(--blue);
+  border:1px solid #cce2fd;
+  border-radius:10px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  transition:all 0.2s;
+}
+.small-btn:hover{background:#dbeafe;color:#0d47a1}
+.unit-toggle{display:flex;gap:5px;background:#eef2f7;padding:3px;border-radius:10px}
+.unit-toggle button{
+  border:0;
+  border-radius:8px;
+  padding:6px 14px;
+  font-size:12.5px;
+  font-weight:800;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+}
+.unit-toggle button.selected{background:var(--dark);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{background:#f8fafc;border:1px solid #e9eef5;border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-size:19px;color:var(--dark);margin-top:2px}
+.stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
+.fuel-result{display:none;margin-top:14px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:14px;border-radius:12px;font-weight:600;font-size:14.5px}
+.fuel-result.show{display:block}
+.recent-box{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);display:none}
+.recent-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.recent-chips{display:flex;gap:8px;flex-wrap:wrap}
+.recent-chip{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;color:#334155}
+.recent-chip:hover{background:#e2e8f0;color:#0f172a}
+.seo-section{margin-top:26px}
+.popular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.route-chip{
+  margin:0;
+  padding:14px;
+  background:#f8fafc;
+  color:var(--dark);
+  border:1px solid var(--line);
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:left;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.route-chip:hover{background:#edf5ff;border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+.route-chip::after{content:"→";font-size:16px;color:var(--muted)}
+.route-chip:hover::after{color:var(--blue)}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.seo-card h2{font-size:22px;margin:0 0 14px;font-weight:800;color:var(--dark)}
+.seo-card h3{font-size:17px;margin:18px 0 8px;font-weight:700;color:var(--dark)}
+.seo-card p{color:var(--muted);font-size:15px;line-height:1.65;margin:0 0 10px}
+details{border-top:1px solid var(--line);padding:14px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--dark);padding:4px 0;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:20px;font-weight:400;color:var(--blue)}
+details[open] summary::after{content:"−"}
+details p{margin-top:8px;color:var(--muted);font-size:15px}
+footer{
+  background:#0b1f33;
+  color:#94a3b8;
+  padding:32px 0;
+  margin-top:40px;
+  text-align:center;
+  font-size:14px;
+}
+footer a{color:#60a5fa;text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:960px){
+  .grid{grid-template-columns:1fr}
+  #map{height:420px}
+  .popular-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:540px){
+  .hero{padding:24px 8px 16px}
+  .popular-grid,.info-grid,.two{grid-template-columns:1fr}
+  .mode-grid{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:1fr}
+  .result-top{flex-direction:column}
+  .distance{font-size:30px}
+  .result-actions{justify-content:stretch}
+  .small-btn{flex-grow:1;justify-content:center}
+}
+</style>
+
+<!-- Structured Data: WebApplication -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"World Distance Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/",
+  "applicationCategory":"TravelApplication",
+  "operatingSystem":"Web",
+  "description":"A free online distance calculator for calculating driving, road, and straight-line distance between cities and places worldwide, including driving time and fuel cost estimates.",
+  "offers":{
+    "@type":"Offer",
+    "price":"0",
+    "priceCurrency":"USD"
+  }
+}
+</script>
+
+<!-- Structured Data: WebSite -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"World Distance Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/",
+  "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://distancecalculator-theta.vercel.app/?from={from}&to={to}",
+    "query-input":"required name=from"
+  }
+}
+</script>
+
+<!-- Structured Data: FAQPage (Google Rich Snippets) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"How do I calculate distance between two places?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Enter your starting location and destination, choose your travel mode (Car, Motorbike, Bus, Train, Flight, or Bicycle), and click 'Calculate Distance' to view total road distance, flight distance, estimated travel time, and optional fuel cost."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"What is the difference between route distance and straight-line distance?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Straight-line distance (as the crow flies) is the shortest geographical path between two coordinates calculated using the haversine formula. Route distance is the actual driving or road distance following highways and roads, which is typically 15% to 35% longer than straight-line distance."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Can I calculate distance between cities in different countries?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes, the World Distance Calculator supports global locations including cities, towns, airports, and geographical landmarks worldwide."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"How is flight distance calculated?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Flight distance is calculated using the Great-Circle Haversine formula based on Earth's spherical curvature, representing the direct aerial flight corridor between two airports or cities."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Can I calculate driving or road distance by car?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes! Select the Car / Driving mode to get real-time driving route distance along highways and streets powered by open road routing algorithms."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Can I estimate fuel cost for a road trip?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes. Check the 'Include fuel / trip cost' box, input your vehicle mileage or fuel efficiency (km/L) and local fuel price per liter, then select your preferred currency (PKR, USD, EUR, GBP, INR, AED, etc.) to get an instant trip cost estimate."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Can I switch between kilometers and miles?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes. Toggle between the KM and Miles buttons in the results panel to view all distance measurements in your preferred unit."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Are travel times exact?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Travel times are based on typical speed averages (e.g. 80 km/h for driving, 800 km/h for flights). Actual travel duration will vary depending on live traffic conditions, speed limits, rest stops, border crossings, and weather."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <span class="badge-tag">Free Travel & Route Tool</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Distance Calculator – Calculate Distance Between Cities & Places</h1>
+    <p>Calculate driving distance, straight-line flight distance, travel time, and fuel cost estimates between any two cities or destinations worldwide.</p>
+  </section>
+
+  <section class="grid">
+    <!-- Form Panel -->
+    <div class="card panel">
+      <label class="label" for="from">Starting Location (From)</label>
+      <div class="inputrow">
+        <input id="from" placeholder="Enter starting city, address or airport" autocomplete="off" aria-label="Starting location">
+        <div class="suggestions" id="fromSuggestions"></div>
+      </div>
+
+      <div class="swap-container">
+        <button class="swap-btn" id="swapBtn" type="button" title="Swap From and To locations" aria-label="Swap Origin and Destination">⇅</button>
+      </div>
+
+      <label class="label" for="to">Destination (To)</label>
+      <div class="inputrow">
+        <input id="to" placeholder="Enter destination city, address or airport" autocomplete="off" aria-label="Destination location">
+        <div class="suggestions" id="toSuggestions"></div>
+      </div>
+
+      <div class="label">Travel Mode</div>
+      <div class="mode-grid">
+        <div class="mode active" data-mode="car"><span class="ico">🚗</span>Car</div>
+        <div class="mode" data-mode="motorbike"><span class="ico">🏍️</span>Motorbike</div>
+        <div class="mode" data-mode="bus"><span class="ico">🚌</span>Bus</div>
+        <div class="mode" data-mode="train"><span class="ico">🚆</span>Train</div>
+        <div class="mode" data-mode="flight"><span class="ico">✈️</span>Flight</div>
+        <div class="mode" data-mode="bicycle"><span class="ico">🚲</span>Bicycle</div>
+      </div>
+
+      <div class="advanced">
+        <label class="toggle" for="fuelToggle">
+          <span>Include fuel / trip cost</span>
+          <input type="checkbox" id="fuelToggle">
+        </label>
+        
+        <div class="fuel-box" id="fuelBox">
+          <div class="two">
+            <div>
+              <label class="label" for="efficiency">Efficiency (km/L)</label>
+              <input id="efficiency" type="number" min="0.1" step="0.1" value="15">
+            </div>
+            <div>
+              <label class="label" for="fuelPrice">Fuel price / L</label>
+              <input id="fuelPrice" type="number" min="0" step="0.01" value="1.50">
+            </div>
+          </div>
+          <label class="label" for="currency">Currency</label>
+          <select id="currency">
+            <option value="PKR" selected>PKR — Pakistani Rupee</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="INR">INR — Indian Rupee</option>
+            <option value="AED">AED — UAE Dirham</option>
+            <option value="SAR">SAR — Saudi Riyal</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="CNY">CNY — Chinese Yuan</option>
+            <option value="TRY">TRY — Turkish Lira</option>
+            <option value="USDT">USDT — Tether USD</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="calculate">Calculate Distance</button>
+
+      <!-- Recent Searches -->
+      <div class="recent-box" id="recentBox">
+        <div class="recent-title">Recent Calculations</div>
+        <div class="recent-chips" id="recentChips"></div>
+      </div>
+    </div>
+
+    <!-- Map & Results Panel -->
+    <div class="card mapcard">
+      <div id="map" role="region" aria-label="Interactive world map showing selected locations and calculated route"></div>
+      
+      <div class="results">
+        <div class="result-top">
+          <div>
+            <div class="distance" id="distance">—</div>
+            <div class="route-note" id="routeNote">Select two locations and click Calculate Distance</div>
+          </div>
+          <div id="modeBadge">🚗 Car / Driving</div>
+        </div>
+
+        <div class="result-actions">
+          <div class="unit-toggle">
+            <button id="kmBtn" class="selected">KM</button>
+            <button id="miBtn">Miles</button>
+          </div>
+          <button class="small-btn" id="gmapsBtn" title="Open driving directions in Google Maps">🗺️ Open in Maps</button>
+          <button class="small-btn" id="shareBtn" title="Share calculated distance link">🔗 Share</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span>Estimated time</span>
+            <b id="time">—</b>
+          </div>
+          <div class="stat">
+            <span>Straight-line</span>
+            <b id="airDistance">—</b>
+          </div>
+          <div class="stat">
+            <span>Route type</span>
+            <b id="routeType">—</b>
+          </div>
+        </div>
+
+        <div class="fuel-result" id="fuelResult"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Distance Routes (Shortcuts for high SEO search volume) -->
+  <section class="seo-section">
+    <div class="card seo-card">
+      <h2>Popular Distance Routes</h2>
+      <p>Quickly calculate distance, road travel time, and driving directions between top cities:</p>
+      <div class="popular-grid">
+        <button class="route-chip" data-from="Lahore, Pakistan" data-to="Islamabad, Pakistan">Lahore to Islamabad</button>
+        <button class="route-chip" data-from="Karachi, Pakistan" data-to="Lahore, Pakistan">Karachi to Lahore</button>
+        <button class="route-chip" data-from="Multan, Pakistan" data-to="Lahore, Pakistan">Multan to Lahore</button>
+        <button class="route-chip" data-from="Islamabad, Pakistan" data-to="Murree, Pakistan">Islamabad to Murree</button>
+        <button class="route-chip" data-from="Dubai, United Arab Emirates" data-to="Abu Dhabi, United Arab Emirates">Dubai to Abu Dhabi</button>
+        <button class="route-chip" data-from="London, United Kingdom" data-to="Paris, France">London to Paris</button>
+        <button class="route-chip" data-from="New York, USA" data-to="Washington DC, USA">New York to Washington DC</button>
+        <button class="route-chip" data-from="Delhi, India" data-to="Mumbai, India">Delhi to Mumbai</button>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--muted)">
+        <strong style="color:var(--dark)">Detailed Route Guides:</strong>
+        <a href="/routes/lahore-to-islamabad.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Lahore to Islamabad Guide</a> ·
+        <a href="/routes/karachi-to-lahore.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Karachi to Lahore Guide</a> ·
+        <a href="/routes/multan-to-lahore.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Multan to Lahore Guide</a> ·
+        <a href="/routes/dubai-to-abu-dhabi.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Dubai to Abu Dhabi Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Informational Content (High SEO Value) -->
+  <section class="seo-section info-grid">
+    <article class="card seo-card">
+      <h2>How to Calculate Distance Between Two Cities</h2>
+      <p>Whether you are planning a weekend road trip, calculating corporate travel mileage, or estimating flight duration, the World Distance Calculator provides precise measurements in both kilometers (km) and miles (mi).</p>
+      
+      <h3>1. Driving Distance vs Straight-Line Flight Distance</h3>
+      <p><strong>Straight-line distance</strong> (great-circle distance) represents the shortest direct path between two geographic coordinates across Earth's surface. In contrast, <strong>driving distance</strong> follows physical roads, highways, and bridges, meaning the driving route is typically 15% to 35% longer than air distance.</p>
+
+      <h3>2. Travel Time Calculation</h3>
+      <p>Travel times are calculated using typical cruising speeds for each vehicle category. For example, highway driving by car averages 80 km/h, while intercity commercial flights average 800 km/h.</p>
+    </article>
+
+    <article class="card seo-card">
+      <h2>Trip Fuel Cost & Travel Modes</h2>
+      <p>Estimate how much fuel your vehicle will consume before you hit the road. By combining road distance with your vehicle's fuel efficiency, you can budget petrol or diesel costs accurately.</p>
+
+      <h3>Supported Travel Modes</h3>
+      <p>Choose from <strong>Car / Driving</strong>, <strong>Motorbike</strong>, <strong>Bus</strong>, <strong>Train</strong>, <strong>Flight</strong>, or <strong>Bicycle</strong> to see customized travel estimates tailored to your mode of transportation.</p>
+
+      <h3>Export & Navigation</h3>
+      <p>After calculating a route, use the <strong>Open in Maps</strong> button to launch turn-by-turn navigation directly on your smartphone, or click <strong>Share</strong> to send the route link to family or colleagues.</p>
+    </article>
+  </section>
+
+  <!-- FAQ Section (Matches JSON-LD Schema) -->
+  <section class="seo-section">
+    <div class="card seo-card">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>How do I calculate distance between two places?</summary>
+        <p>Enter your starting location and destination, choose your travel mode (Car, Motorbike, Bus, Train, Flight, or Bicycle), and click 'Calculate Distance' to view total road distance, flight distance, estimated travel time, and optional fuel cost.</p>
+      </details>
+      <details>
+        <summary>What is the difference between route distance and straight-line distance?</summary>
+        <p>Straight-line distance (as the crow flies) is the shortest geographical path between two coordinates. Route distance is the actual driving or road distance following highways and roads, which is typically 15% to 35% longer.</p>
+      </details>
+      <details>
+        <summary>Can I calculate distance between cities in different countries?</summary>
+        <p>Yes, the World Distance Calculator supports global locations including cities, towns, airports, and geographical landmarks worldwide.</p>
+      </details>
+      <details>
+        <summary>How is flight distance calculated?</summary>
+        <p>Flight distance is calculated using the Great-Circle Haversine formula based on Earth's spherical curvature, representing the direct aerial flight corridor between two coordinates.</p>
+      </details>
+      <details>
+        <summary>Can I calculate driving or road distance by car?</summary>
+        <p>Yes! Select the Car / Driving mode to get real-time driving route distance along highways and streets powered by open road routing algorithms.</p>
+      </details>
+      <details>
+        <summary>Can I estimate fuel cost for a road trip?</summary>
+        <p>Yes. Check the 'Include fuel / trip cost' box, input your vehicle mileage (km/L) and local fuel price per liter, then select your preferred currency (PKR, USD, EUR, etc.) to get an instant cost estimate.</p>
+      </details>
+      <details>
+        <summary>Can I switch between kilometers and miles?</summary>
+        <p>Yes. Toggle between the KM and Miles buttons in the results panel to view all distance measurements in your preferred unit.</p>
+      </details>
+      <details>
+        <summary>Are travel times exact?</summary>
+        <p>Travel times are based on typical speed averages (e.g. 80 km/h for driving, 800 km/h for flights). Actual duration varies based on traffic, weather, road conditions, and stops.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Free Distance & Driving Time Tool</p>
+    <p><small>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · Routing via OSRM</small></p>
+  </div>
+</footer>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const map=L.map('map',{worldCopyJump:true}).setView([25,20],2);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
-let selectedMode='bicycle',fromPoint=null,toPoint=null,routeLine=null,fromMarker=null,toMarker=null,lastKm=null,lastAirKm=null,unit='km';const speeds={bicycle:16,motorbike:55,bus:50,train:80,flight:800},labels={bicycle:'🚲 Bicycle',motorbike:'🏍️ Motorbike',bus:'🚌 Bus',train:'🚆 Train',flight:'✈️ Flight'},ids={from:document.getElementById('from'),to:document.getElementById('to')};
-document.querySelectorAll('.mode').forEach(el=>el.onclick=()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));el.classList.add('active');selectedMode=el.dataset.mode;document.getElementById('modeBadge').textContent=labels[selectedMode]});document.getElementById('fuelToggle').onchange=e=>document.getElementById('fuelBox').classList.toggle('show',e.target.checked);
-function debounce(fn,wait=400){let t;return(...args)=>{clearTimeout(t);t=setTimeout(()=>fn(...args),wait)}}
-function setupSearch(which){const input=ids[which],box=document.getElementById(which+'Suggestions');input.addEventListener('input',debounce(async()=>{const q=input.value.trim();box.innerHTML='';if(q.length<2){box.style.display='none';return}try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&q='+encodeURIComponent(q),{headers:{'Accept-Language':'en'}}),data=await r.json();box.innerHTML=data.map(p=>`<div class="suggestion">${p.display_name}</div>`).join('');box.style.display=data.length?'block':'none';[...box.children].forEach((el,i)=>el.onclick=()=>{const p=data[i];input.value=p.display_name;setPoint(which,{lat:+p.lat,lon:+p.lon,name:p.display_name});box.style.display='none'})}catch(e){box.style.display='none'}},350));document.addEventListener('click',e=>{if(!e.target.closest('.inputrow'))box.style.display='none'})}setupSearch('from');setupSearch('to');
-function setPoint(which,p){if(which==='from'){fromPoint=p;if(fromMarker)map.removeLayer(fromMarker);fromMarker=L.marker([p.lat,p.lon]).addTo(map).bindPopup('From').openPopup()}else{toPoint=p;if(toMarker)map.removeLayer(toMarker);toMarker=L.marker([p.lat,p.lon]).addTo(map).bindPopup('To').openPopup()}if(fromPoint&&toPoint)map.fitBounds([[fromPoint.lat,fromPoint.lon],[toPoint.lat,toPoint.lon]],{padding:[50,50]})}
-function haversine(a,b){const R=6371,rad=x=>x*Math.PI/180,dLat=rad(b.lat-a.lat),dLon=rad(b.lon-a.lon),x=Math.sin(dLat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
-function fmtKm(km){const value=unit==='mi'?km*.621371:km,suffix=unit==='mi'?' mi':' km';return value>=1000?value.toLocaleString(undefined,{maximumFractionDigits:0})+suffix:value.toFixed(1)+suffix}function renderUnits(){if(lastKm===null)return;distance.textContent=fmtKm(lastKm);airDistance.textContent=fmtKm(lastAirKm)}function fmtTime(hours){if(!isFinite(hours))return'—';if(hours<1)return Math.max(1,Math.round(hours*60))+' min';const h=Math.floor(hours),m=Math.round((hours-h)*60);return m?h+' h '+m+' min':h+' h'}
-async function geocodeIfNeeded(which){if(which==='from'&&fromPoint||which==='to'&&toPoint)return;const q=ids[which].value.trim();if(!q)throw Error('Please enter both locations');const r=await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(q)),d=await r.json();if(!d.length)throw Error('Location not found: '+q);setPoint(which,{lat:+d[0].lat,lon:+d[0].lon,name:d[0].display_name})}
-async function getOSRM(a,b){const r=await fetch(`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`);if(!r.ok)throw Error('Routing service unavailable');const d=await r.json();if(!d.routes?.length)throw Error('No route found');return d.routes[0]}function draw(coords){if(routeLine)map.removeLayer(routeLine);routeLine=L.geoJSON({type:'LineString',coordinates:coords}).addTo(map);map.fitBounds(routeLine.getBounds(),{padding:[40,40]})}
-calculate.onclick=async()=>{const btn=calculate;btn.disabled=true;btn.textContent='Calculating…';try{await geocodeIfNeeded('from');await geocodeIfNeeded('to');const air=haversine(fromPoint,toPoint);let km=air,hours=air/speeds[selectedMode],type='Straight line',note='';if(selectedMode==='flight'){draw([[fromPoint.lon,fromPoint.lat],[toPoint.lon,toPoint.lat]]);note='Great-circle estimate for flight distance.'}else try{const route=await getOSRM(fromPoint,toPoint);let factor=selectedMode==='bicycle'?1.05:selectedMode==='bus'?1.08:selectedMode==='train'?.92:1;km=route.distance/1000*factor;hours=km/speeds[selectedMode];type=['bicycle','motorbike','bus'].includes(selectedMode)?'Road estimate':'Rail estimate';draw(route.geometry.coordinates);note=selectedMode==='train'?'Estimated using road corridor because a global public rail-routing API is not included.':'Route geometry uses public road routing; mode adjustments are estimates.'}catch(e){draw([[fromPoint.lon,fromPoint.lat],[toPoint.lon,toPoint.lat]]);const mult={bicycle:1.25,motorbike:1.18,bus:1.25,train:1.10}[selectedMode]||1;km=air*mult;hours=km/speeds[selectedMode];type='Estimated';note='Live road route unavailable, so a distance estimate is shown.'}lastKm=km;lastAirKm=air;renderUnits();time.textContent=fmtTime(hours);routeType.textContent=type;routeNote.textContent=note;if(fuelToggle.checked){const eff=+efficiency.value,price=+fuelPrice.value,cur=currency.value;if(eff>0&&price>=0){const liters=km/eff,cost=liters*price;fuelResult.textContent=`Estimated fuel cost: ${liters.toFixed(1)} L × ${price.toFixed(2)} = ${cur} ${cost.toFixed(2)}`;fuelResult.classList.add('show')}}else fuelResult.classList.remove('show')}catch(e){alert(e.message)}finally{btn.disabled=false;btn.textContent='Calculate Distance'}};
-kmBtn.onclick=()=>{unit='km';kmBtn.classList.add('selected');miBtn.classList.remove('selected');renderUnits()};miBtn.onclick=()=>{unit='mi';miBtn.classList.add('selected');kmBtn.classList.remove('selected');renderUnits()};document.querySelectorAll('.route-chip').forEach(b=>b.onclick=()=>{ids.from.value=b.dataset.from;ids.to.value=b.dataset.to;fromPoint=null;toPoint=null;document.querySelector('.grid').scrollIntoView({behavior:'smooth',block:'start'})});shareBtn.onclick=async()=>{if(lastKm===null){alert('Calculate a distance first');return}const text=`Distance from ${ids.from.value} to ${ids.to.value}: ${fmtKm(lastKm)} by ${selectedMode}.`,url=location.href.split('?')[0]+`?from=${encodeURIComponent(ids.from.value)}&to=${encodeURIComponent(ids.to.value)}&mode=${selectedMode}`;try{if(navigator.share)await navigator.share({title:'Distance Calculator Result',text,url});else{await navigator.clipboard.writeText(url);alert('Share link copied!')}}catch(e){}};const params=new URLSearchParams(location.search);if(params.get('from'))ids.from.value=params.get('from');if(params.get('to'))ids.to.value=params.get('to');if(params.get('mode')&&labels[params.get('mode')])document.querySelector(`.mode[data-mode="${params.get('mode')}"]`).click();
-</script></body></html>
+// Map Initialization
+const map = L.map('map', { worldCopyJump: true }).setView([25, 30], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// State Variables
+let selectedMode = 'car'; // DEFAULT IS NOW CAR!
+let fromPoint = null;
+let toPoint = null;
+let routeLine = null;
+let fromMarker = null;
+let toMarker = null;
+let lastKm = null;
+let lastAirKm = null;
+let unit = 'km';
+
+// Speed averages in km/h
+const speeds = {
+  car: 80,
+  motorbike: 60,
+  bus: 55,
+  train: 85,
+  flight: 800,
+  bicycle: 16
+};
+
+const labels = {
+  car: '🚗 Car / Driving',
+  motorbike: '🏍️ Motorbike',
+  bus: '🚌 Bus',
+  train: '🚆 Train',
+  flight: '✈️ Flight',
+  bicycle: '🚲 Bicycle'
+};
+
+const ids = {
+  from: document.getElementById('from'),
+  to: document.getElementById('to')
+};
+
+// Travel Mode Selection
+document.querySelectorAll('.mode').forEach(el => {
+  el.onclick = () => {
+    document.querySelectorAll('.mode').forEach(x => x.classList.remove('active'));
+    el.classList.add('active');
+    selectedMode = el.dataset.mode;
+    document.getElementById('modeBadge').textContent = labels[selectedMode];
+    if (lastKm !== null) {
+      calculateDistance();
+    }
+  };
+});
+
+// Fuel Toggle
+document.getElementById('fuelToggle').onchange = e => {
+  document.getElementById('fuelBox').classList.toggle('show', e.target.checked);
+  if (lastKm !== null) updateFuelCost();
+};
+
+// Swap Button (Origin <-> Destination)
+document.getElementById('swapBtn').onclick = () => {
+  const tempVal = ids.from.value;
+  ids.from.value = ids.to.value;
+  ids.to.value = tempVal;
+
+  const tempPt = fromPoint;
+  fromPoint = toPoint;
+  toPoint = tempPt;
+
+  // Swap markers
+  if (fromPoint && toPoint) {
+    if (fromMarker) map.removeLayer(fromMarker);
+    if (toMarker) map.removeLayer(toMarker);
+
+    fromMarker = L.marker([fromPoint.lat, fromPoint.lon]).addTo(map).bindPopup(`<b>From:</b> ${fromPoint.name}`).openPopup();
+    toMarker = L.marker([toPoint.lat, toPoint.lon]).addTo(map).bindPopup(`<b>To:</b> ${toPoint.name}`);
+    
+    calculateDistance();
+  }
+};
+
+// Debounce helper
+function debounce(fn, wait = 350) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+// Local cache for geocoding to avoid Nominatim rate-limits
+const geoCache = {};
+
+// Nominatim Search Autocomplete
+function setupSearch(which) {
+  const input = ids[which];
+  const box = document.getElementById(which + 'Suggestions');
+
+  input.addEventListener('input', debounce(async () => {
+    const q = input.value.trim();
+    box.innerHTML = '';
+    if (q.length < 2) {
+      box.style.display = 'none';
+      return;
+    }
+
+    if (geoCache[q.toLowerCase()]) {
+      renderSuggestions(geoCache[q.toLowerCase()], which, box, input);
+      return;
+    }
+
+    try {
+      const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&q=' + encodeURIComponent(q), {
+        headers: { 'Accept-Language': 'en' }
+      });
+      const data = await r.json();
+      geoCache[q.toLowerCase()] = data;
+      renderSuggestions(data, which, box, input);
+    } catch (e) {
+      box.style.display = 'none';
+    }
+  }, 300));
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.inputrow')) box.style.display = 'none';
+  });
+}
+
+function renderSuggestions(data, which, box, input) {
+  if (!data || !data.length) {
+    box.style.display = 'none';
+    return;
+  }
+  box.innerHTML = data.map(p => `<div class="suggestion">${p.display_name}</div>`).join('');
+  box.style.display = 'block';
+
+  [...box.children].forEach((el, i) => {
+    el.onclick = () => {
+      const p = data[i];
+      input.value = p.display_name;
+      setPoint(which, { lat: +p.lat, lon: +p.lon, name: p.display_name });
+      box.style.display = 'none';
+    };
+  });
+}
+
+setupSearch('from');
+setupSearch('to');
+
+function setPoint(which, p) {
+  if (which === 'from') {
+    fromPoint = p;
+    if (fromMarker) map.removeLayer(fromMarker);
+    fromMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup(`<b>From:</b> ${p.name}`).openPopup();
+  } else {
+    toPoint = p;
+    if (toMarker) map.removeLayer(toMarker);
+    toMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup(`<b>To:</b> ${p.name}`).openPopup();
+  }
+
+  if (fromPoint && toPoint) {
+    map.fitBounds([[fromPoint.lat, fromPoint.lon], [toPoint.lat, toPoint.lon]], { padding: [50, 50] });
+  }
+}
+
+// Great Circle Haversine formula
+function haversine(a, b) {
+  const R = 6371;
+  const rad = x => x * Math.PI / 180;
+  const dLat = rad(b.lat - a.lat);
+  const dLon = rad(b.lon - a.lon);
+  const x = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(x));
+}
+
+function fmtKm(km) {
+  const val = unit === 'mi' ? km * 0.621371 : km;
+  const suffix = unit === 'mi' ? ' mi' : ' km';
+  return val >= 1000 
+    ? Math.round(val).toLocaleString() + suffix 
+    : val.toFixed(1) + suffix;
+}
+
+function renderUnits() {
+  if (lastKm === null) return;
+  document.getElementById('distance').textContent = fmtKm(lastKm);
+  document.getElementById('airDistance').textContent = fmtKm(lastAirKm);
+}
+
+function fmtTime(hours) {
+  if (!isFinite(hours) || hours <= 0) return '—';
+  if (hours < 1) return Math.max(1, Math.round(hours * 60)) + ' mins';
+  const h = Math.floor(hours);
+  const m = Math.round((hours - h) * 60);
+  return m ? `${h}h ${m}m` : `${h} hours`;
+}
+
+async function geocodeIfNeeded(which) {
+  if ((which === 'from' && fromPoint) || (which === 'to' && toPoint)) return;
+  const q = ids[which].value.trim();
+  if (!q) throw Error('Please enter both Starting Location and Destination');
+  
+  if (geoCache[q.toLowerCase()] && geoCache[q.toLowerCase()].length) {
+    const d = geoCache[q.toLowerCase()][0];
+    setPoint(which, { lat: +d.lat, lon: +d.lon, name: d.display_name });
+    return;
+  }
+
+  const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=' + encodeURIComponent(q), {
+    headers: { 'Accept-Language': 'en' }
+  });
+  const d = await r.json();
+  if (!d.length) throw Error('Location not found: ' + q);
+  setPoint(which, { lat: +d[0].lat, lon: +d[0].lon, name: d[0].display_name });
+}
+
+async function getOSRM(a, b) {
+  const r = await fetch(`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`);
+  if (!r.ok) throw Error('Routing service temporarily unavailable');
+  const d = await r.json();
+  if (!d.routes?.length) throw Error('No driving route found between these locations');
+  return d.routes[0];
+}
+
+function drawRoute(coords) {
+  if (routeLine) map.removeLayer(routeLine);
+  routeLine = L.geoJSON({ type: 'LineString', coordinates: coords }, {
+    style: { color: '#1565c0', weight: 5, opacity: 0.85 }
+  }).addTo(map);
+  map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+}
+
+function updateFuelCost() {
+  const fuelResult = document.getElementById('fuelResult');
+  const fuelToggle = document.getElementById('fuelToggle');
+  if (!fuelToggle.checked || lastKm === null) {
+    fuelResult.classList.remove('show');
+    return;
+  }
+  const eff = +document.getElementById('efficiency').value;
+  const price = +document.getElementById('fuelPrice').value;
+  const cur = document.getElementById('currency').value;
+  if (eff > 0 && price >= 0) {
+    const liters = lastKm / eff;
+    const cost = liters * price;
+    fuelResult.innerHTML = `⛽ <strong>Estimated Fuel Cost:</strong> ${liters.toFixed(1)} L required ≈ <strong>${cur} ${cost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong>`;
+    fuelResult.classList.add('show');
+  }
+}
+
+async function calculateDistance() {
+  const btn = document.getElementById('calculate');
+  btn.disabled = true;
+  btn.textContent = 'Calculating…';
+
+  try {
+    await geocodeIfNeeded('from');
+    await geocodeIfNeeded('to');
+
+    const air = haversine(fromPoint, toPoint);
+    let km = air;
+    let hours = air / speeds[selectedMode];
+    let type = 'Straight line';
+    let note = '';
+
+    if (selectedMode === 'flight') {
+      drawRoute([[fromPoint.lon, fromPoint.lat], [toPoint.lon, toPoint.lat]]);
+      note = 'Great-circle flight route estimate.';
+      type = 'Flight Corridor';
+    } else {
+      try {
+        const route = await getOSRM(fromPoint, toPoint);
+        const factor = {
+          car: 1.0,
+          motorbike: 1.02,
+          bus: 1.05,
+          train: 0.95,
+          bicycle: 1.08
+        }[selectedMode] || 1.0;
+
+        km = (route.distance / 1000) * factor;
+        hours = km / speeds[selectedMode];
+        type = selectedMode === 'train' ? 'Rail estimate' : 'Road route';
+        drawRoute(route.geometry.coordinates);
+        note = selectedMode === 'train' 
+          ? 'Estimated along standard rail/road corridor.' 
+          : 'Accurate highway & road driving route.';
+      } catch (e) {
+        // Fallback to straight-line multiplier if OSRM is unreachable or overseas
+        drawRoute([[fromPoint.lon, fromPoint.lat], [toPoint.lon, toPoint.lat]]);
+        const mult = {
+          car: 1.25,
+          motorbike: 1.22,
+          bus: 1.28,
+          train: 1.15,
+          bicycle: 1.30
+        }[selectedMode] || 1.25;
+
+        km = air * mult;
+        hours = km / speeds[selectedMode];
+        type = 'Estimated route';
+        note = 'Road routing server busy; showing estimated travel distance.';
+      }
+    }
+
+    lastKm = km;
+    lastAirKm = air;
+    renderUnits();
+
+    document.getElementById('time').textContent = fmtTime(hours);
+    document.getElementById('routeType').textContent = type;
+    document.getElementById('routeNote').textContent = note;
+
+    updateFuelCost();
+    saveRecent(ids.from.value, ids.to.value);
+
+  } catch (e) {
+    alert(e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Calculate Distance';
+  }
+}
+
+document.getElementById('calculate').onclick = calculateDistance;
+
+// Unit Toggle
+document.getElementById('kmBtn').onclick = () => {
+  unit = 'km';
+  document.getElementById('kmBtn').classList.add('selected');
+  document.getElementById('miBtn').classList.remove('selected');
+  renderUnits();
+};
+
+document.getElementById('miBtn').onclick = () => {
+  unit = 'mi';
+  document.getElementById('miBtn').classList.add('selected');
+  document.getElementById('kmBtn').classList.remove('selected');
+  renderUnits();
+};
+
+// Open in Google Maps
+document.getElementById('gmapsBtn').onclick = () => {
+  const from = ids.from.value.trim();
+  const to = ids.to.value.trim();
+  if (!from || !to) {
+    alert('Please enter origin and destination first.');
+    return;
+  }
+  const modeParam = selectedMode === 'bicycle' ? 'bicycling' : selectedMode === 'flight' ? 'transit' : 'driving';
+  const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=${modeParam}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+};
+
+// Share Result Button
+document.getElementById('shareBtn').onclick = async () => {
+  if (lastKm === null) {
+    alert('Please calculate a distance first.');
+    return;
+  }
+  const from = ids.from.value;
+  const to = ids.to.value;
+  const text = `Distance from ${from} to ${to}: ${fmtKm(lastKm)} (${fmtTime(lastKm / speeds[selectedMode])} by ${selectedMode}).`;
+  const url = `${location.origin}${location.pathname}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&mode=${selectedMode}`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'Distance Calculator Result', text, url });
+    } catch (e) {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('Result link copied to clipboard!');
+    } catch (e) {
+      prompt('Copy this link:', url);
+    }
+  }
+};
+
+// Popular Route Chips
+document.querySelectorAll('.route-chip').forEach(btn => {
+  btn.onclick = () => {
+    ids.from.value = btn.dataset.from;
+    ids.to.value = btn.dataset.to;
+    fromPoint = null;
+    toPoint = null;
+    document.querySelector('.grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    calculateDistance();
+  };
+});
+
+// Recent Searches (LocalStorage)
+function saveRecent(from, to) {
+  if (!from || !to) return;
+  try {
+    const list = JSON.parse(localStorage.getItem('recent_calc') || '[]');
+    const pair = `${from.split(',')[0]} → ${to.split(',')[0]}`;
+    const full = { from, to, label: pair };
+    const filtered = list.filter(x => x.label !== pair);
+    filtered.unshift(full);
+    localStorage.setItem('recent_calc', JSON.stringify(filtered.slice(0, 5)));
+    loadRecent();
+  } catch (e) {}
+}
+
+function loadRecent() {
+  try {
+    const list = JSON.parse(localStorage.getItem('recent_calc') || '[]');
+    const container = document.getElementById('recentChips');
+    const box = document.getElementById('recentBox');
+    if (!list.length) {
+      box.style.display = 'none';
+      return;
+    }
+    box.style.display = 'block';
+    container.innerHTML = list.map(item => `<button class="recent-chip" type="button">${item.label}</button>`).join('');
+    [...container.children].forEach((chip, i) => {
+      chip.onclick = () => {
+        ids.from.value = list[i].from;
+        ids.to.value = list[i].to;
+        fromPoint = null;
+        toPoint = null;
+        calculateDistance();
+      };
+    });
+  } catch (e) {}
+}
+loadRecent();
+
+// URL Parameter Handling
+const params = new URLSearchParams(location.search);
+if (params.get('from')) ids.from.value = params.get('from');
+if (params.get('to')) ids.to.value = params.get('to');
+if (params.get('mode') && labels[params.get('mode')]) {
+  const mBtn = document.querySelector(`.mode[data-mode="${params.get('mode')}"]`);
+  if (mBtn) mBtn.click();
+}
+if (params.get('from') && params.get('to')) {
+  setTimeout(calculateDistance, 500);
+}
+</script>
+</body>
+</html>
