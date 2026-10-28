@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – World Distance Calculator</title>
+<meta name="description" content="Learn about World Distance Calculator, our calculation methodology, geodesic distance algorithms, road routing integration, and accuracy disclaimers.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/about.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+<style>
+:root{--blue:#1565c0;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33,#1565c0);color:#fff;padding:16px 0}
+.wrap{max-width:960px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+.nav-link{color:#fff;text-decoration:none;font-size:14px;font-weight:600}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;margin:30px 0;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+h1{font-size:32px;margin-top:0;color:var(--dark)}
+h2{font-size:22px;margin:24px 0 8px;color:var(--dark)}
+p{color:var(--muted);font-size:16px}
+ul{color:var(--muted);padding-left:20px}
+footer{background:#0b1f33;color:#94a3b8;padding:24px 0;text-align:center;font-size:14px}
+footer a{color:#93c5fd;text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <a href="/" class="nav-link">← Back to Calculator</a>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <div class="card">
+    <h1>About World Distance Calculator</h1>
+    <p>World Distance Calculator is a free, web-based geographical measurement and journey planning tool designed to provide fast, reliable distance, flight corridors, and driving time calculations between any two locations globally.</p>
+    
+    <h2>Our Calculation Methodology</h2>
+    <p>We combine two complementary measurement models to give users accurate geographical and travel data:</p>
+    <ul>
+      <li><strong>Great-Circle Spherical Distance:</strong> Using the Haversine trigonometric formula, we compute direct straight-line (as the crow flies) aerial distances based on Earth's mean radius of 6,371 kilometres.</li>
+      <li><strong>Road & Highway Routing:</strong> Road distances and paths are computed using open routing data derived from the OpenStreetMap network via the Open Source Routing Machine (OSRM).</li>
+    </ul>
+
+    <h2>Transparency & Limitations</h2>
+    <p>While our tool provides high-fidelity route and fuel estimates, real-world driving conditions depend on live road closures, weather, vehicle weight, and individual driving style. Flight distances reflect direct airspace corridors rather than commercial airline flight plans. Transit estimates reflect corridor approximations rather than scheduled train or bus timetables.</p>
+
+    <h2>Open Data Attribution</h2>
+    <p>Map tiles and geocoding data are provided by <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors. Routing is powered by OSRM.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · <a href="/privacy-policy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a></p>
+  </div>
+</footer>
+</body>
+</html>

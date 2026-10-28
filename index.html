@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F3Y265MHF4');
+</script>
 
-<title>Distance Calculator – Calculate Driving, Flight & Road Distance Between Cities</title>
-<meta name="description" content="Free online distance calculator. Calculate driving, flight, and road distance between cities worldwide. Compare travel time, straight-line distance, and fuel cost estimates.">
-<meta name="keywords" content="distance calculator, driving distance between cities, calculate distance, mileage calculator, road trip travel time, fuel cost calculator">
+<title>Distance Calculator – Calculate Driving, Road & Flight Distance</title>
+<meta name="description" content="Calculate driving, flight, and road distance between cities worldwide. Compare travel times, straight-line distance, and trip fuel cost estimates with our free distance calculator.">
+<meta name="keywords" content="distance calculator, driving distance between cities, calculate distance, distance in miles and kilometres, driving distance calculator, fuel cost calculator">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <link rel="canonical" href="https://distancecalculator-theta.vercel.app/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
@@ -17,14 +22,14 @@
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://distancecalculator-theta.vercel.app/">
-<meta property="og:title" content="Distance Calculator – Driving, Road & Flight Distance Between Cities">
-<meta property="og:description" content="Calculate accurate driving and flight distance between any two cities or places worldwide. Includes live interactive map, travel time, and fuel cost estimator.">
+<meta property="og:title" content="Distance Calculator – Calculate Driving, Road & Flight Distance">
+<meta property="og:description" content="Calculate accurate driving and flight distance between any two cities worldwide with route map, travel time, and fuel cost estimates.">
 <meta property="og:site_name" content="World Distance Calculator">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Distance Calculator – Calculate Distance Between Cities & Places">
-<meta name="twitter:description" content="Calculate worldwide distance between cities and places with driving time and fuel cost estimates.">
+<meta name="twitter:description" content="Calculate worldwide distance between cities and places with driving time and trip fuel estimates.">
 
 <link rel="preconnect" href="https://nominatim.openstreetmap.org">
 <link rel="preconnect" href="https://router.project-osrm.org">
@@ -40,6 +45,8 @@
   --card:#ffffff;
   --line:#dfe7ef;
   --accent:#00a86b;
+  --danger:#c62828;
+  --warning:#b45309;
 }
 *{box-sizing:border-box}
 body{
@@ -59,17 +66,36 @@ header{
 .header-row{display:flex;align-items:center;justify-content:space-between}
 .brand{font-size:22px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none}
 .badge-tag{background:rgba(255,255,255,0.18);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
-.hero{text-align:center;padding:36px 12px 24px}
-.hero h1{font-size:clamp(28px,4.5vw,44px);line-height:1.2;margin:0 0 12px;font-weight:800;color:var(--dark);letter-spacing:-0.5px}
-.hero p{color:var(--muted);font-size:17px;max-width:760px;margin:0 auto}
+.hero{text-align:center;padding:34px 12px 22px}
+.hero h1{font-size:clamp(28px,4.5vw,42px);line-height:1.2;margin:0 0 12px;font-weight:800;color:var(--dark);letter-spacing:-0.5px}
+.hero p{color:var(--muted);font-size:16.5px;max-width:780px;margin:0 auto}
+
+/* Alert Notification Banner */
+.alert-banner{
+  display:none;
+  padding:12px 18px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:18px;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.alert-banner.show{display:flex}
+.alert-error{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.alert-warning{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.alert-success{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+.alert-close{background:none;border:none;font-size:18px;cursor:pointer;color:inherit;padding:0 4px;line-height:1}
+
 .grid{display:grid;grid-template-columns:420px 1fr;gap:22px;align-items:start;margin-bottom:30px}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 35px rgba(20,45,70,0.06);transition:transform 0.2s,box-shadow 0.2s}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 35px rgba(20,45,70,0.06)}
 .panel,.seo-card{padding:24px}
 .label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
-.inputrow{position:relative}
+.inputrow{position:relative;display:flex;align-items:center}
 input,select{
   width:100%;
-  padding:14px 16px;
+  padding:13px 15px;
   border:1.5px solid #ccd8e4;
   border-radius:12px;
   font-size:15px;
@@ -82,6 +108,27 @@ input:focus,select:focus{
   border-color:var(--blue);
   box-shadow:0 0 0 3px rgba(21,101,192,0.15);
 }
+.input-with-btn{padding-right:48px}
+.gps-btn{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  background:#edf5ff;
+  border:1px solid #c9ddf5;
+  color:var(--blue);
+  border-radius:8px;
+  width:34px;
+  height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:16px;
+  transition:all 0.2s;
+  padding:0;
+}
+.gps-btn:hover{background:var(--blue);color:#fff}
 .swap-container{display:flex;justify-content:center;margin:-4px 0}
 .swap-btn{
   background:#edf5ff;
@@ -125,24 +172,24 @@ input:focus,select:focus{
   font-size:13.5px;
   transition:background 0.15s;
 }
-.suggestion:hover{background:#edf5ff;color:var(--blue)}
+.suggestion:hover,.suggestion.active{background:#edf5ff;color:var(--blue)}
 .mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .mode{
   border:1.5px solid var(--line);
   border-radius:12px;
-  padding:12px 6px;
+  padding:11px 5px;
   text-align:center;
   cursor:pointer;
-  font-size:13px;
+  font-size:12.5px;
   font-weight:700;
   transition:all 0.2s;
   background:#fbfcfe;
 }
 .mode:hover{border-color:#b5cde7;background:#f3f8fe}
 .mode.active{border-color:var(--blue);background:#edf5ff;color:var(--blue);box-shadow:0 2px 8px rgba(21,101,192,0.15)}
-.ico{font-size:22px;display:block;margin-bottom:3px}
-.advanced{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
-.toggle{display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;font-size:14px}
+.ico{font-size:22px;display:block;margin-bottom:2px}
+.advanced{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}
+.toggle{display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer;font-size:13.5px}
 .toggle input{width:42px;height:22px;accent-color:var(--blue);cursor:pointer}
 .fuel-box{display:none;margin-top:12px;padding:14px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0}
 .fuel-box.show{display:block}
@@ -163,6 +210,8 @@ button#calculate{
 }
 button#calculate:hover{opacity:0.95;transform:translateY(-1px);box-shadow:0 10px 28px rgba(21,101,192,0.35)}
 button#calculate:active{transform:translateY(0)}
+button#calculate:disabled{opacity:0.7;cursor:not-allowed;transform:none}
+
 .mapcard{overflow:hidden;min-height:640px;display:flex;flex-direction:column}
 #map{height:460px;width:100%;background:#e5edf5}
 .results{padding:22px;border-top:1px solid var(--line);background:#fff;flex-grow:1}
@@ -202,10 +251,13 @@ button#calculate:active{transform:translateY(0)}
 .unit-toggle button.selected{background:var(--dark);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
 .stat{background:#f8fafc;border:1px solid #e9eef5;border-radius:14px;padding:12px 14px}
-.stat b{display:block;font-size:19px;color:var(--dark);margin-top:2px}
+.stat b{display:block;font-size:18px;color:var(--dark);margin-top:2px}
 .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
-.fuel-result{display:none;margin-top:14px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:14px;border-radius:12px;font-weight:600;font-size:14.5px}
+.fuel-result{display:none;margin-top:14px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:14px;border-radius:12px;font-size:14px}
 .fuel-result.show{display:block}
+.fuel-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.fuel-stat{background:rgba(255,255,255,0.7);padding:8px 12px;border-radius:8px}
+.fuel-disclaimer{font-size:11.5px;color:#15803d;margin-top:6px;line-height:1.4}
 .recent-box{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);display:none}
 .recent-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
 .recent-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -236,6 +288,16 @@ button#calculate:active{transform:translateY(0)}
 .seo-card h2{font-size:22px;margin:0 0 14px;font-weight:800;color:var(--dark)}
 .seo-card h3{font-size:17px;margin:18px 0 8px;font-weight:700;color:var(--dark)}
 .seo-card p{color:var(--muted);font-size:15px;line-height:1.65;margin:0 0 10px}
+
+/* Distance Matrix Table */
+.matrix-container{overflow-x:auto;margin-top:16px}
+.matrix-table{width:100%;border-collapse:collapse;font-size:13.5px;text-align:center}
+.matrix-table th,.matrix-table td{padding:10px 12px;border:1px solid var(--line)}
+.matrix-table th{background:#f8fafc;font-weight:700;color:var(--dark)}
+.matrix-table td a{color:var(--blue);text-decoration:none;font-weight:600;display:block}
+.matrix-table td a:hover{text-decoration:underline}
+.matrix-table .same-city{background:#edf2f7;color:var(--muted);font-size:11px}
+
 details{border-top:1px solid var(--line);padding:14px 0}
 details:first-of-type{border-top:0}
 summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--dark);padding:4px 0;display:flex;justify-content:space-between;align-items:center}
@@ -243,16 +305,22 @@ summary::-webkit-details-marker{display:none}
 summary::after{content:"+";font-size:20px;font-weight:400;color:var(--blue)}
 details[open] summary::after{content:"−"}
 details p{margin-top:8px;color:var(--muted);font-size:15px}
+
 footer{
   background:#0b1f33;
   color:#94a3b8;
-  padding:32px 0;
+  padding:32px 0 24px;
   margin-top:40px;
-  text-align:center;
   font-size:14px;
 }
-footer a{color:#60a5fa;text-decoration:none}
-footer a:hover{text-decoration:underline}
+.footer-links{display:flex;justify-content:center;gap:18px;margin-bottom:14px;flex-wrap:wrap}
+.footer-links a{color:#93c5fd;text-decoration:none;font-weight:600}
+.footer-links a:hover{text-decoration:underline}
+footer p{margin:6px 0;text-align:center}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+}
 @media(max-width:960px){
   .grid{grid-template-columns:1fr}
   #map{height:420px}
@@ -267,6 +335,7 @@ footer a:hover{text-decoration:underline}
   .distance{font-size:30px}
   .result-actions{justify-content:stretch}
   .small-btn{flex-grow:1;justify-content:center}
+  .fuel-result-grid{grid-template-columns:1fr}
 }
 </style>
 
@@ -279,7 +348,7 @@ footer a:hover{text-decoration:underline}
   "url":"https://distancecalculator-theta.vercel.app/",
   "applicationCategory":"TravelApplication",
   "operatingSystem":"Web",
-  "description":"A free online distance calculator for calculating driving, road, and straight-line distance between cities and places worldwide, including driving time and fuel cost estimates.",
+  "description":"A free online distance calculator for calculating driving, road, and straight-line distance between cities and places worldwide, including travel time and fuel cost estimates.",
   "offers":{
     "@type":"Offer",
     "price":"0",
@@ -303,7 +372,7 @@ footer a:hover{text-decoration:underline}
 }
 </script>
 
-<!-- Structured Data: FAQPage (Google Rich Snippets) -->
+<!-- Structured Data: FAQPage (Validated matching visible FAQs) -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -346,7 +415,7 @@ footer a:hover{text-decoration:underline}
       "name":"Can I calculate driving or road distance by car?",
       "acceptedAnswer":{
         "@type":"Answer",
-        "text":"Yes! Select the Car / Driving mode to get real-time driving route distance along highways and streets powered by open road routing algorithms."
+        "text":"Yes. Select the Car / Driving mode to get road route distance along public highways powered by open road routing algorithms."
       }
     },
     {
@@ -354,7 +423,7 @@ footer a:hover{text-decoration:underline}
       "name":"Can I estimate fuel cost for a road trip?",
       "acceptedAnswer":{
         "@type":"Answer",
-        "text":"Yes. Check the 'Include fuel / trip cost' box, input your vehicle mileage or fuel efficiency (km/L) and local fuel price per liter, then select your preferred currency (PKR, USD, EUR, GBP, INR, AED, etc.) to get an instant trip cost estimate."
+        "text":"Yes. Check the 'Include fuel / trip cost' box, select your efficiency unit (km/L, L/100km, or MPG), enter your vehicle efficiency and fuel price, and choose your currency to get an instant cost and consumption estimate."
       }
     },
     {
@@ -370,7 +439,7 @@ footer a:hover{text-decoration:underline}
       "name":"Are travel times exact?",
       "acceptedAnswer":{
         "@type":"Answer",
-        "text":"Travel times are based on typical speed averages (e.g. 80 km/h for driving, 800 km/h for flights). Actual travel duration will vary depending on live traffic conditions, speed limits, rest stops, border crossings, and weather."
+        "text":"Travel times are based on typical speed averages (e.g. 80 km/h for driving, 800 km/h for flights). Actual duration varies based on traffic, weather, road conditions, and stops."
       }
     }
   ]
@@ -383,7 +452,7 @@ footer a:hover{text-decoration:underline}
   <div class="wrap">
     <div class="header-row">
       <a href="/" class="brand">📍 World Distance Calculator</a>
-      <span class="badge-tag">Free Travel & Route Tool</span>
+      <span class="badge-tag">Free Route & Distance Tool</span>
     </div>
   </div>
 </header>
@@ -394,53 +463,70 @@ footer a:hover{text-decoration:underline}
     <p>Calculate driving distance, straight-line flight distance, travel time, and fuel cost estimates between any two cities or destinations worldwide.</p>
   </section>
 
+  <!-- Inline Notification Banner for errors and feedback -->
+  <div id="alertBanner" class="alert-banner alert-warning" role="alert" aria-live="assertive">
+    <span id="alertMessage">Please enter both locations to calculate distance.</span>
+    <button class="alert-close" id="alertCloseBtn" type="button" aria-label="Close notification">×</button>
+  </div>
+
   <section class="grid">
     <!-- Form Panel -->
     <div class="card panel">
       <label class="label" for="from">Starting Location (From)</label>
       <div class="inputrow">
-        <input id="from" placeholder="Enter starting city, address or airport" autocomplete="off" aria-label="Starting location">
-        <div class="suggestions" id="fromSuggestions"></div>
+        <input id="from" class="input-with-btn" placeholder="Enter starting city, address or airport" autocomplete="off" aria-label="Starting location" aria-autocomplete="list">
+        <button class="gps-btn" id="gpsBtn" type="button" title="Use my current GPS location" aria-label="Detect my location">📍</button>
+        <div class="suggestions" id="fromSuggestions" role="listbox"></div>
       </div>
 
       <div class="swap-container">
-        <button class="swap-btn" id="swapBtn" type="button" title="Swap From and To locations" aria-label="Swap Origin and Destination">⇅</button>
+        <button class="swap-btn" id="swapBtn" type="button" title="Swap Origin and Destination" aria-label="Swap Origin and Destination">⇅</button>
       </div>
 
       <label class="label" for="to">Destination (To)</label>
       <div class="inputrow">
-        <input id="to" placeholder="Enter destination city, address or airport" autocomplete="off" aria-label="Destination location">
-        <div class="suggestions" id="toSuggestions"></div>
+        <input id="to" placeholder="Enter destination city, address or airport" autocomplete="off" aria-label="Destination location" aria-autocomplete="list">
+        <div class="suggestions" id="toSuggestions" role="listbox"></div>
       </div>
 
       <div class="label">Travel Mode</div>
-      <div class="mode-grid">
-        <div class="mode active" data-mode="car"><span class="ico">🚗</span>Car</div>
-        <div class="mode" data-mode="motorbike"><span class="ico">🏍️</span>Motorbike</div>
-        <div class="mode" data-mode="bus"><span class="ico">🚌</span>Bus</div>
-        <div class="mode" data-mode="train"><span class="ico">🚆</span>Train</div>
-        <div class="mode" data-mode="flight"><span class="ico">✈️</span>Flight</div>
-        <div class="mode" data-mode="bicycle"><span class="ico">🚲</span>Bicycle</div>
+      <div class="mode-grid" role="radiogroup" aria-label="Travel mode">
+        <div class="mode active" data-mode="car" role="radio" aria-checked="true" tabindex="0"><span class="ico">🚗</span>Car</div>
+        <div class="mode" data-mode="motorbike" role="radio" aria-checked="false" tabindex="0"><span class="ico">🏍️</span>Motorbike</div>
+        <div class="mode" data-mode="bus" role="radio" aria-checked="false" tabindex="0"><span class="ico">🚌</span>Bus</div>
+        <div class="mode" data-mode="train" role="radio" aria-checked="false" tabindex="0"><span class="ico">🚆</span>Train</div>
+        <div class="mode" data-mode="flight" role="radio" aria-checked="false" tabindex="0"><span class="ico">✈️</span>Flight</div>
+        <div class="mode" data-mode="bicycle" role="radio" aria-checked="false" tabindex="0"><span class="ico">🚲</span>Bicycle</div>
       </div>
 
       <div class="advanced">
         <label class="toggle" for="fuelToggle">
-          <span>Include fuel / trip cost</span>
+          <span>Include trip fuel cost</span>
           <input type="checkbox" id="fuelToggle">
         </label>
         
         <div class="fuel-box" id="fuelBox">
+          <div style="margin-bottom:10px">
+            <label class="label" for="efficiencyUnit" style="margin-top:0">Efficiency Unit</label>
+            <select id="efficiencyUnit">
+              <option value="kml" selected>km/L — Kilometres per Litre</option>
+              <option value="l100km">L/100km — Litres per 100 km</option>
+              <option value="mpg">MPG (US) — Miles per Gallon</option>
+            </select>
+          </div>
+
           <div class="two">
             <div>
-              <label class="label" for="efficiency">Efficiency (km/L)</label>
+              <label class="label" for="efficiency" id="effLabel">Efficiency (km/L)</label>
               <input id="efficiency" type="number" min="0.1" step="0.1" value="15">
             </div>
             <div>
-              <label class="label" for="fuelPrice">Fuel price / L</label>
+              <label class="label" for="fuelPrice" id="priceLabel">Fuel price / Litre</label>
               <input id="fuelPrice" type="number" min="0" step="0.01" value="1.50">
             </div>
           </div>
-          <label class="label" for="currency">Currency</label>
+
+          <label class="label" for="currency">Currency (enter price in this currency)</label>
           <select id="currency">
             <option value="PKR" selected>PKR — Pakistani Rupee</option>
             <option value="USD">USD — US Dollar</option>
@@ -453,12 +539,11 @@ footer a:hover{text-decoration:underline}
             <option value="AUD">AUD — Australian Dollar</option>
             <option value="CNY">CNY — Chinese Yuan</option>
             <option value="TRY">TRY — Turkish Lira</option>
-            <option value="USDT">USDT — Tether USD</option>
           </select>
         </div>
       </div>
 
-      <button id="calculate">Calculate Distance</button>
+      <button id="calculate" type="button">Calculate Distance</button>
 
       <!-- Recent Searches -->
       <div class="recent-box" id="recentBox">
@@ -469,9 +554,9 @@ footer a:hover{text-decoration:underline}
 
     <!-- Map & Results Panel -->
     <div class="card mapcard">
-      <div id="map" role="region" aria-label="Interactive world map showing selected locations and calculated route"></div>
+      <div id="map" role="region" aria-label="Interactive map showing route and points"></div>
       
-      <div class="results">
+      <div class="results" aria-live="polite">
         <div class="result-top">
           <div>
             <div class="distance" id="distance">—</div>
@@ -481,12 +566,12 @@ footer a:hover{text-decoration:underline}
         </div>
 
         <div class="result-actions">
-          <div class="unit-toggle">
-            <button id="kmBtn" class="selected">KM</button>
-            <button id="miBtn">Miles</button>
+          <div class="unit-toggle" role="group" aria-label="Distance unit toggle">
+            <button id="kmBtn" class="selected" type="button">KM</button>
+            <button id="miBtn" type="button">Miles</button>
           </div>
-          <button class="small-btn" id="gmapsBtn" title="Open driving directions in Google Maps">🗺️ Open in Maps</button>
-          <button class="small-btn" id="shareBtn" title="Share calculated distance link">🔗 Share</button>
+          <button class="small-btn" id="gmapsBtn" type="button" title="Open driving directions in Google Maps">🗺️ Open in Maps</button>
+          <button class="small-btn" id="shareBtn" type="button" title="Share calculated distance link">🔗 Share</button>
         </div>
 
         <div class="stats">
@@ -524,6 +609,7 @@ footer a:hover{text-decoration:underline}
         <button class="route-chip" data-from="New York, USA" data-to="Washington DC, USA">New York to Washington DC</button>
         <button class="route-chip" data-from="Delhi, India" data-to="Mumbai, India">Delhi to Mumbai</button>
       </div>
+
       <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--muted)">
         <strong style="color:var(--dark)">Detailed Route Guides:</strong>
         <a href="/routes/lahore-to-islamabad.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Lahore to Islamabad Guide</a> ·
@@ -534,28 +620,93 @@ footer a:hover{text-decoration:underline}
     </div>
   </section>
 
+  <!-- City Distance Matrix Table (Featured Snippet Magnet) -->
+  <section class="seo-section">
+    <div class="card seo-card">
+      <h2>Major Cities Distance Matrix Table</h2>
+      <p>Quickly reference road driving distances between major regional and global hubs. Click any distance to view the live route on the map:</p>
+      
+      <div class="matrix-container">
+        <table class="matrix-table" aria-label="City distance table">
+          <thead>
+            <tr>
+              <th>From / To</th>
+              <th>Lahore</th>
+              <th>Islamabad</th>
+              <th>Karachi</th>
+              <th>Multan</th>
+              <th>Dubai</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Lahore</th>
+              <td class="same-city">—</td>
+              <td><a href="/?from=Lahore,%20Pakistan&to=Islamabad,%20Pakistan&mode=car">375 km</a></td>
+              <td><a href="/?from=Lahore,%20Pakistan&to=Karachi,%20Pakistan&mode=car">1,215 km</a></td>
+              <td><a href="/?from=Lahore,%20Pakistan&to=Multan,%20Pakistan&mode=car">335 km</a></td>
+              <td><a href="/?from=Lahore,%20Pakistan&to=Dubai,%20United%20Arab%20Emirates&mode=flight">1,985 km (Air)</a></td>
+            </tr>
+            <tr>
+              <th>Islamabad</th>
+              <td><a href="/?from=Islamabad,%20Pakistan&to=Lahore,%20Pakistan&mode=car">375 km</a></td>
+              <td class="same-city">—</td>
+              <td><a href="/?from=Islamabad,%20Pakistan&to=Karachi,%20Pakistan&mode=car">1,410 km</a></td>
+              <td><a href="/?from=Islamabad,%20Pakistan&to=Multan,%20Pakistan&mode=car">530 km</a></td>
+              <td><a href="/?from=Islamabad,%20Pakistan&to=Dubai,%20United%20Arab%20Emirates&mode=flight">1,930 km (Air)</a></td>
+            </tr>
+            <tr>
+              <th>Karachi</th>
+              <td><a href="/?from=Karachi,%20Pakistan&to=Lahore,%20Pakistan&mode=car">1,215 km</a></td>
+              <td><a href="/?from=Karachi,%20Pakistan&to=Islamabad,%20Pakistan&mode=car">1,410 km</a></td>
+              <td class="same-city">—</td>
+              <td><a href="/?from=Karachi,%20Pakistan&to=Multan,%20Pakistan&mode=car">880 km</a></td>
+              <td><a href="/?from=Karachi,%20Pakistan&to=Dubai,%20United%20Arab%20Emirates&mode=flight">1,190 km (Air)</a></td>
+            </tr>
+            <tr>
+              <th>Multan</th>
+              <td><a href="/?from=Multan,%20Pakistan&to=Lahore,%20Pakistan&mode=car">335 km</a></td>
+              <td><a href="/?from=Multan,%20Pakistan&to=Islamabad,%20Pakistan&mode=car">530 km</a></td>
+              <td><a href="/?from=Multan,%20Pakistan&to=Karachi,%20Pakistan&mode=car">880 km</a></td>
+              <td class="same-city">—</td>
+              <td><a href="/?from=Multan,%20Pakistan&to=Dubai,%20United%20Arab%20Emirates&mode=flight">1,680 km (Air)</a></td>
+            </tr>
+            <tr>
+              <th>Dubai</th>
+              <td><a href="/?from=Dubai,%20United%20Arab%20Emirates&to=Lahore,%20Pakistan&mode=flight">1,985 km (Air)</a></td>
+              <td><a href="/?from=Dubai,%20United%20Arab%20Emirates&to=Islamabad,%20Pakistan&mode=flight">1,930 km (Air)</a></td>
+              <td><a href="/?from=Dubai,%20United%20Arab%20Emirates&to=Karachi,%20Pakistan&mode=flight">1,190 km (Air)</a></td>
+              <td><a href="/?from=Dubai,%20United%20Arab%20Emirates&to=Multan,%20Pakistan&mode=flight">1,680 km (Air)</a></td>
+              <td class="same-city">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <!-- Informational Content (High SEO Value) -->
   <section class="seo-section info-grid">
     <article class="card seo-card">
       <h2>How to Calculate Distance Between Two Cities</h2>
-      <p>Whether you are planning a weekend road trip, calculating corporate travel mileage, or estimating flight duration, the World Distance Calculator provides precise measurements in both kilometers (km) and miles (mi).</p>
+      <p>Whether you are planning a road trip, calculating corporate mileage expenses, or checking flight distances, this distance calculator provides accurate measurements in both kilometers (km) and miles (mi).</p>
       
       <h3>1. Driving Distance vs Straight-Line Flight Distance</h3>
-      <p><strong>Straight-line distance</strong> (great-circle distance) represents the shortest direct path between two geographic coordinates across Earth's surface. In contrast, <strong>driving distance</strong> follows physical roads, highways, and bridges, meaning the driving route is typically 15% to 35% longer than air distance.</p>
+      <p><strong>Straight-line distance</strong> (as the crow flies) uses the spherical haversine formula to compute the shortest geographical arc across Earth's surface. <strong>Driving distance</strong> tracks actual roads, expressways, and bridges via public road routing data, typically making the driving path 15% to 35% longer than air distance.</p>
 
-      <h3>2. Travel Time Calculation</h3>
-      <p>Travel times are calculated using typical cruising speeds for each vehicle category. For example, highway driving by car averages 80 km/h, while intercity commercial flights average 800 km/h.</p>
+      <h3>2. Travel Time Calculations</h3>
+      <p>Travel times are calculated using typical cruising speed profiles for each mode (e.g. 80 km/h for driving, 800 km/h for flights). Actual duration varies depending on traffic conditions, road construction, weather, and rest stops.</p>
     </article>
 
     <article class="card seo-card">
       <h2>Trip Fuel Cost & Travel Modes</h2>
-      <p>Estimate how much fuel your vehicle will consume before you hit the road. By combining road distance with your vehicle's fuel efficiency, you can budget petrol or diesel costs accurately.</p>
+      <p>Estimate how much fuel your vehicle will consume before you travel. By pairing route distance with vehicle efficiency, you can accurately budget fuel costs for road trips.</p>
 
       <h3>Supported Travel Modes</h3>
-      <p>Choose from <strong>Car / Driving</strong>, <strong>Motorbike</strong>, <strong>Bus</strong>, <strong>Train</strong>, <strong>Flight</strong>, or <strong>Bicycle</strong> to see customized travel estimates tailored to your mode of transportation.</p>
+      <p>Select from <strong>Car / Driving</strong>, <strong>Motorbike</strong>, <strong>Bus</strong>, <strong>Train</strong>, <strong>Flight</strong>, or <strong>Bicycle</strong>. Mode assumptions and corridor limitations are transparently documented in the calculation results.</p>
 
       <h3>Export & Navigation</h3>
-      <p>After calculating a route, use the <strong>Open in Maps</strong> button to launch turn-by-turn navigation directly on your smartphone, or click <strong>Share</strong> to send the route link to family or colleagues.</p>
+      <p>After calculating, use <strong>Open in Maps</strong> to initiate turn-by-turn navigation directly on your smartphone, or click <strong>Share</strong> to send the permanent route link to friends or colleagues.</p>
     </article>
   </section>
 
@@ -569,7 +720,7 @@ footer a:hover{text-decoration:underline}
       </details>
       <details>
         <summary>What is the difference between route distance and straight-line distance?</summary>
-        <p>Straight-line distance (as the crow flies) is the shortest geographical path between two coordinates. Route distance is the actual driving or road distance following highways and roads, which is typically 15% to 35% longer.</p>
+        <p>Straight-line distance (as the crow flies) is the shortest geographical path between two coordinates calculated using the haversine formula. Route distance is the actual driving or road distance following highways and roads, which is typically 15% to 35% longer than straight-line distance.</p>
       </details>
       <details>
         <summary>Can I calculate distance between cities in different countries?</summary>
@@ -577,15 +728,15 @@ footer a:hover{text-decoration:underline}
       </details>
       <details>
         <summary>How is flight distance calculated?</summary>
-        <p>Flight distance is calculated using the Great-Circle Haversine formula based on Earth's spherical curvature, representing the direct aerial flight corridor between two coordinates.</p>
+        <p>Flight distance is calculated using the Great-Circle Haversine formula based on Earth's spherical curvature, representing the direct aerial flight corridor between two airports or cities.</p>
       </details>
       <details>
         <summary>Can I calculate driving or road distance by car?</summary>
-        <p>Yes! Select the Car / Driving mode to get real-time driving route distance along highways and streets powered by open road routing algorithms.</p>
+        <p>Yes. Select the Car / Driving mode to get road route distance along public highways powered by open road routing algorithms.</p>
       </details>
       <details>
         <summary>Can I estimate fuel cost for a road trip?</summary>
-        <p>Yes. Check the 'Include fuel / trip cost' box, input your vehicle mileage (km/L) and local fuel price per liter, then select your preferred currency (PKR, USD, EUR, etc.) to get an instant cost estimate.</p>
+        <p>Yes. Check the 'Include trip fuel cost' box, select your efficiency unit (km/L, L/100km, or MPG), enter your vehicle efficiency and fuel price, and choose your currency to get an instant cost and consumption estimate.</p>
       </details>
       <details>
         <summary>Can I switch between kilometers and miles?</summary>
@@ -601,6 +752,12 @@ footer a:hover{text-decoration:underline}
 
 <footer>
   <div class="wrap">
+    <div class="footer-links">
+      <a href="/about.html">About Us</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
     <p>© 2026 World Distance Calculator · Free Distance & Driving Time Tool</p>
     <p><small>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · Routing via OSRM</small></p>
   </div>
@@ -608,17 +765,17 @@ footer a:hover{text-decoration:underline}
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// Map Initialization
+// --- Map Initialization ---
 const map = L.map('map', { worldCopyJump: true }).setView([25, 30], 2);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// State Variables
-let selectedMode = 'car'; // DEFAULT IS NOW CAR!
-let fromPoint = null;
-let toPoint = null;
+// --- Application State ---
+let selectedMode = 'car';
+let fromPoint = null; // { lat, lon, name }
+let toPoint = null;   // { lat, lon, name }
 let routeLine = null;
 let fromMarker = null;
 let toMarker = null;
@@ -626,7 +783,6 @@ let lastKm = null;
 let lastAirKm = null;
 let unit = 'km';
 
-// Speed averages in km/h
 const speeds = {
   car: 80,
   motorbike: 60,
@@ -647,30 +803,120 @@ const labels = {
 
 const ids = {
   from: document.getElementById('from'),
-  to: document.getElementById('to')
+  to: document.getElementById('to'),
+  calculate: document.getElementById('calculate'),
+  swapBtn: document.getElementById('swapBtn'),
+  gpsBtn: document.getElementById('gpsBtn'),
+  fuelToggle: document.getElementById('fuelToggle'),
+  fuelBox: document.getElementById('fuelBox'),
+  efficiencyUnit: document.getElementById('efficiencyUnit'),
+  efficiency: document.getElementById('efficiency'),
+  fuelPrice: document.getElementById('fuelPrice'),
+  currency: document.getElementById('currency'),
+  effLabel: document.getElementById('effLabel'),
+  priceLabel: document.getElementById('priceLabel'),
+  kmBtn: document.getElementById('kmBtn'),
+  miBtn: document.getElementById('miBtn'),
+  distance: document.getElementById('distance'),
+  airDistance: document.getElementById('airDistance'),
+  time: document.getElementById('time'),
+  routeType: document.getElementById('routeType'),
+  routeNote: document.getElementById('routeNote'),
+  modeBadge: document.getElementById('modeBadge'),
+  fuelResult: document.getElementById('fuelResult'),
+  gmapsBtn: document.getElementById('gmapsBtn'),
+  shareBtn: document.getElementById('shareBtn'),
+  alertBanner: document.getElementById('alertBanner'),
+  alertMessage: document.getElementById('alertMessage'),
+  alertCloseBtn: document.getElementById('alertCloseBtn')
 };
 
-// Travel Mode Selection
+// --- Alert Banner Helpers (Accessible Inline UI instead of alert()) ---
+function showAlert(message, type = 'warning') {
+  ids.alertMessage.textContent = message;
+  ids.alertBanner.className = 'alert-banner show alert-' + type;
+  ids.alertBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function hideAlert() {
+  ids.alertBanner.className = 'alert-banner';
+}
+ids.alertCloseBtn.onclick = hideAlert;
+
+// --- Stale Coordinates Invalidation on Text Edit ---
+function handleInputChange(which) {
+  hideAlert();
+  const val = ids[which].value.trim();
+  const current = which === 'from' ? fromPoint : toPoint;
+  // If the user modified the text away from the selected place name, invalidate coordinates
+  if (current && current.name && current.name !== val) {
+    if (which === 'from') {
+      fromPoint = null;
+      if (fromMarker) { map.removeLayer(fromMarker); fromMarker = null; }
+    } else {
+      toPoint = null;
+      if (toMarker) { map.removeLayer(toMarker); toMarker = null; }
+    }
+  }
+}
+ids.from.addEventListener('input', () => handleInputChange('from'));
+ids.to.addEventListener('input', () => handleInputChange('to'));
+
+// --- Travel Mode Selection ---
 document.querySelectorAll('.mode').forEach(el => {
   el.onclick = () => {
-    document.querySelectorAll('.mode').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.mode').forEach(x => {
+      x.classList.remove('active');
+      x.setAttribute('aria-checked', 'false');
+    });
     el.classList.add('active');
+    el.setAttribute('aria-checked', 'true');
     selectedMode = el.dataset.mode;
-    document.getElementById('modeBadge').textContent = labels[selectedMode];
+    ids.modeBadge.textContent = labels[selectedMode];
+    if (typeof gtag === 'function') {
+      gtag('event', 'mode_select', { travel_mode: selectedMode });
+    }
     if (lastKm !== null) {
       calculateDistance();
     }
   };
+  el.onkeydown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      el.click();
+    }
+  };
 });
 
-// Fuel Toggle
-document.getElementById('fuelToggle').onchange = e => {
-  document.getElementById('fuelBox').classList.toggle('show', e.target.checked);
+// --- Fuel Calculation Units ---
+ids.efficiencyUnit.onchange = () => {
+  const u = ids.efficiencyUnit.value;
+  if (u === 'kml') {
+    ids.effLabel.textContent = 'Efficiency (km/L)';
+    ids.priceLabel.textContent = 'Fuel price / Litre';
+    if (+ids.efficiency.value <= 0 || +ids.efficiency.value > 80) ids.efficiency.value = '15';
+  } else if (u === 'l100km') {
+    ids.effLabel.textContent = 'Efficiency (L/100km)';
+    ids.priceLabel.textContent = 'Fuel price / Litre';
+    if (+ids.efficiency.value <= 0 || +ids.efficiency.value > 50) ids.efficiency.value = '7.5';
+  } else if (u === 'mpg') {
+    ids.effLabel.textContent = 'Efficiency (MPG US)';
+    ids.priceLabel.textContent = 'Fuel price / Gallon';
+    if (+ids.efficiency.value <= 0 || +ids.efficiency.value > 100) ids.efficiency.value = '30';
+  }
   if (lastKm !== null) updateFuelCost();
 };
 
-// Swap Button (Origin <-> Destination)
-document.getElementById('swapBtn').onclick = () => {
+ids.fuelToggle.onchange = e => {
+  ids.fuelBox.classList.toggle('show', e.target.checked);
+  if (lastKm !== null) updateFuelCost();
+};
+ids.efficiency.addEventListener('input', () => { if (lastKm !== null) updateFuelCost(); });
+ids.fuelPrice.addEventListener('input', () => { if (lastKm !== null) updateFuelCost(); });
+ids.currency.addEventListener('change', () => { if (lastKm !== null) updateFuelCost(); });
+
+// --- Swap Locations Button (⇅) ---
+ids.swapBtn.onclick = () => {
+  hideAlert();
   const tempVal = ids.from.value;
   ids.from.value = ids.to.value;
   ids.to.value = tempVal;
@@ -679,81 +925,201 @@ document.getElementById('swapBtn').onclick = () => {
   fromPoint = toPoint;
   toPoint = tempPt;
 
-  // Swap markers
-  if (fromPoint && toPoint) {
-    if (fromMarker) map.removeLayer(fromMarker);
-    if (toMarker) map.removeLayer(toMarker);
+  // Swap map markers
+  if (fromMarker) map.removeLayer(fromMarker);
+  if (toMarker) map.removeLayer(toMarker);
+  fromMarker = null;
+  toMarker = null;
 
-    fromMarker = L.marker([fromPoint.lat, fromPoint.lon]).addTo(map).bindPopup(`<b>From:</b> ${fromPoint.name}`).openPopup();
-    toMarker = L.marker([toPoint.lat, toPoint.lon]).addTo(map).bindPopup(`<b>To:</b> ${toPoint.name}`);
-    
+  if (fromPoint) {
+    fromMarker = L.marker([fromPoint.lat, fromPoint.lon]).addTo(map).bindPopup('<b>From:</b> ' + escapeHtml(fromPoint.name));
+  }
+  if (toPoint) {
+    toMarker = L.marker([toPoint.lat, toPoint.lon]).addTo(map).bindPopup('<b>To:</b> ' + escapeHtml(toPoint.name));
+  }
+
+  if (fromPoint && toPoint) {
+    map.fitBounds([[fromPoint.lat, fromPoint.lon], [toPoint.lat, toPoint.lon]], { padding: [50, 50] });
     calculateDistance();
   }
 };
 
-// Debounce helper
-function debounce(fn, wait = 350) {
+// --- GPS "Use Current Location" Button ---
+ids.gpsBtn.onclick = () => {
+  hideAlert();
+  if (!navigator.geolocation) {
+    showAlert('Geolocation is not supported by your browser.', 'warning');
+    return;
+  }
+  ids.gpsBtn.disabled = true;
+  ids.gpsBtn.textContent = '⏳';
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      ids.gpsBtn.disabled = false;
+      ids.gpsBtn.textContent = '📍';
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      let name = `My Location (${lat.toFixed(3)}, ${lon.toFixed(3)})`;
+      try {
+        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
+        if (r.ok) {
+          const d = await r.json();
+          if (d && d.display_name) name = d.display_name;
+        }
+      } catch (e) {}
+
+      ids.from.value = name;
+      setPoint('from', { lat, lon, name });
+      showAlert('Current GPS location set successfully.', 'success');
+      setTimeout(hideAlert, 3000);
+    },
+    (err) => {
+      ids.gpsBtn.disabled = false;
+      ids.gpsBtn.textContent = '📍';
+      let msg = 'Unable to retrieve location.';
+      if (err.code === 1) msg = 'Location access was denied. Please allow location permissions in your browser.';
+      else if (err.code === 2) msg = 'Location position is currently unavailable.';
+      else if (err.code === 3) msg = 'Location request timed out.';
+      showAlert(msg, 'warning');
+    },
+    { timeout: 10000, enableHighAccuracy: true }
+  );
+};
+
+// --- Autocomplete with AbortController, Debounce & Safe DOM (Prevent XSS) ---
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, m => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[m]);
+}
+
+const geoCache = {};
+let abortControllers = { from: null, to: null };
+
+function setupSearch(which) {
+  const input = ids[which];
+  const box = document.getElementById(which + 'Suggestions');
+  let activeIndex = -1;
+
+  function closeBox() {
+    box.style.display = 'none';
+    box.textContent = '';
+    activeIndex = -1;
+  }
+
+  function renderList(data) {
+    box.textContent = '';
+    if (!data || !data.length) {
+      closeBox();
+      return;
+    }
+    activeIndex = -1;
+    data.forEach((p, idx) => {
+      const item = document.createElement('div');
+      item.className = 'suggestion';
+      item.textContent = p.display_name; // SAFE: sets textContent, no innerHTML
+      item.setAttribute('role', 'option');
+      item.onmousedown = (e) => {
+        e.preventDefault(); // prevent blur before click
+        selectPlace(p);
+      };
+      box.appendChild(item);
+    });
+    box.style.display = 'block';
+  }
+
+  function selectPlace(p) {
+    input.value = p.display_name;
+    setPoint(which, { lat: +p.lat, lon: +p.lon, name: p.display_name });
+    closeBox();
+  }
+
+  const debouncedFetch = debounce(async () => {
+    const q = input.value.trim();
+    if (q.length < 2) {
+      closeBox();
+      return;
+    }
+    const qKey = q.toLowerCase();
+    if (geoCache[qKey]) {
+      renderList(geoCache[qKey]);
+      return;
+    }
+
+    if (abortControllers[which]) {
+      abortControllers[which].abort();
+    }
+    abortControllers[which] = new AbortController();
+
+    try {
+      const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&q=' + encodeURIComponent(q), {
+        headers: { 'Accept-Language': 'en' },
+        signal: abortControllers[which].signal
+      });
+      if (!r.ok) throw new Error('Search status ' + r.status);
+      const data = await r.json();
+      geoCache[qKey] = data;
+      renderList(data);
+    } catch (e) {
+      if (e.name !== 'AbortError') closeBox();
+    }
+  }, 320);
+
+  input.addEventListener('input', debouncedFetch);
+
+  // Keyboard navigation for suggestions
+  input.addEventListener('keydown', (e) => {
+    const items = box.querySelectorAll('.suggestion');
+    if (!items.length || box.style.display === 'none') {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        calculateDistance();
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % items.length;
+      updateHighlight(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = (activeIndex - 1 + items.length) % items.length;
+      updateHighlight(items);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0 && items[activeIndex]) {
+        items[activeIndex].click();
+      } else {
+        calculateDistance();
+      }
+    } else if (e.key === 'Escape') {
+      closeBox();
+    }
+  });
+
+  function updateHighlight(items) {
+    items.forEach((el, idx) => {
+      el.classList.toggle('active', idx === activeIndex);
+      if (idx === activeIndex) el.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#' + which + 'Suggestions') && e.target !== input) {
+      closeBox();
+    }
+  });
+}
+
+function debounce(fn, wait = 300) {
   let t;
   return (...args) => {
     clearTimeout(t);
     t = setTimeout(() => fn(...args), wait);
   };
-}
-
-// Local cache for geocoding to avoid Nominatim rate-limits
-const geoCache = {};
-
-// Nominatim Search Autocomplete
-function setupSearch(which) {
-  const input = ids[which];
-  const box = document.getElementById(which + 'Suggestions');
-
-  input.addEventListener('input', debounce(async () => {
-    const q = input.value.trim();
-    box.innerHTML = '';
-    if (q.length < 2) {
-      box.style.display = 'none';
-      return;
-    }
-
-    if (geoCache[q.toLowerCase()]) {
-      renderSuggestions(geoCache[q.toLowerCase()], which, box, input);
-      return;
-    }
-
-    try {
-      const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&q=' + encodeURIComponent(q), {
-        headers: { 'Accept-Language': 'en' }
-      });
-      const data = await r.json();
-      geoCache[q.toLowerCase()] = data;
-      renderSuggestions(data, which, box, input);
-    } catch (e) {
-      box.style.display = 'none';
-    }
-  }, 300));
-
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.inputrow')) box.style.display = 'none';
-  });
-}
-
-function renderSuggestions(data, which, box, input) {
-  if (!data || !data.length) {
-    box.style.display = 'none';
-    return;
-  }
-  box.innerHTML = data.map(p => `<div class="suggestion">${p.display_name}</div>`).join('');
-  box.style.display = 'block';
-
-  [...box.children].forEach((el, i) => {
-    el.onclick = () => {
-      const p = data[i];
-      input.value = p.display_name;
-      setPoint(which, { lat: +p.lat, lon: +p.lon, name: p.display_name });
-      box.style.display = 'none';
-    };
-  });
 }
 
 setupSearch('from');
@@ -763,11 +1129,11 @@ function setPoint(which, p) {
   if (which === 'from') {
     fromPoint = p;
     if (fromMarker) map.removeLayer(fromMarker);
-    fromMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup(`<b>From:</b> ${p.name}`).openPopup();
+    fromMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup('<b>From:</b> ' + escapeHtml(p.name)).openPopup();
   } else {
     toPoint = p;
     if (toMarker) map.removeLayer(toMarker);
-    toMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup(`<b>To:</b> ${p.name}`).openPopup();
+    toMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup('<b>To:</b> ' + escapeHtml(p.name)).openPopup();
   }
 
   if (fromPoint && toPoint) {
@@ -775,17 +1141,48 @@ function setPoint(which, p) {
   }
 }
 
-// Great Circle Haversine formula
+// --- Great Circle Spherical Calculations (Haversine & Geodesic Arc) ---
 function haversine(a, b) {
   const R = 6371;
   const rad = x => x * Math.PI / 180;
   const dLat = rad(b.lat - a.lat);
   const dLon = rad(b.lon - a.lon);
   const x = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(x));
+  return 2 * R * Math.asin(Math.sqrt(Math.max(0, Math.min(1, x))));
 }
 
+// Generate intermediate great-circle points for a realistic flight arc
+function generateGreatCircleArc(p1, p2, numPoints = 25) {
+  const rad = d => d * Math.PI / 180;
+  const deg = r => r * 180 / Math.PI;
+  const lat1 = rad(p1.lat), lon1 = rad(p1.lon);
+  const lat2 = rad(p2.lat), lon2 = rad(p2.lon);
+
+  const d = 2 * Math.asin(Math.sqrt(
+    Math.sin((lat2 - lat1) / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin((lon2 - lon1) / 2) ** 2
+  ));
+
+  if (d === 0) return [[p1.lon, p1.lat], [p2.lon, p2.lat]];
+
+  const coords = [];
+  for (let i = 0; i <= numPoints; i++) {
+    const f = i / numPoints;
+    const A = Math.sin((1 - f) * d) / Math.sin(d);
+    const B = Math.sin(f * d) / Math.sin(d);
+    const x = A * Math.cos(lat1) * Math.cos(lon1) + B * Math.cos(lat2) * Math.cos(lon2);
+    const y = A * Math.cos(lat1) * Math.sin(lon1) + B * Math.cos(lat2) * Math.sin(lon2);
+    const z = A * Math.sin(lat1) + B * Math.sin(lat2);
+    const lat = Math.atan2(z, Math.sqrt(x * x + y * y));
+    const lon = Math.atan2(y, x);
+    coords.push([deg(lon), deg(lat)]);
+  }
+  return coords;
+}
+
+// --- Formatters ---
 function fmtKm(km) {
+  if (km === null || !isFinite(km)) return '—';
   const val = unit === 'mi' ? km * 0.621371 : km;
   const suffix = unit === 'mi' ? ' mi' : ' km';
   return val >= 1000 
@@ -795,25 +1192,31 @@ function fmtKm(km) {
 
 function renderUnits() {
   if (lastKm === null) return;
-  document.getElementById('distance').textContent = fmtKm(lastKm);
-  document.getElementById('airDistance').textContent = fmtKm(lastAirKm);
+  ids.distance.textContent = fmtKm(lastKm);
+  ids.airDistance.textContent = fmtKm(lastAirKm);
+  updateFuelCost();
 }
 
 function fmtTime(hours) {
-  if (!isFinite(hours) || hours <= 0) return '—';
+  if (!isFinite(hours) || hours < 0) return '—';
+  if (hours === 0) return '0 min';
   if (hours < 1) return Math.max(1, Math.round(hours * 60)) + ' mins';
   const h = Math.floor(hours);
   const m = Math.round((hours - h) * 60);
   return m ? `${h}h ${m}m` : `${h} hours`;
 }
 
+// --- Geocode Unresolved Inputs ---
 async function geocodeIfNeeded(which) {
-  if ((which === 'from' && fromPoint) || (which === 'to' && toPoint)) return;
+  if (which === 'from' && fromPoint) return;
+  if (which === 'to' && toPoint) return;
+
   const q = ids[which].value.trim();
-  if (!q) throw Error('Please enter both Starting Location and Destination');
-  
-  if (geoCache[q.toLowerCase()] && geoCache[q.toLowerCase()].length) {
-    const d = geoCache[q.toLowerCase()][0];
+  if (!q) throw new Error(`Please enter a valid ${which === 'from' ? 'starting location' : 'destination'}.`);
+
+  const qKey = q.toLowerCase();
+  if (geoCache[qKey] && geoCache[qKey].length) {
+    const d = geoCache[qKey][0];
     setPoint(which, { lat: +d.lat, lon: +d.lon, name: d.display_name });
     return;
   }
@@ -821,47 +1224,112 @@ async function geocodeIfNeeded(which) {
   const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=' + encodeURIComponent(q), {
     headers: { 'Accept-Language': 'en' }
   });
-  const d = await r.json();
-  if (!d.length) throw Error('Location not found: ' + q);
-  setPoint(which, { lat: +d[0].lat, lon: +d[0].lon, name: d[0].display_name });
+  if (!r.ok) throw new Error('Location search service is currently unavailable. Please try again.');
+  const data = await r.json();
+  if (!data || !data.length) {
+    throw new Error(`Location not found: "${q}". Please check the spelling or select a suggestion.`);
+  }
+  setPoint(which, { lat: +data[0].lat, lon: +data[0].lon, name: data[0].display_name });
 }
 
+// --- Route Fetching & Map Rendering ---
 async function getOSRM(a, b) {
-  const r = await fetch(`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`);
-  if (!r.ok) throw Error('Routing service temporarily unavailable');
-  const d = await r.json();
-  if (!d.routes?.length) throw Error('No driving route found between these locations');
-  return d.routes[0];
+  const url = `https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=full&geometries=geojson`;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+  try {
+    const r = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (!r.ok) throw new Error('OSRM routing responded with ' + r.status);
+    const d = await r.json();
+    if (!d.routes || !d.routes.length) throw new Error('No road route found between locations.');
+    return d.routes[0];
+  } catch (e) {
+    clearTimeout(timeoutId);
+    throw e;
+  }
 }
 
-function drawRoute(coords) {
+function drawRoute(coords, isFlight = false) {
   if (routeLine) map.removeLayer(routeLine);
   routeLine = L.geoJSON({ type: 'LineString', coordinates: coords }, {
-    style: { color: '#1565c0', weight: 5, opacity: 0.85 }
+    style: {
+      color: isFlight ? '#0284c7' : '#1565c0',
+      weight: 5,
+      opacity: 0.85,
+      dashArray: isFlight ? '8, 8' : null
+    }
   }).addTo(map);
   map.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
 }
 
+// --- Fuel Cost & Consumption Calculation ---
 function updateFuelCost() {
-  const fuelResult = document.getElementById('fuelResult');
-  const fuelToggle = document.getElementById('fuelToggle');
-  if (!fuelToggle.checked || lastKm === null) {
-    fuelResult.classList.remove('show');
+  const resultBox = ids.fuelResult;
+  if (!ids.fuelToggle.checked || lastKm === null) {
+    resultBox.classList.remove('show');
+    resultBox.textContent = '';
     return;
   }
-  const eff = +document.getElementById('efficiency').value;
-  const price = +document.getElementById('fuelPrice').value;
-  const cur = document.getElementById('currency').value;
-  if (eff > 0 && price >= 0) {
-    const liters = lastKm / eff;
-    const cost = liters * price;
-    fuelResult.innerHTML = `⛽ <strong>Estimated Fuel Cost:</strong> ${liters.toFixed(1)} L required ≈ <strong>${cur} ${cost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong>`;
-    fuelResult.classList.add('show');
+
+  // Not applicable for Flight or Bicycle
+  if (selectedMode === 'flight' || selectedMode === 'bicycle') {
+    resultBox.innerHTML = `<strong>Note:</strong> Fuel cost estimation is not applicable for ${labels[selectedMode]} mode.`;
+    resultBox.classList.add('show');
+    return;
   }
+
+  const unitType = ids.efficiencyUnit.value;
+  const eff = +ids.efficiency.value;
+  const price = +ids.fuelPrice.value;
+  const cur = ids.currency.value;
+
+  if (isNaN(eff) || eff <= 0 || isNaN(price) || price < 0) {
+    resultBox.innerHTML = '<span style="color:#b91c1c">Please enter valid positive numbers for fuel efficiency and fuel price.</span>';
+    resultBox.classList.add('show');
+    return;
+  }
+
+  let fuelRequired = 0;
+  let fuelUnitName = 'Litres';
+  const distanceForFuel = lastKm;
+
+  if (unitType === 'kml') {
+    fuelRequired = distanceForFuel / eff;
+    fuelUnitName = 'Litres';
+  } else if (unitType === 'l100km') {
+    fuelRequired = (distanceForFuel / 100) * eff;
+    fuelUnitName = 'Litres';
+  } else if (unitType === 'mpg') {
+    const miles = distanceForFuel * 0.621371;
+    fuelRequired = miles / eff;
+    fuelUnitName = 'Gallons';
+  }
+
+  const totalCost = fuelRequired * price;
+
+  resultBox.innerHTML = `
+    <div>⛽ <strong>Estimated Fuel Consumption & Trip Cost:</strong></div>
+    <div class="fuel-result-grid">
+      <div class="fuel-stat">
+        <span style="font-size:11px;color:#166534;text-transform:uppercase;font-weight:700">Estimated Fuel</span>
+        <b style="display:block;font-size:16px">${fuelRequired.toFixed(1)} ${fuelUnitName}</b>
+      </div>
+      <div class="fuel-stat">
+        <span style="font-size:11px;color:#166534;text-transform:uppercase;font-weight:700">Estimated Cost</span>
+        <b style="display:block;font-size:16px">${cur} ${totalCost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b>
+      </div>
+    </div>
+    <div class="fuel-disclaimer">Calculation based on your entered vehicle efficiency and fuel price in ${cur}. Real consumption depends on road grade, vehicle load, AC, and driving conditions.</div>
+  `;
+  resultBox.classList.add('show');
 }
 
+// --- Main Calculation Engine ---
 async function calculateDistance() {
-  const btn = document.getElementById('calculate');
+  hideAlert();
+  const btn = ids.calculate;
   btn.disabled = true;
   btn.textContent = 'Calculating…';
 
@@ -869,49 +1337,79 @@ async function calculateDistance() {
     await geocodeIfNeeded('from');
     await geocodeIfNeeded('to');
 
+    // Check for identical coordinates / identical location
     const air = haversine(fromPoint, toPoint);
+    if (air < 0.1 || (fromPoint.name && fromPoint.name === toPoint.name)) {
+      lastKm = 0;
+      lastAirKm = 0;
+      renderUnits();
+      ids.time.textContent = '0 min';
+      ids.routeType.textContent = 'Same location';
+      ids.routeNote.textContent = 'Origin and destination are the exact same location.';
+      if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+      map.setView([fromPoint.lat, fromPoint.lon], 13);
+      updateFuelCost();
+      return;
+    }
+
     let km = air;
     let hours = air / speeds[selectedMode];
     let type = 'Straight line';
     let note = '';
 
     if (selectedMode === 'flight') {
-      drawRoute([[fromPoint.lon, fromPoint.lat], [toPoint.lon, toPoint.lat]]);
-      note = 'Great-circle flight route estimate.';
+      const arcCoords = generateGreatCircleArc(fromPoint, toPoint);
+      drawRoute(arcCoords, true);
+      note = 'Great-circle aerial corridor between coordinates. Not a booked airline flight schedule.';
       type = 'Flight Corridor';
     } else {
       try {
         const route = await getOSRM(fromPoint, toPoint);
-        const factor = {
-          car: 1.0,
-          motorbike: 1.02,
-          bus: 1.05,
-          train: 0.95,
-          bicycle: 1.08
-        }[selectedMode] || 1.0;
+        drawRoute(route.geometry.coordinates, false);
 
-        km = (route.distance / 1000) * factor;
-        hours = km / speeds[selectedMode];
-        type = selectedMode === 'train' ? 'Rail estimate' : 'Road route';
-        drawRoute(route.geometry.coordinates);
-        note = selectedMode === 'train' 
-          ? 'Estimated along standard rail/road corridor.' 
-          : 'Accurate highway & road driving route.';
-      } catch (e) {
-        // Fallback to straight-line multiplier if OSRM is unreachable or overseas
-        drawRoute([[fromPoint.lon, fromPoint.lat], [toPoint.lon, toPoint.lat]]);
-        const mult = {
+        if (selectedMode === 'car') {
+          km = route.distance / 1000;
+          hours = km / speeds.car;
+          type = 'Road highway route';
+          note = 'Accurate driving distance along public highways.';
+        } else if (selectedMode === 'motorbike') {
+          km = route.distance / 1000;
+          hours = km / speeds.motorbike;
+          type = 'Road route (motorbike)';
+          note = 'Calculated using road routing geometry with typical motorbike cruising speed.';
+        } else if (selectedMode === 'bus') {
+          km = (route.distance / 1000) * 1.03;
+          hours = km / speeds.bus;
+          type = 'Road corridor estimate';
+          note = 'Road corridor estimate. Actual bus duration depends on bus schedules, stops, and transfers.';
+        } else if (selectedMode === 'train') {
+          km = (route.distance / 1000) * 0.96;
+          hours = km / speeds.train;
+          type = 'Rail corridor approximation';
+          note = 'Rail corridor approximation. Direct railway timetable is not integrated; travel time represents express passenger train.';
+        } else if (selectedMode === 'bicycle') {
+          km = (route.distance / 1000) * 1.06;
+          hours = km / speeds.bicycle;
+          type = 'Bicycle road corridor';
+          note = 'Bicycle corridor estimate based on available public road routing.';
+        }
+      } catch (routingErr) {
+        // Fallback when OSRM is busy or overseas route is requested
+        const arcCoords = generateGreatCircleArc(fromPoint, toPoint);
+        drawRoute(arcCoords, false);
+
+        const detourMultiplier = {
           car: 1.25,
           motorbike: 1.22,
-          bus: 1.28,
+          bus: 1.26,
           train: 1.15,
           bicycle: 1.30
         }[selectedMode] || 1.25;
 
-        km = air * mult;
+        km = air * detourMultiplier;
         hours = km / speeds[selectedMode];
-        type = 'Estimated route';
-        note = 'Road routing server busy; showing estimated travel distance.';
+        type = 'Estimated route (Fallback)';
+        note = 'Live road route server is currently busy; showing calculated distance using standard detour factor.';
       }
     }
 
@@ -919,61 +1417,76 @@ async function calculateDistance() {
     lastAirKm = air;
     renderUnits();
 
-    document.getElementById('time').textContent = fmtTime(hours);
-    document.getElementById('routeType').textContent = type;
-    document.getElementById('routeNote').textContent = note;
+    ids.time.textContent = fmtTime(hours);
+    ids.routeType.textContent = type;
+    ids.routeNote.textContent = note;
 
     updateFuelCost();
     saveRecent(ids.from.value, ids.to.value);
 
+    if (typeof gtag === 'function') {
+      gtag('event', 'calculate_distance', {
+        travel_mode: selectedMode,
+        distance_km: Math.round(km),
+        has_fuel: ids.fuelToggle.checked
+      });
+    }
+
   } catch (e) {
-    alert(e.message);
+    showAlert(e.message || 'An error occurred during calculation. Please check your locations.', 'error');
+    if (typeof gtag === 'function') {
+      gtag('event', 'calculation_error', { error_message: e.message });
+    }
   } finally {
     btn.disabled = false;
     btn.textContent = 'Calculate Distance';
   }
 }
 
-document.getElementById('calculate').onclick = calculateDistance;
+ids.calculate.onclick = calculateDistance;
 
-// Unit Toggle
-document.getElementById('kmBtn').onclick = () => {
+// --- Unit Toggle (KM / Miles) ---
+ids.kmBtn.onclick = () => {
   unit = 'km';
-  document.getElementById('kmBtn').classList.add('selected');
-  document.getElementById('miBtn').classList.remove('selected');
+  ids.kmBtn.classList.add('selected');
+  ids.miBtn.classList.remove('selected');
   renderUnits();
+  if (typeof gtag === 'function') gtag('event', 'unit_toggle', { unit: 'km' });
 };
 
-document.getElementById('miBtn').onclick = () => {
+ids.miBtn.onclick = () => {
   unit = 'mi';
-  document.getElementById('miBtn').classList.add('selected');
-  document.getElementById('kmBtn').classList.remove('selected');
+  ids.miBtn.classList.add('selected');
+  ids.kmBtn.classList.remove('selected');
   renderUnits();
+  if (typeof gtag === 'function') gtag('event', 'unit_toggle', { unit: 'mi' });
 };
 
-// Open in Google Maps
-document.getElementById('gmapsBtn').onclick = () => {
+// --- Open in Google Maps ---
+ids.gmapsBtn.onclick = () => {
   const from = ids.from.value.trim();
   const to = ids.to.value.trim();
   if (!from || !to) {
-    alert('Please enter origin and destination first.');
+    showAlert('Please enter and calculate both origin and destination first.', 'warning');
     return;
   }
-  const modeParam = selectedMode === 'bicycle' ? 'bicycling' : selectedMode === 'flight' ? 'transit' : 'driving';
+  const modeParam = selectedMode === 'bicycle' ? 'bicycling' : (selectedMode === 'bus' || selectedMode === 'train') ? 'transit' : selectedMode === 'flight' ? 'transit' : 'driving';
   const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=${modeParam}`;
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 
-// Share Result Button
-document.getElementById('shareBtn').onclick = async () => {
+// --- Share Result Button ---
+ids.shareBtn.onclick = async () => {
   if (lastKm === null) {
-    alert('Please calculate a distance first.');
+    showAlert('Please calculate a distance before sharing.', 'warning');
     return;
   }
   const from = ids.from.value;
   const to = ids.to.value;
-  const text = `Distance from ${from} to ${to}: ${fmtKm(lastKm)} (${fmtTime(lastKm / speeds[selectedMode])} by ${selectedMode}).`;
-  const url = `${location.origin}${location.pathname}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&mode=${selectedMode}`;
+  const text = `Distance from ${from} to ${to}: ${fmtKm(lastKm)} by ${labels[selectedMode]}.`;
+  const url = `${location.origin}${location.pathname}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&mode=${selectedMode}&unit=${unit}`;
+
+  if (typeof gtag === 'function') gtag('event', 'share_click', { travel_mode: selectedMode });
 
   if (navigator.share) {
     try {
@@ -982,14 +1495,15 @@ document.getElementById('shareBtn').onclick = async () => {
   } else {
     try {
       await navigator.clipboard.writeText(url);
-      alert('Result link copied to clipboard!');
+      showAlert('✓ Result link copied to clipboard!', 'success');
+      setTimeout(hideAlert, 4000);
     } catch (e) {
-      prompt('Copy this link:', url);
+      prompt('Copy this result link:', url);
     }
   }
 };
 
-// Popular Route Chips
+// --- Popular Route Chips ---
 document.querySelectorAll('.route-chip').forEach(btn => {
   btn.onclick = () => {
     ids.from.value = btn.dataset.from;
@@ -1001,7 +1515,7 @@ document.querySelectorAll('.route-chip').forEach(btn => {
   };
 });
 
-// Recent Searches (LocalStorage)
+// --- Recent Searches (LocalStorage) ---
 function saveRecent(from, to) {
   if (!from || !to) return;
   try {
@@ -1025,30 +1539,36 @@ function loadRecent() {
       return;
     }
     box.style.display = 'block';
-    container.innerHTML = list.map(item => `<button class="recent-chip" type="button">${item.label}</button>`).join('');
-    [...container.children].forEach((chip, i) => {
+    container.textContent = '';
+    list.forEach(item => {
+      const chip = document.createElement('button');
+      chip.className = 'recent-chip';
+      chip.type = 'button';
+      chip.textContent = item.label;
       chip.onclick = () => {
-        ids.from.value = list[i].from;
-        ids.to.value = list[i].to;
+        ids.from.value = item.from;
+        ids.to.value = item.to;
         fromPoint = null;
         toPoint = null;
         calculateDistance();
       };
+      container.appendChild(chip);
     });
   } catch (e) {}
 }
 loadRecent();
 
-// URL Parameter Handling
+// --- URL Parameter Initialization ---
 const params = new URLSearchParams(location.search);
 if (params.get('from')) ids.from.value = params.get('from');
 if (params.get('to')) ids.to.value = params.get('to');
+if (params.get('unit') === 'mi') ids.miBtn.click();
 if (params.get('mode') && labels[params.get('mode')]) {
   const mBtn = document.querySelector(`.mode[data-mode="${params.get('mode')}"]`);
   if (mBtn) mBtn.click();
 }
 if (params.get('from') && params.get('to')) {
-  setTimeout(calculateDistance, 500);
+  setTimeout(calculateDistance, 450);
 }
 </script>
 </body>
