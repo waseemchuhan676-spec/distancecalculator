@@ -499,6 +499,15 @@ footer p{margin:6px 0;text-align:center}
         <div class="mode" data-mode="bicycle" role="radio" aria-checked="false" tabindex="0"><span class="ico">🚲</span>Bicycle</div>
       </div>
 
+      <div style="display:flex;align-items:center;gap:16px;margin:14px 0 6px">
+        <label style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="radio" name="tripType" id="tripOneWay" value="1" checked style="width:auto;cursor:pointer"> One-way trip
+        </label>
+        <label style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="radio" name="tripType" id="tripRound" value="2" style="width:auto;cursor:pointer"> Round-trip (return)
+        </label>
+      </div>
+
       <div class="advanced">
         <label class="toggle" for="fuelToggle">
           <span>Include trip fuel cost</span>
@@ -773,6 +782,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // --- Application State ---
+const KM_TO_MILES = 0.621371192;
+const MILES_TO_KM = 1.609344;
+
 let selectedMode = 'car';
 let fromPoint = null; // { lat, lon, name }
 let toPoint = null;   // { lat, lon, name }
@@ -781,7 +793,12 @@ let fromMarker = null;
 let toMarker = null;
 let lastKm = null;
 let lastAirKm = null;
+let lastHours = null;
 let unit = 'km';
+
+function getTripMultiplier() {
+  return document.getElementById('tripRound') && document.getElementById('tripRound').checked ? 2 : 1;
+}
 
 const speeds = {
   car: 80,
@@ -913,6 +930,11 @@ ids.fuelToggle.onchange = e => {
 ids.efficiency.addEventListener('input', () => { if (lastKm !== null) updateFuelCost(); });
 ids.fuelPrice.addEventListener('input', () => { if (lastKm !== null) updateFuelCost(); });
 ids.currency.addEventListener('change', () => { if (lastKm !== null) updateFuelCost(); });
+
+const tripOneWayEl = document.getElementById('tripOneWay');
+const tripRoundEl = document.getElementById('tripRound');
+if (tripOneWayEl) tripOneWayEl.addEventListener('change', renderUnits);
+if (tripRoundEl) tripRoundEl.addEventListener('change', renderUnits);
 
 // --- Swap Locations Button (⇅) ---
 ids.swapBtn.onclick = () => {
@@ -1183,7 +1205,7 @@ function generateGreatCircleArc(p1, p2, numPoints = 25) {
 // --- Formatters ---
 function fmtKm(km) {
   if (km === null || !isFinite(km)) return '—';
-  const val = unit === 'mi' ? km * 0.621371 : km;
+  const val = unit === 'mi' ? km * KM_TO_MILES : km;
   const suffix = unit === 'mi' ? ' mi' : ' km';
   return val >= 1000 
     ? Math.round(val).toLocaleString() + suffix 
@@ -1192,8 +1214,13 @@ function fmtKm(km) {
 
 function renderUnits() {
   if (lastKm === null) return;
-  ids.distance.textContent = fmtKm(lastKm);
-  ids.airDistance.textContent = fmtKm(lastAirKm);
+  const mult = getTripMultiplier();
+  const tripLabel = mult === 2 ? ' (Round-trip)' : '';
+  ids.distance.textContent = fmtKm(lastKm * mult) + tripLabel;
+  ids.airDistance.textContent = fmtKm(lastAirKm * mult) + (mult === 2 ? ' (Round)' : '');
+  if (lastHours !== null) {
+    ids.time.textContent = fmtTime(lastHours * mult);
+  }
   updateFuelCost();
 }
 
@@ -1293,7 +1320,9 @@ function updateFuelCost() {
 
   let fuelRequired = 0;
   let fuelUnitName = 'Litres';
-  const distanceForFuel = lastKm;
+  const mult = getTripMultiplier();
+  const tripText = mult === 2 ? ' (Round-trip)' : ' (One-way)';
+  const distanceForFuel = lastKm * mult;
 
   if (unitType === 'kml') {
     fuelRequired = distanceForFuel / eff;
@@ -1302,7 +1331,7 @@ function updateFuelCost() {
     fuelRequired = (distanceForFuel / 100) * eff;
     fuelUnitName = 'Litres';
   } else if (unitType === 'mpg') {
-    const miles = distanceForFuel * 0.621371;
+    const miles = distanceForFuel * KM_TO_MILES;
     fuelRequired = miles / eff;
     fuelUnitName = 'Gallons';
   }
@@ -1310,7 +1339,7 @@ function updateFuelCost() {
   const totalCost = fuelRequired * price;
 
   resultBox.innerHTML = `
-    <div>⛽ <strong>Estimated Fuel Consumption & Trip Cost:</strong></div>
+    <div>⛽ <strong>Estimated Fuel Consumption & Trip Cost${tripText}:</strong></div>
     <div class="fuel-result-grid">
       <div class="fuel-stat">
         <span style="font-size:11px;color:#166534;text-transform:uppercase;font-weight:700">Estimated Fuel</span>
@@ -1415,9 +1444,9 @@ async function calculateDistance() {
 
     lastKm = km;
     lastAirKm = air;
+    lastHours = hours;
     renderUnits();
 
-    ids.time.textContent = fmtTime(hours);
     ids.routeType.textContent = type;
     ids.routeNote.textContent = note;
 
