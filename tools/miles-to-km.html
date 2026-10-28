@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Miles to Kilometers Converter (mi to km) – Instant Conversion</title>
+<meta name="description" content="Convert miles to kilometers instantly. Exact conversion formula (1 mi = 1.609344 km) with reference chart, practical road examples, and copy-result option.">
+<meta name="keywords" content="miles to km, convert miles to kilometers, miles in km, mi to km, distance converter">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/miles-to-km.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📏</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0}
+.wrap{max-width:1000px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 8px 30px rgba(20,45,70,0.06);margin-bottom:24px}
+.converter-box{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin:20px 0}
+.conv-group label{display:block;font-size:13px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+input{width:100%;padding:14px 16px;border:1.5px solid #ccd8e4;border-radius:12px;font-size:22px;font-weight:700;color:var(--dark)}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.swap-btn{background:#edf5ff;border:1.5px solid #c9ddf5;color:var(--blue);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all 0.2s}
+.swap-btn:hover{background:var(--blue);color:#fff;transform:rotate(180deg)}
+.action-row{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
+.small-btn{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;background:#edf5ff;color:var(--blue);border:1px solid #cce2fd;cursor:pointer}
+.small-btn:hover{background:#dbeafe}
+.formula-banner{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center;font-size:15px;margin:18px 0}
+.formula-banner b{color:var(--blue)}
+.table-container{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:12px}
+th,td{padding:10px 14px;border:1px solid var(--line);text-align:left}
+th{background:#f8fafc;font-weight:700}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:650px){.converter-box{grid-template-columns:1fr;text-align:center}.swap-btn{margin:auto}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Miles to Kilometers Converter",
+  "url":"https://distancecalculator-theta.vercel.app/tools/miles-to-km.html",
+  "applicationCategory":"UtilityApplication",
+  "description":"Instant conversion tool from miles (mi) to kilometers (km) using exact international formula 1 mile = 1.609344 kilometers."
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/km-to-miles.html">KM to Miles</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Miles to Kilometers Converter</h1>
+    <p>Convert miles (mi) to kilometers (km) instantly with exact mathematical conversion.</p>
+  </section>
+
+  <div class="card">
+    <div class="converter-box">
+      <div class="conv-group">
+        <label for="miInput">Miles (mi)</label>
+        <input id="miInput" type="number" step="any" value="60" placeholder="e.g. 60">
+      </div>
+
+      <button class="swap-btn" id="swapBtn" type="button" title="Swap to KM to Miles">⇅</button>
+
+      <div class="conv-group">
+        <label for="kmInput">Kilometers (km)</label>
+        <input id="kmInput" type="number" step="any" value="96.5606" placeholder="e.g. 96.56">
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="small-btn" id="copyBtn" type="button">📋 Copy Result</button>
+      <a class="small-btn" href="/tools/km-to-miles.html" style="text-decoration:none">Switch to KM to Miles →</a>
+    </div>
+
+    <div class="formula-banner">
+      Conversion Formula: <b>Kilometers = Miles × 1.609344</b> (exact international definition)
+    </div>
+  </div>
+
+  <article class="card">
+    <h2>Quick Reference: Miles to Kilometers Conversion Table</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Miles (mi)</th>
+            <th>Kilometers (km)</th>
+            <th>Common Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1 mi</td><td>1.61 km</td><td>Standard statute mile (1,760 yards / 5,280 feet)</td></tr>
+          <tr><td>3.11 mi</td><td>5.00 km</td><td>Standard 5K road run</td></tr>
+          <tr><td>5 mi</td><td>8.05 km</td><td>Short urban commute</td></tr>
+          <tr><td>10 mi</td><td>16.09 km</td><td>Intercity suburban driving distance</td></tr>
+          <tr><td>25 mi</td><td>40.23 km</td><td>Metropolitan transit commute</td></tr>
+          <tr><td>55 mi</td><td>88.51 km</td><td>US highway speed limit distance per hour (55 mph)</td></tr>
+          <tr><td>65 mi</td><td>104.61 km</td><td>Standard US interstate cruising speed (65 mph)</td></tr>
+          <tr><td>100 mi</td><td>160.93 km</td><td>Century bike ride / medium driving trip</td></tr>
+          <tr><td>250 mi</td><td>402.34 km</td><td>Major intercity road trip leg</td></tr>
+          <tr><td>500 mi</td><td>804.67 km</td><td>Full day interstate road trip</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 style="margin-top:24px">Mental Math Tip for Miles to KM</h2>
+    <p>For a quick mental approximation while driving, multiply miles by <strong>1.6</strong>. For instance, 50 miles × 1.6 = 80 kilometers (exact calculation: 80.47 km).</p>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · <a href="/">Main Calculator</a> · <a href="/tools/km-to-miles.html">KM to Miles</a> · <a href="/privacy-policy.html">Privacy</a></p>
+  </div>
+</footer>
+
+<script>
+const MI_TO_KM = 1.609344;
+const KM_TO_MI = 0.621371192;
+
+const miIn = document.getElementById('miInput');
+const kmIn = document.getElementById('kmInput');
+const copyBtn = document.getElementById('copyBtn');
+const swapBtn = document.getElementById('swapBtn');
+
+miIn.addEventListener('input', () => {
+  const v = parseFloat(miIn.value);
+  if (!isNaN(v)) {
+    const res = v * MI_TO_KM;
+    kmIn.value = Number(res.toFixed(4));
+  } else {
+    kmIn.value = '';
+  }
+});
+
+kmIn.addEventListener('input', () => {
+  const v = parseFloat(kmIn.value);
+  if (!isNaN(v)) {
+    const res = v * KM_TO_MI;
+    miIn.value = Number(res.toFixed(4));
+  } else {
+    miIn.value = '';
+  }
+});
+
+swapBtn.onclick = () => {
+  window.location.href = '/tools/km-to-miles.html';
+};
+
+copyBtn.onclick = async () => {
+  const text = `${miIn.value} miles = ${kmIn.value} km`;
+  try {
+    await navigator.clipboard.writeText(text);
+    copyBtn.textContent = '✓ Copied!';
+    setTimeout(() => copyBtn.textContent = '📋 Copy Result', 2500);
+  } catch (e) {
+    prompt('Copy result:', text);
+  }
+};
+</script>
+</body>
+</html>

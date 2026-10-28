@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>How It Works: Distance Calculation Methodology & Algorithms</title>
+<meta name="description" content="Discover the mathematics and technology behind World Distance Calculator. From Nominatim geocoding and Haversine geodesic equations to OSRM road routing.">
+<meta name="keywords" content="how distance is calculated, haversine formula, osrm routing engine, great circle navigation, geodesy algorithms">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/how-it-works.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#475569;--bg:#f8fafc;--card:#fff;--line:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.7}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:860px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.breadcrumbs{font-size:13px;color:#64748b;margin:24px 0 12px}
+.breadcrumbs a{color:var(--blue);text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline}
+.content{background:#fff;border:1px solid var(--line);border-radius:18px;padding:36px;box-shadow:0 8px 30px rgba(20,45,70,0.04);margin-bottom:30px}
+h1{font-size:clamp(26px,4vw,36px);margin:0 0 14px;color:#0b1f33;font-weight:800}
+.lead{font-size:17px;color:var(--muted);margin-bottom:28px}
+h2{font-size:22px;margin:32px 0 12px;color:#0f172a;border-bottom:2px solid #f1f5f9;padding-bottom:8px}
+h3{font-size:18px;margin:20px 0 8px;color:#1e293b}
+.callout{background:#eff6ff;border-left:4px solid var(--blue);border-radius:8px;padding:16px 20px;margin:20px 0;font-size:15px}
+.formula-box{background:#f1f5f9;border:1px solid #cbd5e1;padding:14px 18px;border-radius:8px;font-family:monospace;font-size:14px;margin:16px 0;line-height:1.7}
+footer{background:#0b1f33;color:#94a3b8;padding:32px 0;text-align:center;font-size:14px;margin-top:50px}
+footer a{color:#93c5fd;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a>
+        <a href="/blog/">Blog</a>
+        <a href="/how-it-works.html" style="text-decoration:underline">How It Works</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> › <span>How It Works</span>
+  </div>
+
+  <article class="content">
+    <h1>How Distance Is Calculated</h1>
+    <p class="lead">A transparent breakdown of the geographic algorithms, geocoding pipelines, and routing engines powering World Distance Calculator.</p>
+
+    <h2>1. Location Geocoding (Nominatim OpenStreetMap)</h2>
+    <p>When you type a city name or address into the search input, our system queries the <strong>Nominatim OpenStreetMap Geocoder</strong>. This translates human-readable place names into precise WGS 84 geographic coordinates (latitude and longitude).</p>
+    <p>To preserve search accuracy and prevent coordinate mismatches, any manual modification to the city input immediately invalidates previous coordinates until a new verified location is selected.</p>
+
+    <h2>2. Straight-Line Geodesic Distance (Haversine Formula)</h2>
+    <p>Earth is an oblate spheroid with a mean radius of <strong>6,371.0 kilometers (3,958.8 miles)</strong>. To compute the true shortest path between two points across this curved surface, we execute the <strong>Haversine equation</strong>:</p>
+
+    <div class="formula-box">
+Δφ = lat₂ − lat₁ (in radians)<br>
+Δλ = lon₂ − lon₁ (in radians)<br>
+a = sin²(Δφ / 2) + cos(φ₁) ⋅ cos(φ₂) ⋅ sin²(Δλ / 2)<br>
+c = 2 ⋅ atan2( √a, √(1 − a) )<br>
+Distance (km) = 6371.0 × c
+    </div>
+
+    <h2>3. Geodesic Flight Arc (Spherical Linear Interpolation)</h2>
+    <p>On flat 2D Web Mercator map projections, straight lines do not represent the true shortest path on a sphere. To accurately depict commercial flight corridors, we compute a <strong>Slerp (Spherical Linear Interpolation)</strong> arc consisting of 100 intermediate geodesic points along the Great Circle vector.</p>
+
+    <h2>4. Driving Route Distance (OSRM Routing Engine)</h2>
+    <p>Unlike straight-line flight paths, automobiles must navigate physical road networks. We query the <strong>Open Source Routing Machine (OSRM)</strong>, which leverages high-performance Contraction Hierarchies over OpenStreetMap road graphs to determine:</p>
+    <ul>
+      <li>Fastest legal driving route and total turn-by-turn distance.</li>
+      <li>Speed limit restrictions and highway hierarchies.</li>
+      <li>One-way streets, bridges, and tunnels.</li>
+    </ul>
+
+    <h2>5. Fuel Economy & Trip Expense Formulas</h2>
+    <p>Our platform handles global fuel economy standards without approximation distortion:</p>
+    <ul>
+      <li><strong>km/L:</strong> Fuel Volume (L) = Distance (km) ÷ Efficiency (km/L)</li>
+      <li><strong>L/100 km:</strong> Fuel Volume (L) = (Distance (km) ÷ 100) × (L/100km Rating)</li>
+      <li><strong>MPG (US):</strong> Fuel Volume (Gal) = Distance (miles) ÷ MPG</li>
+      <li><strong>Total Cost:</strong> Fuel Volume × Fuel Price per Unit × Trip Multiplier (1 for one-way, 2 for round-trip)</li>
+    </ul>
+
+    <div class="callout">
+      ℹ️ <strong>System Limitations:</strong> While OSRM routing reflects current road topology, it does not factor in real-time emergency road closures, active weather squalls, or live traffic delays. Drivers should always consult local highway alerts during extreme weather.
+    </div>
+
+    <h2>Explore Our Tools</h2>
+    <p>
+      👉 <a href="/" style="color:var(--blue);font-weight:700">Main Interactive Distance Calculator</a><br>
+      👉 <a href="/tools/straight-line-distance.html" style="color:var(--blue);font-weight:700">Dedicated Straight-Line Haversine Tool</a><br>
+      👉 <a href="/tools/fuel-cost-calculator.html" style="color:var(--blue);font-weight:700">Trip Fuel Cost Calculator</a>
+    </p>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Geodesy & Navigation Platform</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/how-it-works.html">How It Works</a> · 
+      <a href="/data-sources.html">Data Sources</a> · 
+      <a href="/privacy-policy.html">Privacy</a> · 
+      <a href="/terms.html">Terms</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

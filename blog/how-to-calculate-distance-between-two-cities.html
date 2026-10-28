@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>How to Calculate Distance Between Two Cities (Driving & Straight-Line)</title>
+<meta name="description" content="Learn how to calculate distance between two cities accurately. Understand the difference between road routing and straight-line Haversine distance with worked examples.">
+<meta name="keywords" content="calculate distance between two cities, driving distance calculator, city to city distance, haversine formula, road trip distance">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/blog/how-to-calculate-distance-between-two-cities.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#475569;--bg:#f8fafc;--card:#fff;--line:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.7}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:860px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.breadcrumbs{font-size:13px;color:#64748b;margin:24px 0 12px}
+.breadcrumbs a{color:var(--blue);text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline}
+.article-header{margin-bottom:28px}
+.article-tag{display:inline-block;padding:4px 10px;background:#edf5ff;color:var(--blue);border-radius:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
+h1{font-size:clamp(28px,4vw,38px);line-height:1.25;margin:0 0 14px;color:#0b1f33;font-weight:800}
+.meta{font-size:14px;color:#64748b}
+.content{background:#fff;border:1px solid var(--line);border-radius:18px;padding:36px;box-shadow:0 8px 30px rgba(20,45,70,0.04);font-size:16.5px}
+.content h2{font-size:24px;margin:32px 0 14px;color:#0f172a;border-bottom:2px solid #f1f5f9;padding-bottom:8px}
+.content h3{font-size:19px;margin:24px 0 10px;color:#1e293b}
+.callout{background:#eff6ff;border-left:4px solid var(--blue);border-radius:8px;padding:18px 20px;margin:20px 0;font-size:15.5px}
+.formula-box{background:#f1f5f9;border:1px solid #cbd5e1;padding:14px 18px;border-radius:8px;font-family:monospace;font-size:14px;margin:16px 0}
+.faq-box{margin-top:30px}
+.faq-item{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+.faq-item h4{margin:0 0 8px;font-size:16.5px;color:#0f172a}
+.faq-item p{margin:0;font-size:15px;color:var(--muted)}
+.tools-banner{background:linear-gradient(135deg,#0b1f33,#1565c0);color:#fff;border-radius:14px;padding:24px;margin:36px 0;text-align:center}
+.tools-banner h3{color:#fff;margin:0 0 8px;font-size:20px}
+.tools-banner p{color:#e2e8f0;margin:0 0 18px;font-size:14.5px}
+.btn-cta{display:inline-block;background:#fff;color:var(--blue);font-weight:800;padding:12px 24px;border-radius:10px;text-decoration:none;transition:transform 0.15s}
+.btn-cta:hover{transform:translateY(-2px)}
+footer{background:#0b1f33;color:#94a3b8;padding:32px 0;text-align:center;font-size:14px;margin-top:50px}
+footer a{color:#93c5fd;text-decoration:none}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"How to Calculate Distance Between Two Cities",
+  "description":"Step-by-step guide to calculating accurate driving distance and straight-line geographic distance between two cities.",
+  "author":{"@type":"Organization","name":"World Distance Calculator"},
+  "publisher":{"@type":"Organization","name":"World Distance Calculator"},
+  "datePublished":"2026-10-28",
+  "mainEntityOfPage":"https://distancecalculator-theta.vercel.app/blog/how-to-calculate-distance-between-two-cities.html"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Why is driving distance between two cities longer than straight-line distance?",
+      "acceptedAnswer":{"@type":"Answer","text":"Driving distance is almost always 15% to 35% longer because roads must follow geographic contours, bypass mountains and bodies of water, and connect through urban road networks."}
+    },
+    {
+      "@type":"Question",
+      "name":"How can I calculate the straight-line distance between two cities?",
+      "acceptedAnswer":{"@type":"Answer","text":"Straight-line distance on Earth is calculated using the Haversine equation or the Spherical Law of Cosines based on the latitude and longitude of each city center."}
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a>
+        <a href="/tools/travel-time-calculator.html">Travel Time</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> › <a href="/blog/">Blog</a> › <span>Calculate City Distance</span>
+  </div>
+
+  <header class="article-header">
+    <span class="article-tag">Navigation & Routing Guide</span>
+    <h1>How to Calculate Distance Between Two Cities</h1>
+    <div class="meta">Published on October 28, 2026 · By Navigation & Geodesy Editorial Team · 6 min read</div>
+  </header>
+
+  <article class="content">
+    <p>Whether you are planning a weekend road trip, moving to a new state, estimating business travel reimbursement, or organizing freight logistics, knowing the exact distance between two cities is essential.</p>
+
+    <p>However, many travelers are surprised to find that different tools give conflicting numbers. One website might say that two cities are 340 kilometers apart, while another claims 415 kilometers. The reason lies in the distinction between <strong>road driving distance</strong> and <strong>straight-line ("as the crow flies") distance</strong>.</p>
+
+    <h2>Step 1: Understand the Two Types of City Distance</h2>
+    <p>Before entering city names into a search engine, clarify which type of measurement your situation requires:</p>
+    <ul>
+      <li><strong>Driving Distance (Road Network):</strong> The actual vehicular mileage traveled along public highways, turnpikes, and municipal roadways. This is the number you need for calculating gas consumption, road tolls, driving time, and vehicle wear-and-tear.</li>
+      <li><strong>Straight-Line Distance (Great-Circle):</strong> The direct geodesic distance across the curved surface of the Earth between two points. This measurement is used in aviation flight planning, telecommunications, radio line-of-sight, and regional zoning.</li>
+    </ul>
+
+    <div class="callout">
+      💡 <strong>Rule of Thumb:</strong> In most developed countries, driving road distance is roughly <strong>1.15 to 1.30 times</strong> the straight-line distance. In mountainous regions or coastal archipelagos, it can exceed 1.5 times.
+    </div>
+
+    <h2>Step 2: How to Calculate Distance with Our Interactive Tool</h2>
+    <p>Calculating accurate city-to-city distances takes just three steps on our platform:</p>
+    <ol>
+      <li><strong>Enter the Origin City:</strong> Type the city name into the "Starting Point (City A)" field. Select the verified location from the automatic search suggestions.</li>
+      <li><strong>Enter the Destination City:</strong> Type the city name into the "Destination (City B)" field and select it.</li>
+      <li><strong>Click "Calculate Distance":</strong> Our system simultaneously plots the turn-by-turn road route and the Great-Circle flight arc on an interactive Leaflet map, displaying results in kilometers, miles, and nautical miles.</li>
+    </ol>
+
+    <div class="tools-banner">
+      <h3>Calculate Your Route Instantly</h3>
+      <p>Try our free interactive map calculator with live road routing and fuel cost estimation.</p>
+      <a href="/" class="btn-cta">Open Distance Calculator →</a>
+    </div>
+
+    <h2>Step 3: Worked Example (London to Edinburgh)</h2>
+    <p>Let's look at a concrete real-world example between two major United Kingdom capitals: London and Edinburgh.</p>
+    <ul>
+      <li><strong>Straight-Line Distance (Haversine):</strong> 534 km (332 miles) heading North-Northwest (bearing 343°).</li>
+      <li><strong>Fastest Driving Route (via A1(M) & M1):</strong> Approximately 650 km (404 miles).</li>
+      <li><strong>Driving Difference:</strong> The road route is 116 km (21.7%) longer than the direct flight path because the motorway network skirts around the Pennine hills and urban centers.</li>
+    </ul>
+
+    <h2>Common Mistakes When Calculating City Distance</h2>
+    <p>To ensure your travel calculations are reliable, watch out for these frequent oversights:</p>
+    <ul>
+      <li><strong>Ambiguous City Names:</strong> There are dozens of cities named "Springfield" or "Richmond" in the United States alone. Always confirm the state or country when selecting your origin or destination.</li>
+      <li><strong>Ignoring City Center Offsets:</strong> Most mapping platforms calculate distance from the historic center (e.g., City Hall or Central Post Office). If your actual start point is on the suburban perimeter, your true trip distance could differ by 20–30 km.</li>
+      <li><strong>Forgetting Return Mileage:</strong> A common budgeting blunder is calculating fuel expenses for a one-way trip when planning a round-trip vacation. Use our <a href="/tools/fuel-cost-calculator.html" style="color:var(--blue);font-weight:700">Fuel Cost Calculator</a> with the <em>Round-trip</em> toggle enabled.</li>
+      <li><strong>Confusing Statute Miles with Nautical Miles:</strong> 1 statute mile equals 1.609 km, while 1 nautical mile equals 1.852 km. Mixing these up introduces a 15% calculation error.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-box">
+      <div class="faq-item">
+        <h4>Why is driving distance between two cities longer than straight-line distance?</h4>
+        <p>Driving distance is longer because roads must follow natural topography, avoid bodies of water and mountains, and pass through designated highway corridors rather than flying straight across terrain.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do I calculate driving time once I have the distance?</h4>
+        <p>Divide the distance by your anticipated average speed. For instance, a 300 km highway journey at 100 km/h takes roughly 3 hours of driving. You can use our <a href="/tools/travel-time-calculator.html" style="color:var(--blue)">Travel Time Calculator</a> to include rest stops and generate arrival ETAs.</p>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Navigation & Distance Planning Guides</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a> · 
+      <a href="/tools/travel-time-calculator.html">Travel Time</a> · 
+      <a href="/blog/">Blog</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/privacy-policy.html">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

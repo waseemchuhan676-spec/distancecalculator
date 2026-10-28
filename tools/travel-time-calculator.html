@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Travel Time Calculator – Estimate Driving & Trip Duration</title>
+<meta name="description" content="Calculate accurate travel time based on distance and average speed. Supports rest breaks, departure ETA, driving presets, and unit conversion between km/h and mph.">
+<meta name="keywords" content="travel time calculator, driving time calculator, trip duration calculator, speed distance time calculator, eta calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/travel-time-calculator.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+.inputrow{display:grid;grid-template-columns:1fr 130px;gap:8px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:var(--dark)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.preset-btns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+.preset-btn{background:#f1f5f9;border:1px solid #cbd5e1;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:#334155;transition:all 0.15s}
+.preset-btn:hover{background:#e2e8f0;border-color:#94a3b8}
+.preset-btn.active{background:var(--blue);color:#fff;border-color:var(--blue-hover)}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.result-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-top:14px}
+.result-stat{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eef2f6}
+.result-stat:last-child{border-bottom:0}
+.result-stat span{color:var(--muted);font-size:14px}
+.result-stat b{font-size:18px;color:var(--dark)}
+.total-stat{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px;margin-top:14px;text-align:center}
+.total-stat span{font-size:12px;text-transform:uppercase;color:#1e40af;font-weight:700;letter-spacing:0.5px}
+.total-stat b{font-size:30px;color:#1d4ed8;display:block;margin-top:2px}
+.eta-stat{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px;margin-top:10px;text-align:center}
+.eta-stat span{font-size:12px;text-transform:uppercase;color:#166534;font-weight:700}
+.eta-stat b{font-size:20px;color:#15803d;display:block}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article h3{font-size:18px;margin:18px 0 8px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.formula-box{background:#edf5ff;border-left:4px solid var(--blue);padding:14px 18px;border-radius:8px;font-family:monospace;font-size:14px;margin:14px 0}
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 14px;border:1px solid #e2e8f0;text-align:left}
+th{background:#f8fafc;font-weight:700}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Travel Time Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/tools/travel-time-calculator.html",
+  "applicationCategory":"TravelApplication",
+  "description":"Calculate estimated travel duration, driving time, and arrival time based on journey distance and average travel speed."
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/travel-time-calculator.html" style="text-decoration:underline">Travel Time</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a>
+        <a href="/tools/km-to-miles.html">KM to Miles</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Travel Time & Driving Duration Calculator</h1>
+    <p>Estimate pure driving duration, total travel time including rest breaks, and expected arrival time (ETA).</p>
+  </section>
+
+  <section class="grid">
+    <!-- Calculator Card -->
+    <div class="card">
+      <label class="label" for="distVal">Journey Distance</label>
+      <div class="inputrow">
+        <input id="distVal" type="number" min="0.1" step="0.1" value="280" placeholder="e.g. 280">
+        <select id="distUnit">
+          <option value="km" selected>Kilometers (km)</option>
+          <option value="mi">Miles (mi)</option>
+        </select>
+      </div>
+
+      <label class="label" for="speedVal">Average Speed</label>
+      <div class="inputrow">
+        <input id="speedVal" type="number" min="1" step="1" value="90" placeholder="e.g. 90">
+        <select id="speedUnit">
+          <option value="kmh" selected>km/h</option>
+          <option value="mph">mph</option>
+        </select>
+      </div>
+
+      <div class="label" style="margin-top:10px">Speed Presets</div>
+      <div class="preset-btns">
+        <button type="button" class="preset-btn" onclick="applyPreset('walk')">🚶 Walking (5 km/h)</button>
+        <button type="button" class="preset-btn" onclick="applyPreset('cycle')">🚴 Cycling (18 km/h)</button>
+        <button type="button" class="preset-btn" onclick="applyPreset('city')">🚗 City (45 km/h)</button>
+        <button type="button" class="preset-btn active" onclick="applyPreset('highway')">🛣️ Highway (90 km/h)</button>
+        <button type="button" class="preset-btn" onclick="applyPreset('fast')">🏎️ Express (120 km/h)</button>
+        <button type="button" class="preset-btn" onclick="applyPreset('train')">🚄 Train (200 km/h)</button>
+      </div>
+
+      <label class="label" for="breakMins">Rest Breaks (Total Minutes)</label>
+      <input id="breakMins" type="number" min="0" step="5" value="30" placeholder="e.g. 30">
+
+      <label class="label" for="departTime">Departure Time (Optional for ETA)</label>
+      <input id="departTime" type="time" value="09:00">
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" onclick="calculateTravelTime()">Calculate Duration</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+      </div>
+
+      <!-- Result Card -->
+      <div id="resultContainer" class="result-box" style="display:block">
+        <div class="total-stat">
+          <span>Total Journey Time</span>
+          <b id="resTotalFormatted">3 hr 36 min</b>
+        </div>
+        <div class="eta-stat" id="resEtaWrap">
+          <span>Estimated Arrival (ETA)</span>
+          <b id="resEtaFormatted">12:36 PM</b>
+        </div>
+        <div class="result-stat" style="margin-top:10px">
+          <span>Pure Moving Time</span>
+          <b id="resMovingTime">3 hr 6 min</b>
+        </div>
+        <div class="result-stat">
+          <span>Rest & Stop Time</span>
+          <b id="resBreakTime">30 min</b>
+        </div>
+        <div class="result-stat">
+          <span>Total Decimal Hours</span>
+          <b id="resDecimalHours">3.61 hrs</b>
+        </div>
+        <div class="result-stat">
+          <span>Effective Average Speed</span>
+          <b id="resEffectiveSpeed">77.6 km/h</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article & Educational Content -->
+    <div class="card article">
+      <h2>How Travel Time is Calculated</h2>
+      <p>The core mathematical formula connecting distance, speed, and time is fundamental to navigation:</p>
+      
+      <div class="formula-box">
+Time = Distance ÷ Speed<br>
+Total Journey Time = (Distance ÷ Speed) + Rest Break Duration
+      </div>
+
+      <p>For example, driving a distance of <strong>280 kilometers</strong> at an average speed of <strong>90 km/h</strong> requires 3.111 hours of movement (3 hours, 6 minutes). Adding a 30-minute rest break brings the total journey time to <strong>3 hours and 36 minutes</strong>.</p>
+
+      <h3>Mathematical Time vs. Real-World Route Time</h3>
+      <p>A simple mathematical travel time calculator provides a baseline benchmark. However, real-world driving times are influenced by several unpredictable variables:</p>
+      <ul>
+        <li><strong>Traffic Density & Congestion:</strong> Bottlenecks around metropolitan rings, rush-hour volume, and construction zones can increase duration by 20% to 50%.</li>
+        <li><strong>Road Topography & Speed Limits:</strong> Mountain passes, switchbacks, and urban traffic lights force lower average speeds than posted highway limits.</li>
+        <li><strong>Weather Conditions:</strong> Rain, fog, or snow significantly reduce safe braking distances and travel velocity.</li>
+        <li><strong>Fuel & Rest Stops:</strong> On long trips (over 3 hours), physiological rest breaks are essential for road safety and fatigue prevention.</li>
+      </ul>
+
+      <h3>Reference Speed & Time Benchmarks</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Transport Mode</th>
+              <th>Typical Average Speed</th>
+              <th>Time per 100 km (62 mi)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Walking / Hiking</td><td>4 – 5 km/h (2.5 – 3.1 mph)</td><td>20 – 25 hours</td></tr>
+            <tr><td>Bicycle Touring</td><td>15 – 20 km/h (9.3 – 12.4 mph)</td><td>5 – 6.6 hours</td></tr>
+            <tr><td>City Commute</td><td>30 – 45 km/h (18.6 – 28 mph)</td><td>2.2 – 3.3 hours</td></tr>
+            <tr><td>Highway Driving</td><td>80 – 110 km/h (50 – 68 mph)</td><td>55 – 75 minutes</td></tr>
+            <tr><td>High-Speed Rail</td><td>200 – 300 km/h (124 – 186 mph)</td><td>20 – 30 minutes</td></tr>
+            <tr><td>Commercial Jetliner</td><td>800 – 900 km/h (500 – 560 mph)</td><td>~7 minutes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Plan Your Route Accurately</h3>
+      <p>Need accurate turnkey route measurements? Use our primary tools:</p>
+      <p>
+        👉 <a href="/" style="color:var(--blue);font-weight:700">Calculate Exact Route on Interactive Map</a><br>
+        👉 <a href="/tools/fuel-cost-calculator.html" style="color:var(--blue);font-weight:700">Calculate Fuel Consumption & Petrol Cost</a><br>
+        👉 <a href="/tools/km-to-miles.html" style="color:var(--blue);font-weight:700">KM to Miles Unit Converter</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Travel & Distance Estimation Tools</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a> · 
+      <a href="/tools/travel-time-calculator.html">Travel Time</a> · 
+      <a href="/tools/km-to-miles.html">KM to Miles</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/privacy-policy.html">Privacy Policy</a> · 
+      <a href="/terms.html">Terms</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+const KM_TO_MILES = 0.621371192;
+const MILES_TO_KM = 1.609344;
+
+function applyPreset(type) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+  const speedUnit = document.getElementById('speedUnit').value;
+  let kmh = 90;
+  if (type === 'walk') kmh = 5;
+  else if (type === 'cycle') kmh = 18;
+  else if (type === 'city') kmh = 45;
+  else if (type === 'highway') kmh = 90;
+  else if (type === 'fast') kmh = 120;
+  else if (type === 'train') kmh = 200;
+
+  if (speedUnit === 'mph') {
+    document.getElementById('speedVal').value = Math.round(kmh * KM_TO_MILES);
+  } else {
+    document.getElementById('speedVal').value = kmh;
+  }
+  calculateTravelTime();
+}
+
+function formatHoursMinutes(totalMinutes) {
+  const mins = Math.round(totalMinutes);
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  if (h === 0) return `${m} min`;
+  if (m === 0) return `${h} hr`;
+  return `${h} hr ${m} min`;
+}
+
+function calculateTravelTime() {
+  const dist = parseFloat(document.getElementById('distVal').value);
+  const distUnit = document.getElementById('distUnit').value;
+  const speed = parseFloat(document.getElementById('speedVal').value);
+  const speedUnit = document.getElementById('speedUnit').value;
+  const breakMins = parseFloat(document.getElementById('breakMins').value) || 0;
+  const departVal = document.getElementById('departTime').value;
+
+  if (isNaN(dist) || dist <= 0 || isNaN(speed) || speed <= 0) {
+    alert("Please enter a valid positive distance and average speed.");
+    return;
+  }
+
+  // Convert distance and speed to uniform km and km/h for calculation
+  const distKm = distUnit === 'mi' ? dist * MILES_TO_KM : dist;
+  const speedKmh = speedUnit === 'mph' ? speed * MILES_TO_KM : speed;
+
+  const pureHours = distKm / speedKmh;
+  const pureMinutes = pureHours * 60;
+  const totalMinutes = pureMinutes + breakMins;
+  const totalHours = totalMinutes / 60;
+
+  document.getElementById('resTotalFormatted').textContent = formatHoursMinutes(totalMinutes);
+  document.getElementById('resMovingTime').textContent = formatHoursMinutes(pureMinutes);
+  document.getElementById('resBreakTime').textContent = `${Math.round(breakMins)} min`;
+  document.getElementById('resDecimalHours').textContent = `${totalHours.toFixed(2)} hrs`;
+
+  // Effective average speed
+  const effectiveKmh = distKm / totalHours;
+  const displaySpeed = speedUnit === 'mph' ? `${(effectiveKmh * KM_TO_MILES).toFixed(1)} mph` : `${effectiveKmh.toFixed(1)} km/h`;
+  document.getElementById('resEffectiveSpeed').textContent = displaySpeed;
+
+  // Calculate ETA if departure time provided
+  if (departVal) {
+    const parts = departVal.split(':');
+    if (parts.length === 2) {
+      const depHour = parseInt(parts[0], 10);
+      const depMin = parseInt(parts[1], 10);
+      const arrivalTotalMin = (depHour * 60) + depMin + Math.round(totalMinutes);
+      
+      const dayOffset = Math.floor(arrivalTotalMin / 1440);
+      const normalizedMin = arrivalTotalMin % 1440;
+      let arrH = Math.floor(normalizedMin / 60);
+      const arrM = normalizedMin % 60;
+      
+      const ampm = arrH >= 12 ? 'PM' : 'AM';
+      let displayH = arrH % 12;
+      if (displayH === 0) displayH = 12;
+      const displayM = arrM < 10 ? '0' + arrM : arrM;
+      
+      let etaStr = `${displayH}:${displayM} ${ampm}`;
+      if (dayOffset === 1) etaStr += ' (Next Day)';
+      else if (dayOffset > 1) etaStr += ` (+${dayOffset} Days)`;
+      
+      document.getElementById('resEtaFormatted').textContent = etaStr;
+      document.getElementById('resEtaWrap').style.display = 'block';
+    }
+  } else {
+    document.getElementById('resEtaWrap').style.display = 'none';
+  }
+}
+
+function resetForm() {
+  document.getElementById('distVal').value = "280";
+  document.getElementById('distUnit').value = "km";
+  document.getElementById('speedVal').value = "90";
+  document.getElementById('speedUnit').value = "kmh";
+  document.getElementById('breakMins').value = "30";
+  document.getElementById('departTime').value = "09:00";
+  calculateTravelTime();
+}
+
+// Initial calculation on page load
+calculateTravelTime();
+</script>
+
+</body>
+</html>

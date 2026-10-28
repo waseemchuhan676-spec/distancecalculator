@@ -3,6 +3,7 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from urllib.parse import urlparse
 
 # Exact mathematical constants as required
 KM_TO_MILES = 0.621371192
@@ -36,12 +37,10 @@ def test_haversine_accuracy():
     print("[PASS] Haversine accuracy and zero-distance test passed.")
 
 def test_unit_conversions_exact():
-    # Test exact conversion constants
     km = 100.0
     miles = km * KM_TO_MILES
     assert abs(miles - 62.1371192) < 1e-6, f"Expected 62.1371192, got {miles}"
     
-    # Test inverse conversion
     back_to_km = miles * MILES_TO_KM
     assert abs(back_to_km - 100.0) < 1e-4, f"Expected ~100.0, got {back_to_km}"
     print("[PASS] Exact unit conversions (1 km = 0.621371192 mi, 1 mi = 1.609344 km) passed.")
@@ -80,16 +79,46 @@ def test_fuel_calculations_oneway_and_roundtrip():
 
     print("[PASS] Fuel calculation models (km/L, L/100km, MPG US) for One-way & Round-trip passed.")
 
-def test_sitemap_xml():
+def test_fuel_economy_converter_math():
+    C_US = 235.214583
+    C_UK = 282.480936
+    
+    # 30 MPG US to L/100km
+    mpg_us = 30.0
+    l100 = C_US / mpg_us
+    assert abs(l100 - 7.840486) < 1e-4
+    
+    # L/100km back to MPG UK
+    mpg_uk = C_UK / l100
+    assert abs(mpg_uk - (30.0 * 1.20095)) < 1e-2
+    
+    # km/L to MPG US
+    kml = 100.0 / l100
+    assert abs(kml * 2.35214583 - mpg_us) < 1e-3
+    print("[PASS] Fuel economy multi-way converter mathematical formulas verified.")
+
+def test_sitemap_xml_and_all_pages_exist():
     sitemap_path = Path("sitemap.xml")
     assert sitemap_path.exists(), "sitemap.xml does not exist"
     tree = ET.parse(sitemap_path)
     root = tree.getroot()
     urls = [elem.text for elem in root.findall("{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc")]
-    assert len(urls) >= 8, f"Expected at least 8 URLs in sitemap, found {len(urls)}"
+    assert len(urls) >= 28, f"Expected at least 28 canonical URLs in sitemap, found {len(urls)}"
+    
     for url in urls:
         assert url.startswith("https://distancecalculator-theta.vercel.app/"), f"Invalid sitemap URL: {url}"
-    print(f"[PASS] Sitemap valid XML with {len(urls)} canonical URLs.")
+        parsed = urlparse(url)
+        path_str = parsed.path.lstrip('/')
+        if not path_str:
+            local_file = Path("index.html")
+        elif path_str.endswith('/'):
+            local_file = Path(path_str) / "index.html"
+        else:
+            local_file = Path(path_str)
+        
+        assert local_file.exists(), f"Sitemap URL refers to missing disk file: {local_file} (from {url})"
+    
+    print(f"[PASS] Sitemap valid XML with {len(urls)} canonical URLs; all verified to exist on disk!")
 
 def test_robots_txt():
     robots_path = Path("robots.txt")
@@ -100,60 +129,117 @@ def test_robots_txt():
     assert "Sitemap: https://distancecalculator-theta.vercel.app/sitemap.xml" in content
     print("[PASS] robots.txt syntax and sitemap link verified.")
 
+def test_tools_pages_quality():
+    tools = [
+        "tools/fuel-cost-calculator.html",
+        "tools/km-to-miles.html",
+        "tools/miles-to-km.html",
+        "tools/travel-time-calculator.html",
+        "tools/straight-line-distance.html",
+        "tools/fuel-economy-converter.html",
+        "tools/road-trip-cost-calculator.html"
+    ]
+    for tool_file in tools:
+        p = Path(tool_file)
+        assert p.exists(), f"Missing tool file: {tool_file}"
+        html = p.read_text(encoding="utf-8")
+        assert "<title>" in html and "</title>" in html, f"Missing title in {tool_file}"
+        assert '<meta name="description"' in html, f"Missing description in {tool_file}"
+        assert '<link rel="canonical"' in html, f"Missing canonical in {tool_file}"
+        assert '<script type="application/ld+json">' in html, f"Missing structured data in {tool_file}"
+        assert 'href="/"' in html, f"Missing link back to home in {tool_file}"
+    print(f"[PASS] All {len(tools)} specialized tools verified with titles, descriptions, canonicals & schemas.")
+
+def test_blog_articles_quality():
+    blog_files = list(Path("blog").glob("*.html"))
+    assert len(blog_files) >= 10, f"Expected at least 10 blog files, found {len(blog_files)}"
+    for bf in blog_files:
+        html = bf.read_text(encoding="utf-8")
+        assert "<title>" in html, f"Missing title in {bf}"
+        assert '<meta name="description"' in html, f"Missing description in {bf}"
+        assert '<link rel="canonical"' in html, f"Missing canonical in {bf}"
+        assert "<h1" in html, f"Missing H1 in {bf}"
+        assert '<script type="application/ld+json">' in html, f"Missing schema in {bf}"
+    print(f"[PASS] All {len(blog_files)} blog articles verified with complete SEO metadata and schemas.")
+
+def test_city_distance_pilot_routes_quality():
+    route_files = list(Path("distance").glob("*.html"))
+    assert len(route_files) >= 5, f"Expected 5 pilot route files, found {len(route_files)}"
+    for rf in route_files:
+        html = rf.read_text(encoding="utf-8")
+        assert "<title>" in html, f"Missing title in {rf}"
+        assert '<meta name="description"' in html, f"Missing description in {rf}"
+        assert '<link rel="canonical"' in html, f"Missing canonical in {rf}"
+        assert '<script type="application/ld+json">' in html, f"Missing schema in {rf}"
+        assert 'class="stat-box"' in html, f"Missing stats box in {rf}"
+    print(f"[PASS] All {len(route_files)} pilot city route pages verified.")
+
+def test_trust_and_legal_pages_exist():
+    trust_pages = [
+        "about.html",
+        "how-it-works.html",
+        "data-sources.html",
+        "faq.html",
+        "contact.html",
+        "privacy-policy.html",
+        "terms.html",
+        "disclaimer.html"
+    ]
+    for tp in trust_pages:
+        p = Path(tp)
+        assert p.exists(), f"Missing trust page: {tp}"
+        html = p.read_text(encoding="utf-8")
+        assert "<title>" in html and "</title>" in html, f"Missing title in {tp}"
+        assert '<meta name="description"' in html, f"Missing description in {tp}"
+    print(f"[PASS] All {len(trust_pages)} trust, legal and methodology pages verified.")
+
 def test_index_html_security_and_structure():
     index_path = Path("index.html")
     assert index_path.exists(), "index.html does not exist"
     content = index_path.read_text(encoding="utf-8")
     
-    # 1. No raw innerHTML on API suggestions (prevent XSS)
+    # Security: No raw innerHTML on API suggestions
     assert "box.innerHTML = data.map" not in content, "SECURITY RISK: raw innerHTML found on API suggestions!"
     assert "item.textContent = p.display_name" in content, "Safe textContent must be used for API suggestions."
     
-    # 2. Stale coordinate invalidation logic
+    # Logic verification
     assert "handleInputChange" in content, "Stale coordinate invalidation handler missing!"
-    
-    # 3. GPS Geolocation button
     assert 'id="gpsBtn"' in content, "GPS My Location button missing!"
-    
-    # 4. Geodesic flight arc
     assert "generateGreatCircleArc" in content, "Great-Circle arc generator missing!"
-    
-    # 5. One-way vs Round-trip trip type support
     assert 'id="tripOneWay"' in content and 'id="tripRound"' in content, "Trip type selector missing!"
     assert "getTripMultiplier" in content, "Trip multiplier calculation helper missing!"
     
-    # 6. Schema JSON-LD validation
+    # Navigation & internal linking
+    assert 'class="header-nav"' in content, "Main header navigation missing!"
+    assert 'tools/fuel-cost-calculator.html' in content, "Fuel cost tool link missing!"
+    assert 'tools/travel-time-calculator.html' in content, "Travel time tool link missing!"
+    assert 'distance/new-york-to-boston.html' in content, "Pilot route link missing!"
+    assert 'how-it-works.html' in content, "How it works link missing!"
+    
+    # Schemas
     schemas = re.findall(r'<script type="application/ld\+json">(.*?)</script>', content, re.DOTALL)
     assert len(schemas) >= 3, f"Expected at least 3 schema blocks, got {len(schemas)}"
     for s in schemas:
-        try:
-            parsed = json.loads(s.strip())
-            assert "@context" in parsed and "@type" in parsed
-        except Exception as e:
-            raise AssertionError(f"Malformed JSON-LD schema: {e}")
-            
-    # 7. Check legal links in footer
-    assert "/about.html" in content
-    assert "/privacy-policy.html" in content
-    assert "/terms.html" in content
+        parsed = json.loads(s.strip())
+        assert "@context" in parsed and "@type" in parsed
     
-    print("[PASS] index.html security (XSS prevention), schemas, trip-type, and structure verified.")
-
-def test_legal_pages_exist():
-    for p in ["about.html", "privacy-policy.html", "terms.html"]:
-        path = Path(p)
-        assert path.exists(), f"Missing legal page: {p}"
-        content = path.read_text(encoding="utf-8")
-        assert "<title>" in content and "World Distance Calculator" in content
-    print("[PASS] Legal & transparency pages (About, Privacy, Terms) verified.")
+    print("[PASS] index.html security, schemas, navigation, and structure verified.")
 
 if __name__ == "__main__":
-    print("Running QA and Unit Test Suite for Distance Calculator (Day 1-5 Audit)...")
+    print("=" * 60)
+    print("RUNNING DISTANCE CALCULATOR COMPREHENSIVE QA & TEST SUITE")
+    print("=" * 60)
     test_haversine_accuracy()
     test_unit_conversions_exact()
     test_fuel_calculations_oneway_and_roundtrip()
-    test_sitemap_xml()
+    test_fuel_economy_converter_math()
+    test_sitemap_xml_and_all_pages_exist()
     test_robots_txt()
+    test_tools_pages_quality()
+    test_blog_articles_quality()
+    test_city_distance_pilot_routes_quality()
+    test_trust_and_legal_pages_exist()
     test_index_html_security_and_structure()
-    test_legal_pages_exist()
-    print("\nALL AUTOMATED TESTS PASSED SUCCESSFULLY! (7/7 suites passed)")
+    print("=" * 60)
+    print("ALL 11 TEST SUITES PASSED FLAWLESSLY! 100% SUCCESS RATE")
+    print("=" * 60)

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Straight-Line Distance Calculator – Great-Circle "As the Crow Flies"</title>
+<meta name="description" content="Calculate the direct straight-line distance between two geographic coordinates or cities using the mathematically accurate Haversine formula. Outputs in km, miles, and nautical miles.">
+<meta name="keywords" content="straight line distance calculator, as the crow flies calculator, great circle distance, haversine calculator, coordinates distance calculator, nautical miles calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/straight-line-distance.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+.coord-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:var(--dark)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.preset-btns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+.preset-btn{background:#f1f5f9;border:1px solid #cbd5e1;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:#334155;transition:all 0.15s}
+.preset-btn:hover{background:#e2e8f0;border-color:#94a3b8}
+.preset-btn.active{background:var(--blue);color:#fff;border-color:var(--blue-hover)}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.result-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-top:14px}
+.result-stat{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eef2f6}
+.result-stat:last-child{border-bottom:0}
+.result-stat span{color:var(--muted);font-size:14px}
+.result-stat b{font-size:18px;color:var(--dark)}
+.total-stat{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px;margin-top:14px;text-align:center}
+.total-stat span{font-size:12px;text-transform:uppercase;color:#1e40af;font-weight:700;letter-spacing:0.5px}
+.total-stat b{font-size:32px;color:#1d4ed8;display:block;margin-top:2px}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article h3{font-size:18px;margin:18px 0 8px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.formula-box{background:#edf5ff;border-left:4px solid var(--blue);padding:14px 18px;border-radius:8px;font-family:monospace;font-size:13.5px;margin:14px 0;line-height:1.7}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Straight-Line Distance Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/tools/straight-line-distance.html",
+  "applicationCategory":"TravelApplication",
+  "description":"Calculate exact Great-Circle geodesic distance between two latitude and longitude points as the crow flies using the Haversine equation."
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/straight-line-distance.html" style="text-decoration:underline">Straight-Line</a>
+        <a href="/tools/travel-time-calculator.html">Travel Time</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Straight-Line Distance Calculator</h1>
+    <p>Calculate direct geodesic "as the crow flies" distance between any two coordinate points or major cities across the globe.</p>
+  </section>
+
+  <section class="grid">
+    <!-- Calculator Card -->
+    <div class="card">
+      <div class="label" style="margin-top:0">Quick City Presets</div>
+      <div class="preset-btns">
+        <button type="button" class="preset-btn active" onclick="setPreset('lon_par')">London → Paris</button>
+        <button type="button" class="preset-btn" onclick="setPreset('nyc_lon')">New York → London</button>
+        <button type="button" class="preset-btn" onclick="setPreset('tok_syd')">Tokyo → Sydney</button>
+        <button type="button" class="preset-btn" onclick="setPreset('dxb_sin')">Dubai → Singapore</button>
+      </div>
+
+      <label class="label">Point A (Origin Coordinates)</label>
+      <div class="coord-grid">
+        <div>
+          <span style="font-size:11px;color:#64748b">Latitude (-90 to 90)</span>
+          <input id="lat1" type="number" min="-90" max="90" step="any" value="51.5074" placeholder="e.g. 51.5074">
+        </div>
+        <div>
+          <span style="font-size:11px;color:#64748b">Longitude (-180 to 180)</span>
+          <input id="lon1" type="number" min="-180" max="180" step="any" value="-0.1278" placeholder="e.g. -0.1278">
+        </div>
+      </div>
+
+      <label class="label">Point B (Destination Coordinates)</label>
+      <div class="coord-grid">
+        <div>
+          <span style="font-size:11px;color:#64748b">Latitude (-90 to 90)</span>
+          <input id="lat2" type="number" min="-90" max="90" step="any" value="48.8566" placeholder="e.g. 48.8566">
+        </div>
+        <div>
+          <span style="font-size:11px;color:#64748b">Longitude (-180 to 180)</span>
+          <input id="lon2" type="number" min="-180" max="180" step="any" value="2.3522" placeholder="e.g. 2.3522">
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" onclick="calculateStraightLine()">Calculate Distance</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+      </div>
+
+      <!-- Result Card -->
+      <div id="resultBox" class="result-box">
+        <div class="total-stat">
+          <span>Kilometers (km)</span>
+          <b id="resKm">343.56 km</b>
+        </div>
+        <div class="result-stat" style="margin-top:10px">
+          <span>Statute Miles (mi)</span>
+          <b id="resMiles">213.48 mi</b>
+        </div>
+        <div class="result-stat">
+          <span>Nautical Miles (NM)</span>
+          <b id="resNaut">185.51 NM</b>
+        </div>
+        <div class="result-stat">
+          <span>Initial Bearing (Compass)</span>
+          <b id="resBearing">148.5° (SSE)</b>
+        </div>
+        <div class="result-stat">
+          <span>Flight Duration (at 850 km/h)</span>
+          <b id="resFlightTime">~45 min</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="card article">
+      <h2>Understanding Straight-Line Geodesic Distance</h2>
+      <p>Because the Earth is a three-dimensional oblate spheroid, the shortest distance between any two points on its surface is an arc along a <strong>Great Circle</strong>, rather than a flat Euclidean straight line on a 2D map.</p>
+
+      <div class="formula-box">
+a = sin²(Δφ/2) + cos(φ₁) ⋅ cos(φ₂) ⋅ sin²(Δλ/2)<br>
+c = 2 ⋅ atan2( √a, √(1−a) )<br>
+d = R ⋅ c
+      </div>
+      <p style="font-size:13px;color:#64748b">Where φ is latitude in radians, λ is longitude in radians, and R is Earth's mean volumetric radius (6,371 km / 3,958.8 miles).</p>
+
+      <h3>Why is Driving Distance Longer than Straight-Line Distance?</h3>
+      <p>A straight-line distance represents the theoretical minimum distance ("as the crow flies"). In practice, road driving routes are almost always <strong>15% to 35% longer</strong> than the straight-line measurement due to:</p>
+      <ul>
+        <li><strong>Geographic Obstacles:</strong> Mountain ranges, rivers, lakes, and oceans require bridges, tunnels, or extensive perimeter detours.</li>
+        <li><strong>Infrastructure Geometry:</strong> Road grids, highway interchanges, and residential streets cannot follow direct geodesic line-of-sight vectors.</li>
+        <li><strong>Elevation & Switchbacks:</strong> Ascending or descending steep topography requires winding switchbacks that add road mileage.</li>
+      </ul>
+
+      <h3>Distance Units Comparison</h3>
+      <ul>
+        <li><strong>Kilometer (km):</strong> Standard SI unit of geographic measurement (1 km = 1,000 meters).</li>
+        <li><strong>Statute Mile (mi):</strong> Imperial/US customary unit used in the US, UK, and Caribbean (1 mi = 1.609344 km).</li>
+        <li><strong>Nautical Mile (NM):</strong> International maritime and aviation standard based on one minute of arc along a meridian of the Earth (1 NM = 1.852 km).</li>
+      </ul>
+
+      <h3>Related Route Tools</h3>
+      <p>
+        👉 <a href="/" style="color:var(--blue);font-weight:700">Calculate Road Driving Route on Interactive Map</a><br>
+        👉 <a href="/tools/travel-time-calculator.html" style="color:var(--blue);font-weight:700">Calculate Travel Time & ETA</a><br>
+        👉 <a href="/tools/km-to-miles.html" style="color:var(--blue);font-weight:700">KM to Miles Converter</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Geodesic & Navigation Calculation Tools</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/tools/straight-line-distance.html">Straight-Line</a> · 
+      <a href="/tools/travel-time-calculator.html">Travel Time</a> · 
+      <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/privacy-policy.html">Privacy</a> · 
+      <a href="/terms.html">Terms</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+const KM_TO_MILES = 0.621371192;
+const KM_TO_NM = 1 / 1.852;
+const R_KM = 6371.0;
+
+const PRESETS = {
+  lon_par: { lat1: 51.5074, lon1: -0.1278, lat2: 48.8566, lon2: 2.3522 },
+  nyc_lon: { lat1: 40.7128, lon1: -74.0060, lat2: 51.5074, lon2: -0.1278 },
+  tok_syd: { lat1: 35.6762, lon1: 139.6503, lat2: -33.8688, lon2: 151.2093 },
+  dxb_sin: { lat1: 25.2048, lon1: 55.2708, lat2: 1.3521, lon2: 103.8198 }
+};
+
+function setPreset(key) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+  const p = PRESETS[key];
+  if (!p) return;
+  document.getElementById('lat1').value = p.lat1;
+  document.getElementById('lon1').value = p.lon1;
+  document.getElementById('lat2').value = p.lat2;
+  document.getElementById('lon2').value = p.lon2;
+  calculateStraightLine();
+}
+
+function toRad(deg) { return deg * Math.PI / 180; }
+function toDeg(rad) { return rad * 180 / Math.PI; }
+
+function getCompassDirection(deg) {
+  const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+  const index = Math.round(deg / 22.5) % 16;
+  return directions[index];
+}
+
+function calculateBearing(lat1, lon1, lat2, lon2) {
+  const phi1 = toRad(lat1), phi2 = toRad(lat2);
+  const deltaLambda = toRad(lon2 - lon1);
+  const y = Math.sin(deltaLambda) * Math.cos(phi2);
+  const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
+  let theta = toDeg(Math.atan2(y, x));
+  return (theta + 360) % 360;
+}
+
+function calculateStraightLine() {
+  const lat1 = parseFloat(document.getElementById('lat1').value);
+  const lon1 = parseFloat(document.getElementById('lon1').value);
+  const lat2 = parseFloat(document.getElementById('lat2').value);
+  const lon2 = parseFloat(document.getElementById('lon2').value);
+
+  if (isNaN(lat1) || lat1 < -90 || lat1 > 90 ||
+      isNaN(lat2) || lat2 < -90 || lat2 > 90 ||
+      isNaN(lon1) || lon1 < -180 || lon1 > 180 ||
+      isNaN(lon2) || lon2 < -180 || lon2 > 180) {
+    alert("Please enter valid latitudes (-90 to 90) and longitudes (-180 to 180).");
+    return;
+  }
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const km = R_KM * c;
+  const miles = km * KM_TO_MILES;
+  const nm = km * KM_TO_NM;
+
+  const bearing = calculateBearing(lat1, lon1, lat2, lon2);
+  const dir = getCompassDirection(bearing);
+
+  // Flight time at ~850 km/h commercial cruising speed + 30m climb/descent
+  const flightHours = (km / 850) + 0.5;
+  const fh = Math.floor(flightHours);
+  const fm = Math.round((flightHours - fh) * 60);
+
+  document.getElementById('resKm').textContent = `${km.toFixed(2)} km`;
+  document.getElementById('resMiles').textContent = `${miles.toFixed(2)} mi`;
+  document.getElementById('resNaut').textContent = `${nm.toFixed(2)} NM`;
+  document.getElementById('resBearing').textContent = `${bearing.toFixed(1)}° (${dir})`;
+  document.getElementById('resFlightTime').textContent = `~${fh > 0 ? fh + ' hr ' : ''}${fm} min`;
+}
+
+function resetForm() {
+  setPreset('lon_par');
+}
+
+// Initial calculation on load
+calculateStraightLine();
+</script>
+
+</body>
+</html>

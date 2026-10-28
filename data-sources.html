@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Data Sources & Attribution – World Distance Calculator</title>
+<meta name="description" content="Transparent attribution of data sources, mapping tiles, routing APIs, and geospatial technologies powering World Distance Calculator.">
+<meta name="keywords" content="data sources, openstreetmap attribution, nominatim geocoding, osrm routing engine, leaflet js">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/data-sources.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#475569;--bg:#f8fafc;--card:#fff;--line:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.7}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:860px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.breadcrumbs{font-size:13px;color:#64748b;margin:24px 0 12px}
+.breadcrumbs a{color:var(--blue);text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline}
+.content{background:#fff;border:1px solid var(--line);border-radius:18px;padding:36px;box-shadow:0 8px 30px rgba(20,45,70,0.04);margin-bottom:30px}
+h1{font-size:clamp(26px,4vw,36px);margin:0 0 14px;color:#0b1f33;font-weight:800}
+.lead{font-size:17px;color:var(--muted);margin-bottom:28px}
+.source-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:18px}
+.source-card h3{margin:0 0 8px;font-size:18px;color:#0f172a}
+.source-card p{margin:0 0 10px;font-size:14.5px;color:var(--muted)}
+.source-card a{color:var(--blue);font-weight:600;text-decoration:none}
+.source-card a:hover{text-decoration:underline}
+footer{background:#0b1f33;color:#94a3b8;padding:32px 0;text-align:center;font-size:14px;margin-top:50px}
+footer a{color:#93c5fd;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a>
+        <a href="/blog/">Blog</a>
+        <a href="/how-it-works.html">How It Works</a>
+        <a href="/data-sources.html" style="text-decoration:underline">Data Sources</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="breadcrumbs">
+    <a href="/">Home</a> › <span>Data Sources</span>
+  </div>
+
+  <article class="content">
+    <h1>Data Sources & Attribution</h1>
+    <p class="lead">World Distance Calculator relies on open-source geographic data, transparent community mapping databases, and established mathematical formulas.</p>
+
+    <div class="source-card">
+      <h3>1. OpenStreetMap (OSM)</h3>
+      <p>Mapping data, highway topologies, municipal boundaries, and street networks are provided by the global OpenStreetMap community. OpenStreetMap is open data, licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMap Foundation (OSMF).</p>
+      <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Learn more about OpenStreetMap Copyright →</a>
+    </div>
+
+    <div class="source-card">
+      <h3>2. Nominatim Geocoding</h3>
+      <p>Place name search and geographic coordinate resolution (latitude/longitude) are powered by the Nominatim search engine, operating under OpenStreetMap usage guidelines.</p>
+      <a href="https://nominatim.org/" target="_blank" rel="noopener">Learn more about Nominatim →</a>
+    </div>
+
+    <div class="source-card">
+      <h3>3. Project OSRM (Open Source Routing Machine)</h3>
+      <p>Vehicular road network distance calculations, turn-by-turn coordinate paths, and mathematical route durations are powered by Project OSRM, a high-performance routing engine written in C++ designed to execute shortest-path queries over highway graphs.</p>
+      <a href="http://project-osrm.org/" target="_blank" rel="noopener">Learn more about Project OSRM →</a>
+    </div>
+
+    <div class="source-card">
+      <h3>4. Leaflet.js Mapping Engine</h3>
+      <p>Interactive client-side map rendering, zoom controls, and geodesic layer drawing are powered by Leaflet, an open-source JavaScript library developed by Volodymyr Agafonkin.</p>
+      <a href="https://leafletjs.com/" target="_blank" rel="noopener">Learn more about Leaflet.js →</a>
+    </div>
+
+    <div class="source-card">
+      <h3>5. Geodesic & Mathematical Standards</h3>
+      <p>Straight-line distance calculations employ the Haversine equation using the WGS 84 mean volumetric Earth radius benchmark of <strong>6,371.0 kilometers (3,958.8 statute miles)</strong>. Statute mile to kilometer conversions adhere to the international treaty constant (1 mile = 1.609344 km).</p>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Open Data Attribution</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/how-it-works.html">How It Works</a> · 
+      <a href="/data-sources.html">Data Sources</a> · 
+      <a href="/privacy-policy.html">Privacy</a> · 
+      <a href="/terms.html">Terms</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

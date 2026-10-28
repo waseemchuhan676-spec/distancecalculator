@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Fuel Economy Converter – MPG (US & UK), km/L, L/100km</title>
+<meta name="description" content="Instant multi-way fuel economy converter between MPG (US), MPG (UK Imperial), km/L, and L/100 km. Accurate formulas and reference comparison charts.">
+<meta name="keywords" content="fuel economy converter, mpg to l 100km, kml to mpg, mpg us to imperial, gas mileage conversion, fuel consumption converter">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/fuel-economy-converter.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#334155}
+.unit-desc{font-size:12px;color:#64748b;margin-bottom:6px;display:block}
+.field-box{position:relative;margin-bottom:12px}
+input{width:100%;padding:14px 70px 14px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:16px;background:#fff;color:var(--dark);font-weight:600}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.unit-badge{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--blue);pointer-events:none}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:0;transition:all 0.2s}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.btn-secondary:hover{background:#dbeafe}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article h3{font-size:18px;margin:18px 0 8px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.formula-box{background:#edf5ff;border-left:4px solid var(--blue);padding:14px 18px;border-radius:8px;font-family:monospace;font-size:13.5px;margin:14px 0;line-height:1.7}
+.table-wrap{overflow-x:auto;margin:18px 0}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:8px 12px;border:1px solid #e2e8f0;text-align:left}
+th{background:#f8fafc;font-weight:700}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Fuel Economy Converter",
+  "url":"https://distancecalculator-theta.vercel.app/tools/fuel-economy-converter.html",
+  "applicationCategory":"UtilityApplication",
+  "description":"Instant multi-way converter for MPG (US), MPG (UK Imperial), km/L, and Liters per 100 km (L/100km)."
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a>
+        <a href="/tools/fuel-economy-converter.html" style="text-decoration:underline">Fuel Economy</a>
+        <a href="/tools/km-to-miles.html">KM to Miles</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Fuel Economy & Mileage Converter</h1>
+    <p>Convert seamlessly between MPG (US), MPG (UK Imperial), km/L, and L/100 km with real-time bidirectional calculation.</p>
+  </section>
+
+  <section class="grid">
+    <!-- Converter Form -->
+    <div class="card">
+      <label class="label" for="mpgUS">US Miles Per Gallon</label>
+      <span class="unit-desc">Standard in United States (1 US Gal = 3.785 L)</span>
+      <div class="field-box">
+        <input id="mpgUS" type="number" step="any" min="0.1" value="30" oninput="convertFrom('mpgUS')">
+        <span class="unit-badge">MPG US</span>
+      </div>
+
+      <label class="label" for="l100km">Liters per 100 Kilometers</label>
+      <span class="unit-desc">Standard in Europe, Australia, Canada (Lower is better)</span>
+      <div class="field-box">
+        <input id="l100km" type="number" step="any" min="0.1" value="7.84" oninput="convertFrom('l100km')">
+        <span class="unit-badge">L/100 km</span>
+      </div>
+
+      <label class="label" for="kmL">Kilometers per Liter</label>
+      <span class="unit-desc">Standard in Japan, India, South America (Higher is better)</span>
+      <div class="field-box">
+        <input id="kmL" type="number" step="any" min="0.1" value="12.75" oninput="convertFrom('kmL')">
+        <span class="unit-badge">km/L</span>
+      </div>
+
+      <label class="label" for="mpgUK">UK Imperial Miles Per Gallon</label>
+      <span class="unit-desc">Standard in United Kingdom (1 Imp Gal = 4.546 L)</span>
+      <div class="field-box">
+        <input id="mpgUK" type="number" step="any" min="0.1" value="36.03" oninput="convertFrom('mpgUK')">
+        <span class="unit-badge">MPG UK</span>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary" onclick="setPresetValue(25)">Standard Sedan (25 MPG)</button>
+        <button type="button" class="btn btn-secondary" onclick="setPresetValue(45)">Hybrid Car (45 MPG)</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset (30 MPG)</button>
+      </div>
+    </div>
+
+    <!-- Educational & Formula Card -->
+    <div class="card article">
+      <h2>Conversion Formulas & Mathematical Foundations</h2>
+      <p>Converting fuel economy requires accounting for whether the metric measures <strong>efficiency</strong> (distance traveled per fuel unit) or <strong>consumption</strong> (fuel volume required per distance unit):</p>
+
+      <div class="formula-box">
+MPG (US) = 235.214583 ÷ (L/100 km)<br>
+MPG (UK) = 282.480936 ÷ (L/100 km)<br>
+km/L = 100 ÷ (L/100 km)<br>
+MPG (UK) = MPG (US) × 1.20095<br>
+MPG (US) = km/L × 2.35214583
+      </div>
+
+      <h3>Why is MPG UK Higher than MPG US?</h3>
+      <p>An Imperial (UK) gallon is approximately <strong>20% larger</strong> than a US customary liquid gallon:</p>
+      <ul>
+        <li><strong>1 US Liquid Gallon:</strong> 3.785411784 liters (231 cubic inches)</li>
+        <li><strong>1 Imperial UK Gallon:</strong> 4.54609 liters (approx. 277.42 cubic inches)</li>
+      </ul>
+      <p>Because an Imperial gallon contains more fuel, a vehicle will travel further on one Imperial gallon than on one US gallon, resulting in a numerical MPG value that is 20.095% higher for the exact same vehicle performance.</p>
+
+      <h3>Efficiency vs. Consumption</h3>
+      <p>In <strong>MPG</strong> and <strong>km/L</strong>, a <em>higher number</em> means superior efficiency (traveling further on less fuel). In <strong>L/100 km</strong>, a <em>lower number</em> means superior efficiency (burning fewer liters to travel 100 km).</p>
+
+      <h3>Reference Comparison Chart</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>MPG (US)</th>
+              <th>L/100 km</th>
+              <th>km/L</th>
+              <th>MPG (UK)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>15 MPG</td><td>15.68</td><td>6.38</td><td>18.01 MPG</td></tr>
+            <tr><td>20 MPG</td><td>11.76</td><td>8.50</td><td>24.02 MPG</td></tr>
+            <tr><td>25 MPG</td><td>9.41</td><td>10.63</td><td>30.02 MPG</td></tr>
+            <tr><td>30 MPG</td><td>7.84</td><td>12.75</td><td>36.03 MPG</td></tr>
+            <tr><td>35 MPG</td><td>6.72</td><td>14.88</td><td>42.03 MPG</td></tr>
+            <tr><td>40 MPG</td><td>5.88</td><td>17.01</td><td>48.04 MPG</td></tr>
+            <tr><td>50 MPG</td><td>4.70</td><td>21.26</td><td>60.05 MPG</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Calculate Road Trip Costs</h3>
+      <p>Now that you know your vehicle's fuel economy, estimate the exact cost of your upcoming journeys:</p>
+      <p>
+        👉 <a href="/tools/fuel-cost-calculator.html" style="color:var(--blue);font-weight:700">Trip Fuel Cost Calculator</a><br>
+        👉 <a href="/" style="color:var(--blue);font-weight:700">Distance Calculator with Route Mapping</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Fuel Economy & Unit Conversion Tools</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/tools/fuel-economy-converter.html">Fuel Economy</a> · 
+      <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a> · 
+      <a href="/tools/travel-time-calculator.html">Travel Time</a> · 
+      <a href="/tools/km-to-miles.html">KM to Miles</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/privacy-policy.html">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+// Mathematical conversion constants
+const C_US = 235.214583;
+const C_UK = 282.480936;
+const RATIO_UK_US = 1.2009499;
+
+let isUpdating = false;
+
+function convertFrom(source) {
+  if (isUpdating) return;
+  isUpdating = true;
+
+  const val = parseFloat(document.getElementById(source).value);
+  if (isNaN(val) || val <= 0) {
+    isUpdating = false;
+    return;
+  }
+
+  let l100 = 0;
+  if (source === 'mpgUS') {
+    l100 = C_US / val;
+  } else if (source === 'mpgUK') {
+    l100 = C_UK / val;
+  } else if (source === 'kmL') {
+    l100 = 100 / val;
+  } else if (source === 'l100km') {
+    l100 = val;
+  }
+
+  const resMpgUS = C_US / l100;
+  const resMpgUK = C_UK / l100;
+  const resKmL = 100 / l100;
+  const resL100 = l100;
+
+  if (source !== 'mpgUS') document.getElementById('mpgUS').value = resMpgUS.toFixed(2);
+  if (source !== 'mpgUK') document.getElementById('mpgUK').value = resMpgUK.toFixed(2);
+  if (source !== 'kmL') document.getElementById('kmL').value = resKmL.toFixed(2);
+  if (source !== 'l100km') document.getElementById('l100km').value = resL100.toFixed(2);
+
+  isUpdating = false;
+}
+
+function setPresetValue(mpg) {
+  document.getElementById('mpgUS').value = mpg;
+  convertFrom('mpgUS');
+}
+
+function resetForm() {
+  setPresetValue(30);
+}
+</script>
+
+</body>
+</html>

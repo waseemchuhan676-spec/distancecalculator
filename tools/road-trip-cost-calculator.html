@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Road Trip Cost Calculator – Complete Journey Budget & Expense Estimator</title>
+<meta name="description" content="Calculate total road trip costs including fuel, tolls, parking, lodging, and meals. Split trip expenses per passenger with one-way and round-trip support.">
+<meta name="keywords" content="road trip cost calculator, trip expense calculator, road trip budget planner, split travel cost calculator, gas and toll calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/road-trip-cost-calculator.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#059669}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:500px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:12px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inputrow{display:grid;grid-template-columns:1fr 120px;gap:8px}
+input,select{width:100%;padding:11px 13px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:14.5px;background:#fff;color:var(--dark)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.trip-radios{display:flex;gap:16px;margin:10px 0 6px}
+.trip-radios label{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:13px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.result-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:18px;margin-top:16px}
+.result-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eef2f6}
+.result-stat:last-child{border-bottom:0}
+.result-stat span{color:var(--muted);font-size:13.5px}
+.result-stat b{font-size:16px;color:var(--dark)}
+.total-stat{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:12px;padding:14px;margin-top:14px;text-align:center}
+.total-stat span{font-size:12px;text-transform:uppercase;color:#065f46;font-weight:700;letter-spacing:0.5px}
+.total-stat b{font-size:30px;color:#047857;display:block;margin-top:2px}
+.split-stat{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px;margin-top:10px;text-align:center}
+.split-stat span{font-size:11.5px;text-transform:uppercase;color:#1e40af;font-weight:700}
+.split-stat b{font-size:20px;color:#1d4ed8;display:block}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article h3{font-size:18px;margin:18px 0 8px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.formula-box{background:#edf5ff;border-left:4px solid var(--blue);padding:14px 18px;border-radius:8px;font-family:monospace;font-size:13.5px;margin:14px 0;line-height:1.7}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Road Trip Cost Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/tools/road-trip-cost-calculator.html",
+  "applicationCategory":"TravelApplication",
+  "description":"Comprehensive road trip budget calculator estimating fuel, tolls, parking, lodging, food, and per-passenger expense splits."
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/road-trip-cost-calculator.html" style="text-decoration:underline">Trip Cost</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a>
+        <a href="/tools/travel-time-calculator.html">Travel Time</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Road Trip Cost Calculator</h1>
+    <p>Plan your complete journey budget including fuel expenses, road tolls, parking fees, hotel stays, food, and passenger splits.</p>
+  </section>
+
+  <section class="grid">
+    <!-- Calculator Card -->
+    <div class="card">
+      <div class="trip-radios">
+        <label><input type="radio" name="tripType" id="tripOneWay" value="1" checked onchange="calculateTripCost()"> One-way</label>
+        <label><input type="radio" name="tripType" id="tripRound" value="2" onchange="calculateTripCost()"> Round-trip (×2)</label>
+      </div>
+
+      <label class="label" for="distVal">Journey Distance</label>
+      <div class="inputrow">
+        <input id="distVal" type="number" min="1" step="1" value="650" placeholder="e.g. 650">
+        <select id="distUnit">
+          <option value="km" selected>Kilometers</option>
+          <option value="mi">Miles</option>
+        </select>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label class="label" for="fuelEff">Fuel Economy</label>
+          <input id="fuelEff" type="number" min="0.1" step="0.1" value="14" placeholder="e.g. 14">
+        </div>
+        <div>
+          <label class="label" for="effUnit">Economy Unit</label>
+          <select id="effUnit">
+            <option value="kml" selected>km/L</option>
+            <option value="l100">L/100km</option>
+            <option value="mpg_us">MPG (US)</option>
+            <option value="mpg_uk">MPG (UK)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label class="label" for="fuelPrice">Fuel Price</label>
+          <input id="fuelPrice" type="number" min="0.01" step="0.01" value="1.85" placeholder="e.g. 1.85">
+        </div>
+        <div>
+          <label class="label" for="currencySymbol">Currency</label>
+          <select id="currencySymbol">
+            <option value="$" selected>USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="£">GBP (£)</option>
+            <option value="C$">CAD (C$)</option>
+            <option value="A$">AUD (A$)</option>
+            <option value="Rs">PKR / INR (Rs)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label class="label" for="tollsCost">Estimated Tolls</label>
+          <input id="tollsCost" type="number" min="0" step="1" value="25" placeholder="e.g. 25">
+        </div>
+        <div>
+          <label class="label" for="parkingCost">Parking & Transit</label>
+          <input id="parkingCost" type="number" min="0" step="1" value="20" placeholder="e.g. 20">
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div>
+          <label class="label" for="hotelCost">Hotel / Lodging</label>
+          <input id="hotelCost" type="number" min="0" step="5" value="120" placeholder="e.g. 120">
+        </div>
+        <div>
+          <label class="label" for="foodCost">Food & Snacks</label>
+          <input id="foodCost" type="number" min="0" step="5" value="80" placeholder="e.g. 80">
+        </div>
+      </div>
+
+      <label class="label" for="passengers">Number of Passengers (To Split)</label>
+      <input id="passengers" type="number" min="1" max="50" step="1" value="3" placeholder="e.g. 3">
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" onclick="calculateTripCost()">Calculate Trip Budget</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+      </div>
+
+      <!-- Result Card -->
+      <div id="resultBox" class="result-box">
+        <div class="total-stat">
+          <span>Estimated Total Trip Cost</span>
+          <b id="resTotal">$330.93</b>
+        </div>
+        <div class="split-stat">
+          <span>Cost Per Passenger (3 People)</span>
+          <b id="resSplit">$110.31 / person</b>
+        </div>
+        <div class="result-stat" style="margin-top:10px">
+          <span>Estimated Fuel Cost</span>
+          <b id="resFuelCost">$85.93 (26.0%)</b>
+        </div>
+        <div class="result-stat">
+          <span>Road Tolls & Parking</span>
+          <b id="resTollParking">$45.00 (13.6%)</b>
+        </div>
+        <div class="result-stat">
+          <span>Hotel & Lodging</span>
+          <b id="resHotel">$120.00 (36.3%)</b>
+        </div>
+        <div class="result-stat">
+          <span>Food & Miscellaneous</span>
+          <b id="resFood">$80.00 (24.2%)</b>
+        </div>
+        <div class="result-stat">
+          <span>Total Distance Driven</span>
+          <b id="resTotalDist">650 km</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational Guide Card -->
+    <div class="card article">
+      <h2>How to Plan an Accurate Road Trip Budget</h2>
+      <p>Road trip expenses fall into two key categories: <strong>vehicle operating costs</strong> (fuel, tolls, parking) and <strong>traveler subsistence costs</strong> (food, refreshments, overnight accommodations).</p>
+
+      <div class="formula-box">
+Total Trip Cost = (Fuel Required × Price) + Tolls + Parking + Lodging + Food<br>
+Per Passenger Share = Total Trip Cost ÷ Number of Travelers
+      </div>
+
+      <h3>Key Expense Categories Explained</h3>
+      <ul>
+        <li><strong>Fuel Consumption:</strong> The biggest variable cost. Driving style, air conditioning, highway vs. city routes, and vehicle payload can impact fuel consumption by up to 20%.</li>
+        <li><strong>Highway Tolls & Vignettes:</strong> Turnpikes, express toll lanes, tunnels, and bridge crossings frequently charge electronic or cash tolls. If you are doing a round trip, remember to account for return toll fees.</li>
+        <li><strong>Parking Fees:</strong> City center parking, national park vehicle permits, and hotel overnight parking can quickly add up.</li>
+        <li><strong>Lodging & Overnight Stays:</strong> For long trips exceeding 8 to 10 hours of driving, scheduling an overnight stop ensures driver alertness and travel safety.</li>
+      </ul>
+
+      <h3>Tips to Reduce Road Trip Costs</h3>
+      <ol>
+        <li><strong>Drive at Steady Highway Speeds:</strong> Driving at 100 km/h (62 mph) instead of 120 km/h (75 mph) can reduce fuel consumption by 15% to 20%.</li>
+        <li><strong>Check Tire Pressure:</strong> Under-inflated tires increase rolling resistance and engine fuel burn.</li>
+        <li><strong>Pack Food & Reusable Water Bottles:</strong> Purchasing snacks and beverages at highway service plazas is up to 300% more expensive than grocery store supplies.</li>
+        <li><strong>Split Expenses Fairly:</strong> Sharing fuel and toll costs among 3 or 4 passengers makes road travel far more cost-effective than flights or trains.</li>
+      </ol>
+
+      <h3>Related Travel Calculators</h3>
+      <p>
+        👉 <a href="/tools/fuel-cost-calculator.html" style="color:var(--blue);font-weight:700">Dedicated Trip Fuel Calculator</a><br>
+        👉 <a href="/tools/travel-time-calculator.html" style="color:var(--blue);font-weight:700">Travel Time & Driving Duration Calculator</a><br>
+        👉 <a href="/" style="color:var(--blue);font-weight:700">Interactive Distance Calculator Map</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Road Trip Budgeting & Navigation Tools</p>
+    <p>
+      <a href="/">Home</a> · 
+      <a href="/tools/road-trip-cost-calculator.html">Trip Cost</a> · 
+      <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a> · 
+      <a href="/tools/travel-time-calculator.html">Travel Time</a> · 
+      <a href="/tools/km-to-miles.html">KM to Miles</a> · 
+      <a href="/about.html">About</a> · 
+      <a href="/privacy-policy.html">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+const KM_TO_MILES = 0.621371192;
+const MILES_TO_KM = 1.609344;
+
+function calculateTripCost() {
+  const distRaw = parseFloat(document.getElementById('distVal').value);
+  const distUnit = document.getElementById('distUnit').value;
+  const isRoundTrip = document.getElementById('tripRound').checked;
+  const multiplier = isRoundTrip ? 2 : 1;
+
+  const eff = parseFloat(document.getElementById('fuelEff').value);
+  const effUnit = document.getElementById('effUnit').value;
+  const fuelPrice = parseFloat(document.getElementById('fuelPrice').value);
+  const cur = document.getElementById('currencySymbol').value;
+
+  const tolls = (parseFloat(document.getElementById('tollsCost').value) || 0) * (isRoundTrip ? 2 : 1);
+  const parking = parseFloat(document.getElementById('parkingCost').value) || 0;
+  const hotel = parseFloat(document.getElementById('hotelCost').value) || 0;
+  const food = parseFloat(document.getElementById('foodCost').value) || 0;
+  const passengers = parseInt(document.getElementById('passengers').value, 10) || 1;
+
+  if (isNaN(distRaw) || distRaw <= 0 || isNaN(eff) || eff <= 0 || isNaN(fuelPrice) || fuelPrice <= 0) {
+    alert("Please enter valid positive values for distance, fuel economy, and fuel price.");
+    return;
+  }
+
+  const singleKm = distUnit === 'mi' ? distRaw * MILES_TO_KM : distRaw;
+  const totalKm = singleKm * multiplier;
+  const totalMiles = totalKm * KM_TO_MILES;
+
+  // Calculate fuel required in uniform fuel units (liters or gallons)
+  let fuelVol = 0;
+  if (effUnit === 'kml') {
+    fuelVol = totalKm / eff;
+  } else if (effUnit === 'l100') {
+    fuelVol = (totalKm / 100) * eff;
+  } else if (effUnit === 'mpg_us') {
+    fuelVol = totalMiles / eff; // in US gallons
+  } else if (effUnit === 'mpg_uk') {
+    fuelVol = totalMiles / eff; // in UK gallons
+  }
+
+  const fuelCost = fuelVol * fuelPrice;
+  const tollParking = tolls + parking;
+  const totalTripCost = fuelCost + tollParking + hotel + food;
+  const perPerson = totalTripCost / Math.max(1, passengers);
+
+  const pctFuel = (fuelCost / totalTripCost * 100).toFixed(1);
+  const pctToll = (tollParking / totalTripCost * 100).toFixed(1);
+  const pctHotel = (hotel / totalTripCost * 100).toFixed(1);
+  const pctFood = (food / totalTripCost * 100).toFixed(1);
+
+  document.getElementById('resTotal').textContent = `${cur}${totalTripCost.toFixed(2)}`;
+  document.getElementById('resSplit').textContent = `${cur}${perPerson.toFixed(2)} / person`;
+  document.getElementById('resFuelCost').textContent = `${cur}${fuelCost.toFixed(2)} (${pctFuel}%)`;
+  document.getElementById('resTollParking').textContent = `${cur}${tollParking.toFixed(2)} (${pctToll}%)`;
+  document.getElementById('resHotel').textContent = `${cur}${hotel.toFixed(2)} (${pctHotel}%)`;
+  document.getElementById('resFood').textContent = `${cur}${food.toFixed(2)} (${pctFood}%)`;
+  
+  const distDisplay = distUnit === 'mi' 
+    ? `${(distRaw * multiplier).toFixed(1)} miles` 
+    : `${(distRaw * multiplier).toFixed(1)} km`;
+  document.getElementById('resTotalDist').textContent = distDisplay;
+}
+
+function resetForm() {
+  document.getElementById('tripOneWay').checked = true;
+  document.getElementById('distVal').value = "650";
+  document.getElementById('distUnit').value = "km";
+  document.getElementById('fuelEff').value = "14";
+  document.getElementById('effUnit').value = "kml";
+  document.getElementById('fuelPrice').value = "1.85";
+  document.getElementById('currencySymbol').value = "$";
+  document.getElementById('tollsCost').value = "25";
+  document.getElementById('parkingCost').value = "20";
+  document.getElementById('hotelCost').value = "120";
+  document.getElementById('foodCost').value = "80";
+  document.getElementById('passengers').value = "3";
+  calculateTripCost();
+}
+
+// Initial calculation on load
+calculateTripCost();
+</script>
+
+</body>
+</html>

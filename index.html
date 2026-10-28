@@ -63,9 +63,18 @@ header{
   box-shadow:0 4px 20px rgba(11,31,51,0.15);
 }
 .wrap{max-width:1200px;margin:auto;padding:0 20px}
-.header-row{display:flex;align-items:center;justify-content:space-between}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
 .brand{font-size:22px;font-weight:800;letter-spacing:-0.5px;display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none}
 .badge-tag{background:rgba(255,255,255,0.18);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.header-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.nav-link{color:#e2e8f0;text-decoration:none;font-size:14px;font-weight:600;padding:5px 10px;border-radius:8px;transition:all 0.2s}
+.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.16)}
+.tools-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}
+.tool-tile{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;color:var(--dark);transition:all 0.2s;display:flex;flex-direction:column}
+.tool-tile:hover{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 6px 20px rgba(21,101,192,0.1)}
+.tool-icon{font-size:24px;margin-bottom:6px}
+.tool-tile b{font-size:15px;color:var(--blue);margin-bottom:4px}
+.tool-tile p{font-size:13px;color:var(--muted);margin:0;line-height:1.4}
 .hero{text-align:center;padding:34px 12px 22px}
 .hero h1{font-size:clamp(28px,4.5vw,42px);line-height:1.2;margin:0 0 12px;font-weight:800;color:var(--dark);letter-spacing:-0.5px}
 .hero p{color:var(--muted);font-size:16.5px;max-width:780px;margin:0 auto}
@@ -452,7 +461,16 @@ footer p{margin:6px 0;text-align:center}
   <div class="wrap">
     <div class="header-row">
       <a href="/" class="brand">📍 World Distance Calculator</a>
-      <span class="badge-tag">Free Route & Distance Tool</span>
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href="/" class="nav-link active">Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html" class="nav-link">Fuel Cost</a>
+        <a href="/tools/travel-time-calculator.html" class="nav-link">Travel Time</a>
+        <a href="/tools/km-to-miles.html" class="nav-link">KM to Miles</a>
+        <a href="/tools/straight-line-distance.html" class="nav-link">Straight-Line</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/how-it-works.html" class="nav-link">How It Works</a>
+        <a href="/faq.html" class="nav-link">FAQ</a>
+      </nav>
     </div>
   </div>
 </header>
@@ -621,10 +639,63 @@ footer p{margin:6px 0;text-align:center}
 
       <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--muted)">
         <strong style="color:var(--dark)">Detailed Route Guides:</strong>
-        <a href="/routes/lahore-to-islamabad.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Lahore to Islamabad Guide</a> ·
-        <a href="/routes/karachi-to-lahore.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Karachi to Lahore Guide</a> ·
-        <a href="/routes/multan-to-lahore.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Multan to Lahore Guide</a> ·
-        <a href="/routes/dubai-to-abu-dhabi.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Dubai to Abu Dhabi Guide</a>
+        <a href="/distance/new-york-to-boston.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">New York to Boston</a> ·
+        <a href="/distance/los-angeles-to-san-diego.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">LA to San Diego</a> ·
+        <a href="/distance/london-to-manchester.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">London to Manchester</a> ·
+        <a href="/distance/toronto-to-ottawa.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Toronto to Ottawa</a> ·
+        <a href="/distance/sydney-to-canberra.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Sydney to Canberra</a> ·
+        <a href="/routes/lahore-to-islamabad.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Lahore to Islamabad</a> ·
+        <a href="/routes/dubai-to-abu-dhabi.html" style="color:var(--blue);text-decoration:none;margin:0 8px;font-weight:600">Dubai to Abu Dhabi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialized Distance & Travel Tools Grid -->
+  <section class="seo-section">
+    <div class="card seo-card">
+      <h2>Specialized Distance & Travel Tools</h2>
+      <p>Explore our suite of dedicated travel calculators, unit converters, and route budgeting utilities:</p>
+      <div class="tools-card-grid">
+        <a href="/tools/fuel-cost-calculator.html" class="tool-tile">
+          <span class="tool-icon">⛽</span>
+          <b>Trip Fuel Cost Calculator</b>
+          <p>Estimate trip petrol & diesel costs with km/L, L/100km, and MPG.</p>
+        </a>
+        <a href="/tools/travel-time-calculator.html" class="tool-tile">
+          <span class="tool-icon">⏱️</span>
+          <b>Travel Time Calculator</b>
+          <p>Estimate driving duration, rest break stops, and arrival clock ETAs.</p>
+        </a>
+        <a href="/tools/km-to-miles.html" class="tool-tile">
+          <span class="tool-icon">📏</span>
+          <b>KM to Miles Converter</b>
+          <p>Convert kilometers to statute miles with precision and conversion charts.</p>
+        </a>
+        <a href="/tools/miles-to-km.html" class="tool-tile">
+          <span class="tool-icon">🔄</span>
+          <b>Miles to KM Converter</b>
+          <p>Convert miles to kilometers using exact 1.609344 standards.</p>
+        </a>
+        <a href="/tools/straight-line-distance.html" class="tool-tile">
+          <span class="tool-icon">🌐</span>
+          <b>Straight-Line Distance</b>
+          <p>Calculate direct Great-Circle distance as the crow flies via Haversine.</p>
+        </a>
+        <a href="/tools/fuel-economy-converter.html" class="tool-tile">
+          <span class="tool-icon">📊</span>
+          <b>Fuel Economy Converter</b>
+          <p>Multi-way live converter between MPG (US/UK), km/L, and L/100km.</p>
+        </a>
+        <a href="/tools/road-trip-cost-calculator.html" class="tool-tile">
+          <span class="tool-icon">🚗</span>
+          <b>Road Trip Cost Calculator</b>
+          <p>Budget fuel, tolls, parking, lodging, food, and passenger splits.</p>
+        </a>
+        <a href="/blog/" class="tool-tile">
+          <span class="tool-icon">📚</span>
+          <b>Travel & Distance Blog</b>
+          <p>Educational articles, worked formulas, and journey planning guides.</p>
+        </a>
       </div>
     </div>
   </section>
@@ -762,12 +833,26 @@ footer p{margin:6px 0;text-align:center}
 <footer>
   <div class="wrap">
     <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/tools/fuel-cost-calculator.html">Fuel Cost Calculator</a>
+      <a href="/tools/travel-time-calculator.html">Travel Time</a>
+      <a href="/tools/km-to-miles.html">KM to Miles</a>
+      <a href="/tools/miles-to-km.html">Miles to KM</a>
+      <a href="/tools/straight-line-distance.html">Straight-Line</a>
+      <a href="/tools/fuel-economy-converter.html">Fuel Economy</a>
+      <a href="/tools/road-trip-cost-calculator.html">Road Trip Cost</a>
+      <a href="/blog/">Blog</a>
+      <a href="/how-it-works.html">How It Works</a>
+      <a href="/data-sources.html">Data Sources</a>
+      <a href="/faq.html">FAQ</a>
       <a href="/about.html">About Us</a>
+      <a href="/contact.html">Contact</a>
       <a href="/privacy-policy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Service</a>
+      <a href="/disclaimer.html">Disclaimer</a>
       <a href="/sitemap.xml">Sitemap</a>
     </div>
-    <p>© 2026 World Distance Calculator · Free Distance & Driving Time Tool</p>
+    <p>© 2026 World Distance Calculator · Global Distance & Driving Platform</p>
     <p><small>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors · Routing via OSRM</small></p>
   </div>
 </footer>

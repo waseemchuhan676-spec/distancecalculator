@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Fuel Cost Calculator – Calculate Trip Petrol & Diesel Expenses</title>
+<meta name="description" content="Calculate accurate fuel cost and consumption for any road trip. Supports km/L, L/100km, and MPG with one-way and round-trip options. Free online fuel calculator.">
+<meta name="keywords" content="fuel cost calculator, trip gas cost calculator, petrol expense calculator, fuel consumption calculator, mileage cost calculator">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/fuel-cost-calculator.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛽</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+.inputrow{display:grid;grid-template-columns:1fr 120px;gap:8px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:var(--dark)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.trip-radios{display:flex;gap:16px;margin:14px 0 6px}
+.trip-radios label{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.result-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-top:14px}
+.result-stat{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eef2f6}
+.result-stat:last-child{border-bottom:0}
+.result-stat span{color:var(--muted);font-size:14px}
+.result-stat b{font-size:18px;color:var(--dark)}
+.total-stat{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:12px;padding:14px;margin-top:14px;text-align:center}
+.total-stat span{font-size:12px;text-transform:uppercase;color:#065f46;font-weight:700;letter-spacing:0.5px}
+.total-stat b{font-size:28px;color:#047857;display:block;margin-top:2px}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.formula-box{background:#edf5ff;border-left:4px solid var(--blue);padding:14px 18px;border-radius:8px;font-family:monospace;font-size:14px;margin:14px 0}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Fuel Cost Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/tools/fuel-cost-calculator.html",
+  "applicationCategory":"TravelApplication",
+  "description":"Free online fuel cost calculator for road trips. Calculates required fuel volume and journey expense based on distance, vehicle fuel economy, and fuel price."
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a>
+        <a href="/tools/km-to-miles.html">KM to Miles</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Trip Fuel Cost Calculator</h1>
+    <p>Estimate the petrol or diesel required and calculate total journey fuel expenses for your next road trip.</p>
+  </section>
+
+  <section class="grid">
+    <!-- Calculator Card -->
+    <div class="card">
+      <label class="label" for="distVal">Trip Distance</label>
+      <div class="inputrow">
+        <input id="distVal" type="number" min="0.1" step="0.1" value="350" placeholder="e.g. 350">
+        <select id="distUnit">
+          <option value="km" selected>Kilometers</option>
+          <option value="mi">Miles</option>
+        </select>
+      </div>
+
+      <div class="trip-radios">
+        <label><input type="radio" name="calcTripType" id="typeOneWay" value="1" checked> One-way trip</label>
+        <label><input type="radio" name="calcTripType" id="typeRound" value="2"> Round-trip (return)</label>
+      </div>
+
+      <label class="label" for="effVal">Vehicle Fuel Economy</label>
+      <div class="inputrow">
+        <input id="effVal" type="number" min="0.1" step="0.1" value="14" placeholder="e.g. 14">
+        <select id="effUnit">
+          <option value="kml" selected>km/L</option>
+          <option value="l100km">L/100km</option>
+          <option value="mpgus">MPG (US)</option>
+          <option value="mpguk">MPG (UK)</option>
+        </select>
+      </div>
+
+      <label class="label" for="priceVal" id="priceLabelText">Fuel Price per Litre</label>
+      <div class="inputrow">
+        <input id="priceVal" type="number" min="0" step="0.01" value="1.50" placeholder="e.g. 1.50">
+        <select id="currVal">
+          <option value="USD">USD ($)</option>
+          <option value="PKR" selected>PKR (Rs)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="INR">INR (₹)</option>
+          <option value="AED">AED</option>
+          <option value="CAD">CAD ($)</option>
+          <option value="AUD">AUD ($)</option>
+        </select>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" id="calcBtn" type="button">Calculate Fuel Cost</button>
+        <button class="btn btn-secondary" id="resetBtn" type="button">Reset</button>
+      </div>
+    </div>
+
+    <!-- Output Card -->
+    <div class="card">
+      <h2 style="margin-top:0;font-size:20px">Calculation Results</h2>
+      
+      <div class="total-stat">
+        <span id="tripTypeLabel">Estimated Trip Fuel Cost (One-Way)</span>
+        <b id="totalCostDisplay">PKR 37.50</b>
+      </div>
+
+      <div class="result-box">
+        <div class="result-stat">
+          <span>Effective Trip Distance:</span>
+          <b id="calcDistanceDisplay">350.0 km</b>
+        </div>
+        <div class="result-stat">
+          <span>Fuel Volume Required:</span>
+          <b id="fuelVolumeDisplay">25.0 Litres</b>
+        </div>
+        <div class="result-stat">
+          <span>Cost per Kilometer:</span>
+          <b id="costPerKmDisplay">PKR 0.11 / km</b>
+        </div>
+        <div class="result-stat">
+          <span>Cost per Mile:</span>
+          <b id="costPerMiDisplay">PKR 0.17 / mi</b>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);margin-top:16px">
+        Need to find the distance first? Use our <a href="/" style="color:var(--blue);font-weight:700">World Distance Calculator</a> to map your route and get exact mileage.
+      </p>
+    </div>
+  </section>
+
+  <!-- Educational Article & Formulas -->
+  <article class="card article">
+    <h2>How Fuel Cost is Calculated</h2>
+    <p>Calculating the fuel needed for a journey involves three variables: total journey distance, vehicle fuel consumption rate, and local fuel price per unit.</p>
+
+    <div class="formula-box">
+      Fuel Required = Distance ÷ Fuel Economy (for km/L or MPG)<br>
+      Fuel Required = (Distance ÷ 100) × Fuel Economy (for L/100km)<br>
+      Total Cost = Fuel Required × Price per Fuel Unit
+    </div>
+
+    <h2>Differences in Fuel Economy Units</h2>
+    <ul>
+      <li><strong>km/L (Kilometers per Liter):</strong> Common in Asia, South America, and Europe. Higher is better (e.g., 18 km/L is more fuel-efficient than 12 km/L).</li>
+      <li><strong>L/100km (Liters per 100 km):</strong> Standard metric unit in Canada, Europe, and Australia. Lower is better (e.g., 6.0 L/100km consumes less fuel than 9.5 L/100km).</li>
+      <li><strong>MPG (Miles per Gallon):</strong> Standard in the United States and United Kingdom. Note that a UK Imperial gallon (4.546 L) is 20% larger than a US liquid gallon (3.785 L).</li>
+    </ul>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · <a href="/">Main Calculator</a> · <a href="/about.html">About</a> · <a href="/privacy-policy.html">Privacy</a></p>
+  </div>
+</footer>
+
+<script>
+const KM_TO_MI = 0.621371192;
+const MI_TO_KM = 1.609344;
+const US_GAL_TO_L = 3.785411784;
+const UK_GAL_TO_L = 4.54609;
+
+const ids = {
+  dist: document.getElementById('distVal'),
+  distUnit: document.getElementById('distUnit'),
+  typeOneWay: document.getElementById('typeOneWay'),
+  typeRound: document.getElementById('typeRound'),
+  eff: document.getElementById('effVal'),
+  effUnit: document.getElementById('effUnit'),
+  price: document.getElementById('priceVal'),
+  curr: document.getElementById('currVal'),
+  priceLabel: document.getElementById('priceLabelText'),
+  tripLabel: document.getElementById('tripTypeLabel'),
+  totalCost: document.getElementById('totalCostDisplay'),
+  distDisplay: document.getElementById('calcDistanceDisplay'),
+  fuelDisplay: document.getElementById('fuelVolumeDisplay'),
+  perKm: document.getElementById('costPerKmDisplay'),
+  perMi: document.getElementById('costPerMiDisplay'),
+  calcBtn: document.getElementById('calcBtn'),
+  resetBtn: document.getElementById('resetBtn')
+};
+
+ids.effUnit.onchange = () => {
+  const u = ids.effUnit.value;
+  if (u === 'mpgus' || u === 'mpguk') {
+    ids.priceLabel.textContent = 'Fuel Price per Gallon';
+  } else {
+    ids.priceLabel.textContent = 'Fuel Price per Litre';
+  }
+  calculate();
+};
+
+function calculate() {
+  const rawDist = +ids.dist.value;
+  const isRound = ids.typeRound.checked;
+  const mult = isRound ? 2 : 1;
+  const tripDist = rawDist * mult;
+
+  // Normalize distance to KM and Miles
+  let distKm = ids.distUnit.value === 'km' ? tripDist : tripDist * MI_TO_KM;
+  let distMi = ids.distUnit.value === 'mi' ? tripDist : tripDist * KM_TO_MI;
+
+  const eff = +ids.eff.value;
+  const price = +ids.price.value;
+  const cur = ids.curr.value;
+  const effU = ids.effUnit.value;
+
+  if (isNaN(tripDist) || tripDist <= 0 || isNaN(eff) || eff <= 0 || isNaN(price) || price < 0) {
+    ids.totalCost.textContent = 'Invalid Input';
+    return;
+  }
+
+  let fuelLiters = 0;
+  let fuelGallons = 0;
+  let isGallonOutput = false;
+
+  if (effU === 'kml') {
+    fuelLiters = distKm / eff;
+  } else if (effU === 'l100km') {
+    fuelLiters = (distKm / 100) * eff;
+  } else if (effU === 'mpgus') {
+    fuelGallons = distMi / eff;
+    fuelLiters = fuelGallons * US_GAL_TO_L;
+    isGallonOutput = true;
+  } else if (effU === 'mpguk') {
+    fuelGallons = distMi / eff;
+    fuelLiters = fuelGallons * UK_GAL_TO_L;
+    isGallonOutput = true;
+  }
+
+  const totalCost = isGallonOutput ? fuelGallons * price : fuelLiters * price;
+  const costPerKm = totalCost / distKm;
+  const costPerMi = totalCost / distMi;
+
+  ids.tripLabel.textContent = `Estimated Trip Fuel Cost (${isRound ? 'Round-Trip' : 'One-Way'})`;
+  ids.totalCost.textContent = `${cur} ${totalCost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+  ids.distDisplay.textContent = `${tripDist.toFixed(1)} ${ids.distUnit.value} (${(ids.distUnit.value === 'km' ? distMi : distKm).toFixed(1)} ${ids.distUnit.value === 'km' ? 'mi' : 'km'})`;
+  ids.fuelDisplay.textContent = isGallonOutput ? `${fuelGallons.toFixed(1)} Gallons (${fuelLiters.toFixed(1)} L)` : `${fuelLiters.toFixed(1)} Litres`;
+  ids.perKm.textContent = `${cur} ${costPerKm.toFixed(2)} / km`;
+  ids.perMi.textContent = `${cur} ${costPerMi.toFixed(2)} / mi`;
+}
+
+ids.calcBtn.onclick = calculate;
+ids.resetBtn.onclick = () => {
+  ids.dist.value = '350';
+  ids.eff.value = '14';
+  ids.price.value = '1.50';
+  ids.typeOneWay.checked = true;
+  calculate();
+};
+
+ids.dist.addEventListener('input', calculate);
+ids.eff.addEventListener('input', calculate);
+ids.price.addEventListener('input', calculate);
+ids.curr.addEventListener('change', calculate);
+ids.distUnit.addEventListener('change', calculate);
+ids.typeOneWay.addEventListener('change', calculate);
+ids.typeRound.addEventListener('change', calculate);
+
+calculate();
+</script>
+</body>
+</html>
