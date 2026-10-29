@@ -450,6 +450,30 @@ footer p{margin:6px 0;text-align:center}
         "@type":"Answer",
         "text":"Travel times are based on typical speed averages (e.g. 80 km/h for driving, 800 km/h for flights). Actual duration varies based on traffic, weather, road conditions, and stops."
       }
+    },
+    {
+      "@type":"Question",
+      "name":"Does the calculator show flight bearing, time difference, and CO2?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes. In Flight mode, the result includes the initial great-circle bearing (compass direction), an approximate time difference based on longitude, and an estimated CO2 figure per passenger. Bearing is calculated exactly from coordinates; time difference and CO2 are estimates, as noted under the result."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Can I calculate round-trip (return) distance and fuel cost?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes. Use the One-way / Round-trip toggle in the calculator to double the distance and time, and the fuel tools offer the same round-trip option. The road trip cost calculator also adds tolls, parking, hotel, and food, with a per-person split."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Can I calculate a multi-stop route (A to B via C)?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes. Click Add stop under the destination field (up to 4 stops) to build a multi-stop route. The result shows the total distance and time plus a per-leg breakdown — distance, time, and fuel cost for each leg — and the share link keeps your stops."
+      }
     }
   ]
 }
@@ -506,6 +530,9 @@ footer p{margin:6px 0;text-align:center}
         <input id="to" placeholder="Enter destination city, address or airport" autocomplete="off" aria-label="Destination location" aria-autocomplete="list">
         <div class="suggestions" id="toSuggestions" role="listbox"></div>
       </div>
+
+      <div id="stopsWrap"></div>
+      <button class="small-btn" id="addStopBtn" type="button" style="margin-top:10px">+ Add stop (multi-stop route)</button>
 
       <div class="label">Travel Mode</div>
       <div class="mode-grid" role="radiogroup" aria-label="Travel mode">
@@ -617,6 +644,8 @@ footer p{margin:6px 0;text-align:center}
         </div>
 
         <div class="fuel-result" id="fuelResult"></div>
+        <div class="fuel-result" id="flightResult"></div>
+        <div class="fuel-result" id="legsResult"></div>
       </div>
     </div>
   </section>
@@ -826,6 +855,18 @@ footer p{margin:6px 0;text-align:center}
         <summary>Are travel times exact?</summary>
         <p>Travel times are based on typical speed averages (e.g. 80 km/h for driving, 800 km/h for flights). Actual duration varies based on traffic, weather, road conditions, and stops.</p>
       </details>
+      <details>
+        <summary>Does the calculator show flight bearing, time difference, and CO2?</summary>
+        <p>Yes. In Flight mode, the result includes the initial great-circle bearing (compass direction), an approximate time difference based on longitude, and an estimated CO2 figure per passenger. Bearing is calculated exactly from coordinates; time difference and CO2 are estimates, as noted under the result.</p>
+      </details>
+      <details>
+        <summary>Can I calculate round-trip (return) distance and fuel cost?</summary>
+        <p>Yes. Use the One-way / Round-trip toggle in the calculator to double the distance and time, and the fuel tools offer the same round-trip option. The road trip cost calculator also adds tolls, parking, hotel, and food, with a per-person split.</p>
+      </details>
+      <details>
+        <summary>Can I calculate a multi-stop route (A to B via C)?</summary>
+        <p>Yes. Click “Add stop” under the destination field (up to 4 stops) to build a multi-stop route. The result shows the total distance and time plus a per-leg breakdown — distance, time, and fuel cost for each leg — and the share link keeps your stops.</p>
+      </details>
     </div>
   </section>
 </main>
@@ -879,6 +920,12 @@ let toMarker = null;
 let lastKm = null;
 let lastAirKm = null;
 let lastHours = null;
+let lastLegs = null; // multi-stop legs [{from,to,km}] or null
+let stopInputs = []; // [{uid, input}]
+let stopPoints = {}; // uid -> {lat,lon,name}
+let stopMarkers = {}; // uid -> marker
+let stopUid = 0;
+const MAX_STOPS = 4;
 let unit = 'km';
 
 function getTripMultiplier() {
@@ -926,6 +973,10 @@ const ids = {
   routeNote: document.getElementById('routeNote'),
   modeBadge: document.getElementById('modeBadge'),
   fuelResult: document.getElementById('fuelResult'),
+  flightResult: document.getElementById('flightResult'),
+  legsResult: document.getElementById('legsResult'),
+  addStopBtn: document.getElementById('addStopBtn'),
+  stopsWrap: document.getElementById('stopsWrap'),
   gmapsBtn: document.getElementById('gmapsBtn'),
   shareBtn: document.getElementById('shareBtn'),
   alertBanner: document.getElementById('alertBanner'),
@@ -973,6 +1024,8 @@ document.querySelectorAll('.mode').forEach(el => {
     el.classList.add('active');
     el.setAttribute('aria-checked', 'true');
     selectedMode = el.dataset.mode;
+    if (ids.flightResult) ids.flightResult.classList.remove('show');
+    if (ids.legsResult) ids.legsResult.classList.remove('show');
     ids.modeBadge.textContent = labels[selectedMode];
     if (typeof gtag === 'function') {
       gtag('event', 'mode_select', { travel_mode: selectedMode });
@@ -1106,7 +1159,7 @@ const geoCache = {};
 let abortControllers = { from: null, to: null };
 
 function setupSearch(which) {
-  const input = ids[which];
+  const input = document.getElementById(which);
   const box = document.getElementById(which + 'Suggestions');
   let activeIndex = -1;
 
@@ -1237,15 +1290,133 @@ function setPoint(which, p) {
     fromPoint = p;
     if (fromMarker) map.removeLayer(fromMarker);
     fromMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup('<b>From:</b> ' + escapeHtml(p.name)).openPopup();
-  } else {
+  } else if (which === 'to') {
     toPoint = p;
     if (toMarker) map.removeLayer(toMarker);
     toMarker = L.marker([p.lat, p.lon]).addTo(map).bindPopup('<b>To:</b> ' + escapeHtml(p.name)).openPopup();
+  } else if (which.startsWith('stop')) {
+    const uid = which.slice(4);
+    stopPoints[uid] = p;
+    if (stopMarkers[uid]) map.removeLayer(stopMarkers[uid]);
+    stopMarkers[uid] = L.marker([p.lat, p.lon]).addTo(map).bindPopup('<b>Stop:</b> ' + escapeHtml(p.name));
+    return;
   }
 
   if (fromPoint && toPoint) {
     map.fitBounds([[fromPoint.lat, fromPoint.lon], [toPoint.lat, toPoint.lon]], { padding: [50, 50] });
   }
+}
+
+
+// --- Multi-stop waypoints (A -> stop -> stop -> B, max 4 stops) ---
+function shortName(v) { return v.split(',')[0].trim(); }
+function refreshAddStopBtn() {
+  ids.addStopBtn.style.display = stopInputs.length >= MAX_STOPS ? 'none' : '';
+}
+function addStop(value = '') {
+  if (stopInputs.length >= MAX_STOPS) return;
+  const uid = String(stopUid++);
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:8px;margin-top:10px;align-items:flex-start';
+  row.innerHTML = `<div style="flex:1;position:relative"><input id="stop${uid}" placeholder="Stop ${stopInputs.length + 1} — city or place" autocomplete="off" aria-label="Stop location"><div class="suggestions" id="stop${uid}Suggestions"></div></div>`;
+  const rm = document.createElement('button');
+  rm.className = 'small-btn'; rm.type = 'button'; rm.textContent = '×'; rm.title = 'Remove this stop';
+  rm.onclick = () => {
+    row.remove();
+    stopInputs = stopInputs.filter(s => s.uid !== uid);
+    delete stopPoints[uid];
+    if (stopMarkers[uid]) { map.removeLayer(stopMarkers[uid]); delete stopMarkers[uid]; }
+    refreshAddStopBtn();
+  };
+  row.appendChild(rm);
+  ids.stopsWrap.appendChild(row);
+  const input = document.getElementById('stop' + uid);
+  input.value = value;
+  input.addEventListener('input', () => {
+    const p = stopPoints[uid];
+    if (p && p.name !== input.value.trim()) {
+      delete stopPoints[uid];
+      if (stopMarkers[uid]) { map.removeLayer(stopMarkers[uid]); delete stopMarkers[uid]; }
+    }
+  });
+  stopInputs.push({ uid, input });
+  setupSearch('stop' + uid);
+  refreshAddStopBtn();
+}
+ids.addStopBtn.onclick = () => addStop();
+async function geocodeStopsIfNeeded() {
+  const pts = [];
+  for (const s of stopInputs) {
+    const v = s.input.value.trim();
+    if (!v) continue;
+    let p = stopPoints[s.uid];
+    if (!p || p.name !== v) {
+      const qKey = v.toLowerCase();
+      let d;
+      if (geoCache[qKey] && geoCache[qKey].length) {
+        d = geoCache[qKey][0];
+      } else {
+        const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=' + encodeURIComponent(v), { headers: { 'Accept-Language': 'en' } });
+        if (!r.ok) throw new Error('Location search service is currently unavailable. Please try again.');
+        const data = await r.json();
+        if (!data || !data.length) throw new Error('Stop location not found: "' + v + '". Please check the spelling.');
+        d = data[0];
+      }
+      p = { lat: +d.lat, lon: +d.lon, name: d.display_name };
+      stopPoints[s.uid] = p;
+      if (stopMarkers[s.uid]) map.removeLayer(stopMarkers[s.uid]);
+      stopMarkers[s.uid] = L.marker([p.lat, p.lon]).addTo(map).bindPopup('<b>Stop:</b> ' + escapeHtml(p.name));
+    }
+    pts.push(p);
+  }
+  return pts;
+}
+function buildWaypointUrl(points) {
+  return points.map(p => `${p.lon},${p.lat}`).join(';');
+}
+async function getOSRMWaypoints(points) {
+  const url = `https://router.project-osrm.org/route/v1/driving/${buildWaypointUrl(points)}?overview=full&geometries=geojson`;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
+  try {
+    const r = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    if (!r.ok) throw new Error('OSRM routing responded with ' + r.status);
+    const d = await r.json();
+    if (!d.routes || !d.routes.length) throw new Error('No road route found between locations.');
+    return d.routes[0];
+  } catch (e) {
+    clearTimeout(timeoutId);
+    throw e;
+  }
+}
+function legFuelText(legKm) {
+  if (!ids.fuelToggle.checked || selectedMode === 'flight' || selectedMode === 'bicycle') return '';
+  const unitType = ids.efficiencyUnit.value;
+  const eff = +ids.efficiency.value;
+  const price = +ids.fuelPrice.value;
+  const cur = ids.currency.value;
+  if (isNaN(eff) || eff <= 0 || isNaN(price) || price < 0) return '';
+  let fuel = 0, unitName = 'L';
+  if (unitType === 'kml') fuel = legKm / eff;
+  else if (unitType === 'l100km') fuel = (legKm / 100) * eff;
+  else if (unitType === 'mpg') { fuel = (legKm * KM_TO_MILES) / eff; unitName = 'gal'; }
+  const cost = fuel * price;
+  return ` · ⛽ ${fuel.toFixed(1)} ${unitName} · ${cur} ${cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+function updateLegsDisplay() {
+  const box = ids.legsResult;
+  if (!lastLegs || lastLegs.length < 2) { box.classList.remove('show'); box.textContent = ''; return; }
+  const mult = getTripMultiplier();
+  const rows = lastLegs.map(l => {
+    const d = unit === 'mi' ? l.km * KM_TO_MILES : l.km;
+    const suffix = unit === 'mi' ? ' mi' : ' km';
+    const dv = d >= 1000 ? Math.round(d).toLocaleString() + suffix : d.toFixed(1) + suffix;
+    const t = fmtTime(l.km / speeds[selectedMode]);
+    return `<div style="display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #eef2f6"><span>${escapeHtml(l.from)} → ${escapeHtml(l.to)}</span><b>${dv} · ${t}${legFuelText(l.km)}</b></div>`;
+  }).join('');
+  box.innerHTML = `<div><strong>Route legs (one-way${mult === 2 ? ' — round-trip doubles the total' : ''}):</strong></div>${rows}`;
+  box.classList.add('show');
 }
 
 // --- Great Circle Spherical Calculations (Haversine & Geodesic Arc) ---
@@ -1307,6 +1478,8 @@ function renderUnits() {
     ids.time.textContent = fmtTime(lastHours * mult);
   }
   updateFuelCost();
+  updateFlightDetails();
+  updateLegsDisplay();
 }
 
 function fmtTime(hours) {
@@ -1440,6 +1613,51 @@ function updateFuelCost() {
   resultBox.classList.add('show');
 }
 
+
+// --- Flight details: bearing, approximate time difference, CO2 (flight mode only) ---
+function initialBearing(a, b) {
+  const toRad = d => d * Math.PI / 180;
+  const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
+  const dLon = toRad(b.lon - a.lon);
+  const y = Math.sin(dLon) * Math.cos(lat2);
+  const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+  return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+}
+function compass16(deg) {
+  const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  return dirs[Math.round(deg / 22.5) % 16];
+}
+function updateFlightDetails() {
+  const box = ids.flightResult;
+  if (selectedMode !== 'flight' || !fromPoint || !toPoint || lastAirKm === null || lastAirKm < 0.1) {
+    box.classList.remove('show'); box.textContent = ''; return;
+  }
+  const brg = initialBearing(fromPoint, toPoint);
+  const tdiff = Math.round(((toPoint.lon - fromPoint.lon) / 15) * 2) / 2;
+  const tdiffText = Math.abs(tdiff) < 0.25 ? 'about the same time'
+    : '≈ ' + (tdiff > 0 ? '+' : '−') + Math.abs(tdiff).toFixed(1) + 'h';
+  const co2 = lastAirKm * 0.115;
+  box.innerHTML = `
+    <div>✈️ <strong>Flight details (one-way):</strong></div>
+    <div class="fuel-result-grid">
+      <div class="fuel-stat">
+        <span style="font-size:11px;color:#166534;text-transform:uppercase;font-weight:700">Initial bearing</span>
+        <b style="display:block;font-size:16px">${Math.round(brg)}° ${compass16(brg)}</b>
+      </div>
+      <div class="fuel-stat">
+        <span style="font-size:11px;color:#166534;text-transform:uppercase;font-weight:700">Approx. time difference</span>
+        <b style="display:block;font-size:16px">${tdiffText}</b>
+      </div>
+      <div class="fuel-stat">
+        <span style="font-size:11px;color:#166534;text-transform:uppercase;font-weight:700">Est. CO2 per passenger</span>
+        <b style="display:block;font-size:16px">≈ ${co2.toFixed(0)} kg</b>
+      </div>
+    </div>
+    <div class="fuel-disclaimer">Bearing is the initial great-circle bearing from origin coordinates. Time difference is approximate from longitude — actual time zones may differ. CO2 is an estimate at 115 g per passenger-km.</div>
+  `;
+  box.classList.add('show');
+}
+
 // --- Main Calculation Engine ---
 async function calculateDistance() {
   hideAlert();
@@ -1450,12 +1668,24 @@ async function calculateDistance() {
   try {
     await geocodeIfNeeded('from');
     await geocodeIfNeeded('to');
+    const viaPoints = await geocodeStopsIfNeeded();
+    const waypoints = [fromPoint, ...viaPoints, toPoint];
+    const legNames = [shortName(ids.from.value)];
+    for (const s of stopInputs) { const v = s.input.value.trim(); if (v) legNames.push(shortName(v)); }
+    legNames.push(shortName(ids.to.value));
+    for (let i = 1; i < legNames.length; i++) {
+      if (legNames[i].toLowerCase() === legNames[i - 1].toLowerCase()) {
+        throw new Error('A stop matches the previous place — please remove the duplicate stop.');
+      }
+    }
+    let air = 0;
+    for (let i = 0; i + 1 < waypoints.length; i++) air += haversine(waypoints[i], waypoints[i + 1]);
 
-    // Check for identical coordinates / identical location
-    const air = haversine(fromPoint, toPoint);
-    if (air < 0.1 || (fromPoint.name && fromPoint.name === toPoint.name)) {
+    // Check for identical coordinates / identical location (direct trips only)
+    if (viaPoints.length === 0 && (air < 0.1 || (fromPoint.name && fromPoint.name === toPoint.name))) {
       lastKm = 0;
       lastAirKm = 0;
+      lastLegs = null;
       renderUnits();
       ids.time.textContent = '0 min';
       ids.routeType.textContent = 'Same location';
@@ -1470,14 +1700,36 @@ async function calculateDistance() {
     let hours = air / speeds[selectedMode];
     let type = 'Straight line';
     let note = '';
+    lastLegs = null;
 
     if (selectedMode === 'flight') {
-      const arcCoords = generateGreatCircleArc(fromPoint, toPoint);
-      drawRoute(arcCoords, true);
-      note = 'Great-circle aerial corridor between coordinates. Not a booked airline flight schedule.';
-      type = 'Flight Corridor';
+      if (viaPoints.length) {
+        let arcs = [];
+        for (let i = 0; i + 1 < waypoints.length; i++) arcs = arcs.concat(generateGreatCircleArc(waypoints[i], waypoints[i + 1]));
+        drawRoute(arcs, true);
+        lastLegs = waypoints.slice(0, -1).map((p, i) => ({ from: legNames[i], to: legNames[i + 1], km: haversine(p, waypoints[i + 1]) }));
+        note = 'Great-circle aerial corridor between coordinates, via ' + (viaPoints.length === 1 ? '1 stop' : viaPoints.length + ' stops') + '. Not a booked airline flight schedule.';
+        type = 'Flight Corridor (multi-stop)';
+      } else {
+        const arcCoords = generateGreatCircleArc(fromPoint, toPoint);
+        drawRoute(arcCoords, true);
+        note = 'Great-circle aerial corridor between coordinates. Not a booked airline flight schedule.';
+        type = 'Flight Corridor';
+      }
     } else {
       try {
+        if (viaPoints.length) {
+          const route = await getOSRMWaypoints(waypoints);
+          drawRoute(route.geometry.coordinates, false);
+          const factor = { car: 1, motorbike: 1, bus: 1.03, train: 0.96, bicycle: 1.06 }[selectedMode] || 1;
+          const legs = route.legs && route.legs.length === viaPoints.length + 1 ? route.legs : null;
+          if (!legs) throw new Error('OSRM did not return per-leg distances.');
+          lastLegs = legs.map((lg, i) => ({ from: legNames[i], to: legNames[i + 1], km: (lg.distance / 1000) * factor }));
+          km = lastLegs.reduce((a, l) => a + l.km, 0);
+          hours = km / speeds[selectedMode];
+          type = 'Road route (multi-stop)';
+          note = 'Multi-stop road route via ' + legNames.slice(1, -1).join(', ') + '.';
+        } else {
         const route = await getOSRM(fromPoint, toPoint);
         drawRoute(route.geometry.coordinates, false);
 
@@ -1507,7 +1759,22 @@ async function calculateDistance() {
           type = 'Bicycle road corridor';
           note = 'Bicycle corridor estimate based on available public road routing.';
         }
+        }
       } catch (routingErr) {
+        if (viaPoints.length) {
+          const detourMultiplier = { car: 1.25, motorbike: 1.22, bus: 1.26, train: 1.15, bicycle: 1.30 }[selectedMode] || 1.25;
+          let arcs = [];
+          lastLegs = [];
+          for (let i = 0; i + 1 < waypoints.length; i++) {
+            arcs = arcs.concat(generateGreatCircleArc(waypoints[i], waypoints[i + 1]));
+            lastLegs.push({ from: legNames[i], to: legNames[i + 1], km: haversine(waypoints[i], waypoints[i + 1]) * detourMultiplier });
+          }
+          drawRoute(arcs, false);
+          km = lastLegs.reduce((a, l) => a + l.km, 0);
+          hours = km / speeds[selectedMode];
+          type = 'Estimated route (Fallback)';
+          note = 'Live road route server is currently busy; showing calculated multi-stop distance using standard detour factors.';
+        } else {
         // Fallback when OSRM is busy or overseas route is requested
         const arcCoords = generateGreatCircleArc(fromPoint, toPoint);
         drawRoute(arcCoords, false);
@@ -1524,6 +1791,7 @@ async function calculateDistance() {
         hours = km / speeds[selectedMode];
         type = 'Estimated route (Fallback)';
         note = 'Live road route server is currently busy; showing calculated distance using standard detour factor.';
+        }
       }
     }
 
@@ -1542,7 +1810,8 @@ async function calculateDistance() {
       gtag('event', 'calculate_distance', {
         travel_mode: selectedMode,
         distance_km: Math.round(km),
-        has_fuel: ids.fuelToggle.checked
+        has_fuel: ids.fuelToggle.checked,
+        stops: viaPoints.length
       });
     }
 
@@ -1598,7 +1867,8 @@ ids.shareBtn.onclick = async () => {
   const from = ids.from.value;
   const to = ids.to.value;
   const text = `Distance from ${from} to ${to}: ${fmtKm(lastKm)} by ${labels[selectedMode]}.`;
-  const url = `${location.origin}${location.pathname}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&mode=${selectedMode}&unit=${unit}`;
+  const viaParam = stopInputs.map(s => s.input.value.trim()).filter(Boolean).map(v => encodeURIComponent(v)).join('|');
+  const url = `${location.origin}${location.pathname}?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&mode=${selectedMode}&unit=${unit}${viaParam ? '&via=' + viaParam : ''}`;
 
   if (typeof gtag === 'function') gtag('event', 'share_click', { travel_mode: selectedMode });
 
@@ -1680,6 +1950,9 @@ if (params.get('unit') === 'mi') ids.miBtn.click();
 if (params.get('mode') && labels[params.get('mode')]) {
   const mBtn = document.querySelector(`.mode[data-mode="${params.get('mode')}"]`);
   if (mBtn) mBtn.click();
+}
+if (params.get('via')) {
+  params.get('via').split('|').forEach(v => { if (v) addStop(v); });
 }
 if (params.get('from') && params.get('to')) {
   setTimeout(calculateDistance, 450);

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Cities Within Radius – Find Cities and Towns Within X km</title>
+<meta name="description" content="Find all cities and towns within a radius of any place — 25, 50, 100 or 200 km — with distances and population, on a map. Uses OpenStreetMap data.">
+<meta name="keywords" content="cities within radius, towns within km, cities near me within radius, places within 50 km, radius search cities, cities around a location">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/cities-within-radius.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+.inputrow{display:grid;grid-template-columns:1fr 120px;gap:8px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:var(--dark)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+#map{height:420px;width:100%;border-radius:14px;margin-top:14px}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.result-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14.5px}
+.result-table th{text-align:left;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.4px;padding:8px;border-bottom:2px solid var(--line)}
+.result-table td{padding:9px 8px;border-bottom:1px solid #eef2f6}
+.result-table td:last-child,.result-table th:last-child{text-align:right}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.faq-item{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+.faq-item h4{margin:0 0 6px;font-size:16px;color:var(--dark)}
+.faq-item p{margin:0;font-size:14.5px;color:var(--muted)}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Cities Within Radius",
+  "url":"https://distancecalculator-theta.vercel.app/tools/cities-within-radius.html",
+  "applicationCategory":"TravelApplication",
+  "description":"Find cities and towns within a chosen radius of any place, with distances and population, using OpenStreetMap data."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"How do I find cities within 50 km of a place?",
+      "acceptedAnswer":{"@type":"Answer","text":"Enter the place name, choose a radius such as 50 km, and the tool lists every mapped city, town, and village inside that circle, sorted by straight-line distance, with a map."}
+    },
+    {
+      "@type":"Question",
+      "name":"Where does the cities data come from?",
+      "acceptedAnswer":{"@type":"Answer","text":"Results come from OpenStreetMap via the Overpass API: places tagged as city, town, or village within the radius. Distances are straight-line (haversine) distances from the centre point."}
+    },
+    {
+      "@type":"Question",
+      "name":"Why is a city missing from the results?",
+      "acceptedAnswer":{"@type":"Answer","text":"A place appears only if it is mapped in OpenStreetMap with a city, town, or village tag inside the radius. Very small settlements may be unmapped, and results are capped at 100 places for large radii — try a smaller radius for complete local coverage."}
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a>
+        <a href="/tools/halfway-point-calculator.html">Halfway Point</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Cities Within Radius</h1>
+    <p>Find every city, town, and village within 25, 50, 100, or 200 km of any place — with distances, population, and a map.</p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <label class="label" for="centerVal">Centre Place</label>
+      <input id="centerVal" type="text" placeholder="e.g. Lahore, Pakistan" value="Lahore, Pakistan">
+      <label class="label" for="radiusVal">Search Radius</label>
+      <div class="inputrow">
+        <select id="radiusSel">
+          <option value="25">25 km</option>
+          <option value="50" selected>50 km</option>
+          <option value="100">100 km</option>
+          <option value="200">200 km</option>
+          <option value="500">500 km</option>
+          <option value="custom">Custom…</option>
+        </select>
+        <input id="radiusVal" type="number" min="1" max="1000" value="50" placeholder="km">
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" id="searchBtn" type="button">Find Cities in Radius</button>
+      </div>
+      <p class="note" id="statusMsg">Enter a place and a radius to list nearby cities and towns.</p>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;font-size:20px" id="resultTitle">Results</h2>
+      <div id="resultWrap">
+        <p style="color:var(--muted)">No search yet. Results will appear here, nearest first.</p>
+      </div>
+      <div id="map"></div>
+      <p class="note">Data: OpenStreetMap places (city, town, village) via the Overpass API. Distances are straight-line from the centre point, not road distances. Results are capped at 100 places — for dense areas, use a smaller radius. A place appears only if it is mapped in OpenStreetMap.</p>
+    </div>
+  </section>
+
+  <article class="card article">
+    <h2>What is a cities-within-radius search?</h2>
+    <p>A radius search draws a circle around a place and lists every city and town inside it. Travellers use it to plan day trips and stopovers, movers use it to compare nearby towns, and delivery planners use it to find coverage areas — without guessing which places fall inside the circle.</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h4>How do I find cities within 50 km of a place?</h4>
+      <p>Enter the place name, choose a radius such as 50 km, and the tool lists every mapped city, town, and village inside that circle, sorted by straight-line distance, with a map.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Where does the cities data come from?</h4>
+      <p>Results come from OpenStreetMap via the Overpass API: places tagged as city, town, or village within the radius. Distances are straight-line (haversine) distances from the centre point.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Why is a city missing from the results?</h4>
+      <p>A place appears only if it is mapped in OpenStreetMap with a city, town, or village tag inside the radius. Very small settlements may be unmapped, and results are capped at 100 places for large radii — try a smaller radius for complete local coverage.</p>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 World Distance Calculator · Free Distance & Driving Time Tool</p>
+    <p><a href="/">Home</a> · <a href="/tools/fuel-cost-calculator.html">Fuel Cost</a> · <a href="/tools/halfway-point-calculator.html">Halfway Point</a> · <a href="/blog/">Blog</a> · <a href="/about.html">About</a> · <a href="/privacy-policy.html">Privacy</a></p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const toRad = d => d * Math.PI / 180;
+function haversineKm(a, b) {
+  const R = 6371, dLat = toRad(b.lat - a.lat), dLon = toRad(b.lon - a.lon);
+  const h = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLon/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+function esc(s) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+let map = null, layer = null;
+function drawMap(center, places, radiusKm) {
+  if (!map) {
+    map = L.map('map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap contributors' }).addTo(map);
+  }
+  if (layer) map.removeLayer(layer);
+  layer = L.layerGroup().addTo(map);
+  L.marker([center.lat, center.lon]).addTo(layer).bindPopup('<b>Centre</b><br>' + esc(center.name.split(',').slice(0, 2).join(','))).openPopup();
+  L.circle([center.lat, center.lon], { radius: radiusKm * 1000, color: '#1565c0', weight: 2, fillOpacity: 0.05 }).addTo(layer);
+  places.forEach(p => {
+    L.circleMarker([p.lat, p.lon], { radius: 6, color: '#1565c0', fillColor: '#3b82f6', fillOpacity: 0.9 })
+      .addTo(layer).bindPopup('<b>' + esc(p.name) + '</b><br>' + p.type + ' · ' + p.dist.toFixed(1) + ' km');
+  });
+  map.fitBounds(L.circle([center.lat, center.lon], { radius: radiusKm * 1000 }).getBounds(), { padding: [20, 20] });
+}
+$('radiusSel').onchange = () => {
+  if ($('radiusSel').value !== 'custom') $('radiusVal').value = $('radiusSel').value;
+};
+$('radiusVal').oninput = () => { $('radiusSel').value = 'custom'; };
+async function searchRadius() {
+  const btn = $('searchBtn');
+  const q = $('centerVal').value.trim();
+  const radiusKm = Math.min(1000, Math.max(1, +$('radiusVal').value || 50));
+  if (!q) { $('statusMsg').textContent = 'Please enter a centre place.'; return; }
+  btn.disabled = true; btn.textContent = 'Searching…';
+  $('statusMsg').textContent = 'Geocoding centre and querying OpenStreetMap…';
+  try {
+    const gr = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=' + encodeURIComponent(q), { headers: { 'Accept-Language': 'en' } });
+    if (!gr.ok) throw new Error('Location search service is currently unavailable.');
+    const gd = await gr.json();
+    if (!gd || !gd.length) throw new Error('Location not found: "' + q + '".');
+    const center = { lat: +gd[0].lat, lon: +gd[0].lon, name: gd[0].display_name };
+    const query = `[out:json][timeout:30];node["place"~"^(city|town|village)$"](around:${Math.round(radiusKm * 1000)},${center.lat},${center.lon});out body;`;
+    const or_ = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(query)
+    });
+    if (!or_.ok) throw new Error('Places service is busy (Overpass). Please try again in a minute, or use a smaller radius.');
+    const od = await or_.json();
+    let places = (od.elements || [])
+      .filter(e => e.tags && e.tags.name)
+      .map(e => ({
+        name: e.tags.name,
+        type: e.tags.place,
+        pop: e.tags.population ? parseInt(e.tags.population, 10) : null,
+        lat: e.lat, lon: e.lon,
+        dist: haversineKm(center, { lat: e.lat, lon: e.lon })
+      }))
+      .sort((x, y) => x.dist - y.dist)
+      .slice(0, 100);
+    $('resultTitle').textContent = places.length
+      ? places.length + ' places within ' + radiusKm + ' km of ' + center.name.split(',')[0]
+      : 'No mapped places found within ' + radiusKm + ' km';
+    if (!places.length) {
+      $('resultWrap').innerHTML = '<p style="color:var(--muted)">No city, town, or village is mapped in OpenStreetMap inside this radius. Try a larger radius or a different centre.</p>';
+    } else {
+      const rows = places.map(p =>
+        `<tr><td><strong>${esc(p.name)}</strong></td><td>${p.type}</td><td>${p.pop ? p.pop.toLocaleString() : '—'}</td><td>${p.dist.toFixed(1)} km</td></tr>`).join('');
+      $('resultWrap').innerHTML = `<table class="result-table"><thead><tr><th>Place</th><th>Type</th><th>Population</th><th>Distance</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+    drawMap(center, places, radiusKm);
+    $('statusMsg').textContent = 'Done. Distances are straight-line from the centre.';
+  } catch (e) {
+    $('statusMsg').textContent = e.message || 'Something went wrong. Please try again.';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Find Cities in Radius';
+  }
+}
+$('searchBtn').onclick = searchRadius;
+</script>
+</body>
+</html>

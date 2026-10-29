@@ -131,6 +131,12 @@ footer a{color:#93c5fd;text-decoration:none}
         </select>
       </div>
 
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px">
+        <button type="button" class="btn btn-secondary" id="pkPetrolBtn">Petrol Rs 377.91 / L</button>
+        <button type="button" class="btn btn-secondary" id="pkDieselBtn">Diesel Rs 399.82 / L</button>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin:0 0 12px">Current Pakistan pump prices, OGRA-notified, effective 29 October 2026. Prices revise frequently — verify at the pump. You can still type your own price.</p>
+
       <div class="btn-group">
         <button class="btn btn-primary" id="calcBtn" type="button">Calculate Fuel Cost</button>
         <button class="btn btn-secondary" id="resetBtn" type="button">Reset</button>
@@ -282,6 +288,18 @@ function calculate() {
   ids.perKm.textContent = `${cur} ${costPerKm.toFixed(2)} / km`;
   ids.perMi.textContent = `${cur} ${costPerMi.toFixed(2)} / mi`;
 }
+
+function applyPkPrice(price) {
+  ids.price.value = price.toFixed(2);
+  ids.curr.value = 'PKR';
+  if (ids.effUnit.value === 'mpgus' || ids.effUnit.value === 'mpguk') {
+    ids.effUnit.value = 'kml';
+  }
+  ids.priceLabel.textContent = 'Fuel Price per Litre';
+  calculate();
+}
+document.getElementById('pkPetrolBtn').onclick = () => applyPkPrice(377.91);
+document.getElementById('pkDieselBtn').onclick = () => applyPkPrice(399.82);
 
 ids.calcBtn.onclick = calculate;
 ids.resetBtn.onclick = () => {

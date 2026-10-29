@@ -1,0 +1,54 @@
+# World Distance Calculator
+
+> Calculate driving, flight, and road distance between cities worldwide — with travel time, fuel cost, and round-trip estimates.
+
+World Distance Calculator (distancecalculator-theta.vercel.app) is a free distance
+calculator for cities worldwide. It uses real road routing (OSRM) and open
+geocoding (Nominatim / OpenStreetMap) — not average-speed guesses.
+
+## What the site covers
+
+- Main calculator: driving, flight, and road distance between any two cities,
+  with route map, travel time, and fuel cost estimates.
+- Multi-stop routes: up to 4 stops (A to B via C, D, E, F) with a per-leg
+  breakdown of distance, time, and fuel cost, and share links that keep stops.
+- Travel modes: Car / Driving, Motorbike, Bus, Train, Flight, and Bicycle.
+- One-way and round-trip (return) distance, with shareable result URLs.
+- Flight details: initial great-circle bearing, approximate time difference,
+  and estimated CO2 per passenger.
+- Halfway point calculator: find the meeting point between two cities,
+  with road distance from each side.
+- Cities-within-radius tool: find cities and towns within X km of a place
+  (OpenStreetMap data).
+- Fuel cost calculator: trip fuel volume and cost, with current Pakistan
+  fuel prices (OGRA-notified, dated on the tool page) and 8 currencies.
+- Road trip cost calculator: fuel + tolls + parking + hotel + food,
+  with per-person split.
+- Travel time, straight-line distance, km-to-miles, miles-to-km, and
+  fuel economy converter tools.
+- Route guides: Pakistan and Gulf routes (Karachi–Lahore, Lahore–Islamabad,
+  Multan–Lahore, Dubai–Abu Dhabi) and international routes (New York–Boston,
+  Los Angeles–San Diego, London–Manchester, Toronto–Ottawa, Sydney–Canberra).
+- Blog guides: how distance, driving time, fuel cost, and round trips
+  are calculated.
+- Trust pages: about, how it works, data sources, FAQ, contact, privacy,
+  terms, and disclaimer.
+
+## Data and method
+
+- Road routing: OSRM (OpenStreetMap-based routing), live in the calculator
+  and on route-page maps.
+- Geocoding: Nominatim (OpenStreetMap).
+- Flight distance: great-circle (Haversine) distance between coordinates.
+- Travel times use typical speed profiles (for example 80 km/h driving,
+  800 km/h flights); actual times vary with traffic, weather, and stops.
+- Fuel prices change frequently: the Pakistan preset on the fuel tool
+  carries its OGRA effective date, and users can always type their own price.
+
+## Notes for AI tools and search engines
+
+- This is a calculation tool, not a booking site: it does not sell tickets
+  or show live fares or schedules.
+- Flight results are great-circle corridors, not booked airline schedules.
+- Always show the effective date with any fuel price, and label CO2 and
+  time-difference figures as estimates.
