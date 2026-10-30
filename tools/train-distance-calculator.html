@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Train Travel Distance Calculator – Train Distance & Travel Time</title>
+<meta name="description" content="Calculate train travel distance and estimated train travel time between two cities. Rail corridor approximation at express passenger train speed — live timetables are not integrated.">
+<meta name="keywords" content="train travel distance calculator, train distance calculator, train distance between two cities, train travel time calculator, how far by train">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/train-distance-calculator.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+input{width:100%;padding:12px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:var(--dark)}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.article li{color:var(--muted);font-size:15.5px;margin-bottom:6px}
+.try-links a{display:inline-block;background:#edf5ff;color:var(--blue);border:1px solid #cce2fd;border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;text-decoration:none;font-size:14px;font-weight:600}
+.try-links a:hover{background:#dbeafe}
+.faq-item{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+.faq-item h4{margin:0 0 6px;font-size:16px;color:var(--dark)}
+.faq-item p{margin:0;font-size:14.5px;color:var(--muted)}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Train Travel Distance Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/tools/train-distance-calculator.html",
+  "applicationCategory":"TravelApplication",
+  "description":"Calculate train travel distance and estimated train travel time between two cities. Rail corridor approximation at express passenger train speed — live timetables are not integrated."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"How do I calculate train travel distance?",
+      "acceptedAnswer":{"@type":"Answer","text":"Enter your starting city and destination city, then open the result in the main calculator with Train mode preselected. Train travel distance is estimated as a rail corridor approximation, and the estimated travel time uses an express passenger train speed of 85 km/h."}
+    },
+    {
+      "@type":"Question",
+      "name":"Is the train travel time based on a live timetable?",
+      "acceptedAnswer":{"@type":"Answer","text":"No. Live railway timetables are not integrated. The travel time is a planning estimate based on an express passenger train speed of 85 km/h. Actual journey times vary with stops, the route, and the operator's schedule, so check the railway operator's timetable for exact departures."}
+    },
+    {
+      "@type":"Question",
+      "name":"Is train distance the same as driving distance?",
+      "acceptedAnswer":{"@type":"Answer","text":"Not necessarily. Train distance follows the rail corridor, while driving distance follows the road route, so the two figures can differ for the same pair of cities. Use Train mode for rail journeys and Car / Driving mode for road journeys."}
+    },
+    {
+      "@type":"Question",
+      "name":"Can I calculate train distance between cities in different countries?",
+      "acceptedAnswer":{"@type":"Answer","text":"Yes. The calculator supports global locations including cities, towns, and stations worldwide, so you can estimate train travel distance for international city pairs as well."}
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a>
+        <a href="/tools/travel-time-calculator.html">Travel Time</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Train Travel Distance Calculator</h1>
+    <p>Calculate train travel distance and estimated train travel time between two cities. Enter your cities below — the result opens in the main calculator with Train mode already selected.</p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <label class="label" for="fromVal">Starting City</label>
+      <input id="fromVal" type="text" placeholder="e.g. Lahore, Pakistan" value="Lahore, Pakistan">
+      <label class="label" for="toVal">Destination City</label>
+      <input id="toVal" type="text" placeholder="e.g. Islamabad, Pakistan" value="Islamabad, Pakistan">
+      <div class="btn-group">
+        <button class="btn btn-primary" id="calcBtn" type="button">Calculate Train Distance</button>
+        <button class="btn btn-secondary" id="swapBtn" type="button">⇄ Swap</button>
+      </div>
+      <p class="note" id="statusMsg">Enter two cities and calculate. The result opens in the main calculator with Train mode preselected.</p>
+      <p class="note"><a href="/?mode=train">Open the main calculator with Train mode (no cities yet) →</a></p>
+    </div>
+
+    <div class="card article">
+      <h2>How train distance is calculated</h2>
+      <p>Train travel distance is estimated as a rail corridor approximation — the path a train would typically follow between the two places — rather than the road route a car would take. Estimated travel time uses an express passenger train speed of 85 km/h.</p>
+      <p><strong>Honest note:</strong> live railway timetables are not integrated, so this is a planning estimate, not a timetable lookup. Actual journey times vary with stops, the route, and the operator's schedule.</p>
+      <h2>Try a popular train route</h2>
+      <p class="try-links">
+        <a href="/?from=Lahore%2C%20Pakistan&amp;to=Islamabad%2C%20Pakistan&amp;mode=train&amp;unit=km">Lahore → Islamabad by train</a>
+        <a href="/?from=Karachi%2C%20Pakistan&amp;to=Lahore%2C%20Pakistan&amp;mode=train&amp;unit=km">Karachi → Lahore by train</a>
+        <a href="/?from=New%20York%2C%20USA&amp;to=Boston%2C%20USA&amp;mode=train&amp;unit=km">New York → Boston by train</a>
+      </p>
+      <h2>Related tools</h2>
+      <p><a href="/">Main Distance Calculator</a> · <a href="/tools/travel-time-calculator.html">Travel Time Calculator</a> · <a href="/tools/fuel-cost-calculator.html">Fuel Cost Calculator</a> · <a href="/tools/halfway-point-calculator.html">Halfway Point Calculator</a></p>
+    </div>
+  </section>
+
+  <section class="article">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h4>How do I calculate train travel distance?</h4>
+      <p>Enter your starting city and destination city, then open the result in the main calculator with Train mode preselected. Train travel distance is estimated as a rail corridor approximation, and the estimated travel time uses an express passenger train speed of 85 km/h.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is the train travel time based on a live timetable?</h4>
+      <p>No. Live railway timetables are not integrated. The travel time is a planning estimate based on an express passenger train speed of 85 km/h. Actual journey times vary with stops, the route, and the operator's schedule, so check the railway operator's timetable for exact departures.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is train distance the same as driving distance?</h4>
+      <p>Not necessarily. Train distance follows the rail corridor, while driving distance follows the road route, so the two figures can differ for the same pair of cities. Use Train mode for rail journeys and Car / Driving mode for road journeys.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I calculate train distance between cities in different countries?</h4>
+      <p>Yes. The calculator supports global locations including cities, towns, and stations worldwide, so you can estimate train travel distance for international city pairs as well.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="/">Home</a> · <a href="/tools/fuel-cost-calculator.html">Fuel Cost Calculator</a> · <a href="/tools/travel-time-calculator.html">Travel Time</a> · <a href="/blog/">Blog</a> · <a href="/how-it-works.html">How It Works</a> · <a href="/faq.html">FAQ</a> · <a href="/about.html">About Us</a> · <a href="/contact.html">Contact</a> · <a href="/privacy-policy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <a href="/disclaimer.html">Disclaimer</a> · <a href="/sitemap.xml">Sitemap</a></p>
+    <p>© 2026 World Distance Calculator · Global Distance & Driving Platform</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('calcBtn').addEventListener('click', function () {
+  var from = document.getElementById('fromVal').value.trim();
+  var to = document.getElementById('toVal').value.trim();
+  var msg = document.getElementById('statusMsg');
+  if (!from || !to) {
+    msg.textContent = 'Please enter both cities first.';
+    return;
+  }
+  window.location.href = '/?from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to) + '&mode=train&unit=km';
+});
+document.getElementById('swapBtn').addEventListener('click', function () {
+  var f = document.getElementById('fromVal');
+  var t = document.getElementById('toVal');
+  var tmp = f.value;
+  f.value = t.value;
+  t.value = tmp;
+});
+</script>
+
+</body>
+</html>

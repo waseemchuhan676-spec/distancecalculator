@@ -474,6 +474,38 @@ footer p{margin:6px 0;text-align:center}
         "@type":"Answer",
         "text":"Yes. Click Add stop under the destination field (up to 4 stops) to build a multi-stop route. The result shows the total distance and time plus a per-leg breakdown — distance, time, and fuel cost for each leg — and the share link keeps your stops."
       }
+    },
+    {
+      "@type":"Question",
+      "name":"How do I calculate train travel distance?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Enter your starting location and destination, select the Train mode, and click 'Calculate Distance'. Train travel distance is estimated as a rail corridor approximation using an express passenger train speed of 85 km/h. Live railway timetables are not integrated, so the result is a planning estimate, not a timetable lookup."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"How do I calculate bus travel distance?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Enter your starting location and destination, select the Bus mode, and click 'Calculate Distance'. Bus distance follows road routing geometry, with travel time estimated at a typical bus cruising speed of 55 km/h. Actual bus journey times vary with stops, traffic, and route schedules."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"How do I calculate biking distance?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Enter your starting location and destination, select the Bicycle mode, and click 'Calculate Distance'. Bike distance is estimated along cycling-friendly routing geometry at a typical cycling speed of 16 km/h. Use it for bike rides, cycling routes, and bicycle trip planning."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"How do I calculate driving distance between two cities?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Enter the two cities, select the Car / Driving mode, and click 'Calculate Distance'. The result shows the road driving distance between the two cities, the estimated driving time at a typical cruising speed of 80 km/h, and the straight-line distance for comparison. You can also add fuel cost and switch between kilometers and miles."
+      }
     }
   ]
 }
@@ -866,6 +898,26 @@ footer p{margin:6px 0;text-align:center}
       <details>
         <summary>Can I calculate a multi-stop route (A to B via C)?</summary>
         <p>Yes. Click “Add stop” under the destination field (up to 4 stops) to build a multi-stop route. The result shows the total distance and time plus a per-leg breakdown — distance, time, and fuel cost for each leg — and the share link keeps your stops.</p>
+      </details>
+      <details>
+        <summary>How do I calculate train travel distance?</summary>
+        <p>Enter your starting location and destination, select the Train mode, and click 'Calculate Distance'. Train travel distance is estimated as a rail corridor approximation using an express passenger train speed of 85 km/h. Live railway timetables are not integrated, so the result is a planning estimate, not a timetable lookup.</p>
+        <p><a href="/?mode=train">Try the calculator with Train mode preselected →</a></p>
+      </details>
+      <details>
+        <summary>How do I calculate bus travel distance?</summary>
+        <p>Enter your starting location and destination, select the Bus mode, and click 'Calculate Distance'. Bus distance follows road routing geometry, with travel time estimated at a typical bus cruising speed of 55 km/h. Actual bus journey times vary with stops, traffic, and route schedules.</p>
+        <p><a href="/?mode=bus">Try the calculator with Bus mode preselected →</a></p>
+      </details>
+      <details>
+        <summary>How do I calculate biking distance?</summary>
+        <p>Enter your starting location and destination, select the Bicycle mode, and click 'Calculate Distance'. Bike distance is estimated along cycling-friendly routing geometry at a typical cycling speed of 16 km/h. Use it for bike rides, cycling routes, and bicycle trip planning.</p>
+        <p><a href="/?mode=bicycle">Try the calculator with Bicycle mode preselected →</a></p>
+      </details>
+      <details>
+        <summary>How do I calculate driving distance between two cities?</summary>
+        <p>Enter the two cities, select the Car / Driving mode, and click 'Calculate Distance'. The result shows the road driving distance between the two cities, the estimated driving time at a typical cruising speed of 80 km/h, and the straight-line distance for comparison. You can also add fuel cost and switch between kilometers and miles.</p>
+        <p><a href="/?mode=car">Try the calculator with Car mode preselected →</a></p>
       </details>
     </div>
   </section>

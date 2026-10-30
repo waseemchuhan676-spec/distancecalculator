@@ -13,6 +13,12 @@ geocoding (Nominatim / OpenStreetMap) — not average-speed guesses.
 - Multi-stop routes: up to 4 stops (A to B via C, D, E, F) with a per-leg
   breakdown of distance, time, and fuel cost, and share links that keep stops.
 - Travel modes: Car / Driving, Motorbike, Bus, Train, Flight, and Bicycle.
+- Mode calculator pages: Train Travel Distance Calculator
+  (/tools/train-distance-calculator.html) — train distance and time estimate,
+  opening the main calculator with Train mode preselected. More mode pages
+  (bus, bicycle, and others) are being added one per day.
+- Home FAQs now also answer train, bus, bicycle, and driving-between-two-cities
+  questions, each linking to the calculator with that mode preselected.
 - One-way and round-trip (return) distance, with shareable result URLs.
 - Flight details: initial great-circle bearing, approximate time difference,
   and estimated CO2 per passenger.
@@ -50,5 +56,7 @@ geocoding (Nominatim / OpenStreetMap) — not average-speed guesses.
 - This is a calculation tool, not a booking site: it does not sell tickets
   or show live fares or schedules.
 - Flight results are great-circle corridors, not booked airline schedules.
+- Train results are a rail corridor approximation at express passenger train
+  speed (85 km/h); live railway timetables are not integrated.
 - Always show the effective date with any fuel price, and label CO2 and
   time-difference figures as estimates.
