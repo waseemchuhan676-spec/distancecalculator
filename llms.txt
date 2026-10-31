@@ -15,8 +15,11 @@ geocoding (Nominatim / OpenStreetMap) — not average-speed guesses.
 - Travel modes: Car / Driving, Motorbike, Bus, Train, Flight, and Bicycle.
 - Mode calculator pages: Train Travel Distance Calculator
   (/tools/train-distance-calculator.html) — train distance and time estimate,
-  opening the main calculator with Train mode preselected. More mode pages
-  (bus, bicycle, and others) are being added one per day.
+  opening the main calculator with Train mode preselected; Bus Travel
+  Distance Calculator (/tools/bus-distance-calculator.html) — bus distance
+  and time estimate, opening the main calculator with Bus mode preselected.
+  More mode pages (bicycle, driving-between-two-cities, flight, and others)
+  are being added one per day.
 - Home FAQs now also answer train, bus, bicycle, and driving-between-two-cities
   questions, each linking to the calculator with that mode preselected.
 - One-way and round-trip (return) distance, with shareable result URLs.
