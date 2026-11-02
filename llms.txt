@@ -20,8 +20,11 @@ geocoding (Nominatim / OpenStreetMap) — not average-speed guesses.
   and time estimate, opening the main calculator with Bus mode preselected;
   Bike Distance Calculator (/tools/bike-distance-calculator.html) — bike
   distance and cycling time estimate, opening the main calculator with
-  Bicycle mode preselected. More mode pages (driving-between-two-cities,
-  flight, and others) are being added one per day.
+  Bicycle mode preselected; Driving Distance Calculator
+  (/tools/driving-distance-calculator.html) — driving distance between
+  cities and car travel time estimate, opening the main calculator with
+  Car / Driving mode preselected. More mode pages (flight and others)
+  are being added one per day.
 - Home FAQs now also answer train, bus, bicycle, and driving-between-two-cities
   questions, each linking to the calculator with that mode preselected.
 - One-way and round-trip (return) distance, with shareable result URLs.
