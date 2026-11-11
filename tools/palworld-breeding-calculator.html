@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
+
+<title>Palworld Breeding Calculator (Palworld 1.0) – Find Every Breeding Combo</title>
+<meta name="description" content="Palworld breeding calculator updated for Palworld 1.0: pick two parent Pals to see the exact offspring, or find every parent pair for the Pal you want.">
+<meta name="keywords" content="palworld breeding calculator, palworld breeding combos, palworld breeding chart, palworld 1.0 breeding, how to breed anubis palworld, palworld breeding farm">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/palworld-breeding-calculator.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📍</text></svg>">
+
+<style>
+:root{--blue:#1565c0;--blue-hover:#0d47a1;--dark:#0b1f33;--muted:#576b80;--bg:#f4f7fb;--card:#fff;--line:#dfe7ef;--accent:#00a86b}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--dark);line-height:1.6}
+header{background:linear-gradient(135deg,#0b1f33 0%,#1565c0 100%);color:#fff;padding:16px 0;box-shadow:0 4px 20px rgba(11,31,51,0.15)}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+.header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.brand{font-size:20px;font-weight:800;color:#fff;text-decoration:none}
+nav a{color:#e2e8f0;text-decoration:none;margin-left:16px;font-size:14px;font-weight:600}
+nav a:hover{color:#fff;text-decoration:underline}
+.hero{text-align:center;padding:32px 10px 20px}
+.hero h1{font-size:clamp(26px,4vw,38px);margin:0 0 10px;font-weight:800}
+.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:auto}
+.badge{display:inline-block;background:#e6f4ea;color:#1d6b34;border:1px solid #bfe3c8;border-radius:999px;padding:5px 14px;font-size:13px;font-weight:700;margin-top:12px}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:24px;margin-bottom:30px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 30px rgba(20,45,70,0.06)}
+.label{display:block;font-size:12.5px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px;color:#475569}
+input,select{width:100%;padding:12px 14px;border:1.5px solid #ccd8e4;border-radius:10px;font-size:15px;background:#fff;color:var(--dark)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,0.15)}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn{flex:1;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;border:0;transition:all 0.2s}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;box-shadow:0 4px 15px rgba(21,101,192,0.3)}
+.btn-secondary{background:#edf5ff;color:var(--blue);border:1px solid #cce2fd}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.result{display:none;margin-top:20px;border:1px solid var(--line);border-radius:12px;padding:18px;background:#f8fafc}
+.result.show{display:block}
+.result h3{margin:0 0 4px;font-size:20px}
+.result .math{font-size:14px;color:var(--muted);margin:8px 0 0}
+.result .tag{display:inline-block;background:#edf5ff;color:var(--blue);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;margin-top:8px}
+.pair-list{max-height:340px;overflow:auto;margin-top:12px;border:1px solid var(--line);border-radius:10px}
+.pair-list table{width:100%;border-collapse:collapse;font-size:14px}
+.pair-list td{padding:7px 12px;border-bottom:1px solid #eef2f6}
+.pair-list tr:last-child td{border-bottom:0}
+.pair-kind{color:var(--muted);font-size:12px}
+.article h2{font-size:22px;margin:24px 0 10px;color:var(--dark)}
+.article p{color:var(--muted);font-size:15.5px}
+.article li{color:var(--muted);font-size:15.5px;margin-bottom:6px}
+.try-links a{display:inline-block;background:#edf5ff;color:var(--blue);border:1px solid #cce2fd;border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;text-decoration:none;font-size:14px;font-weight:600;cursor:pointer}
+.try-links a:hover{background:#dbeafe}
+.faq-item{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+.faq-item h4{margin:0 0 6px;font-size:16px;color:var(--dark)}
+.faq-item p{margin:0;font-size:14.5px;color:var(--muted)}
+footer{background:#0b1f33;color:#94a3b8;padding:28px 0;text-align:center;font-size:14px;margin-top:40px}
+footer a{color:#93c5fd;text-decoration:none}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Palworld Breeding Calculator",
+  "url":"https://distancecalculator-theta.vercel.app/tools/palworld-breeding-calculator.html",
+  "applicationCategory":"GameApplication",
+  "description":"Palworld breeding calculator updated for Palworld 1.0: pick two parent Pals to see the exact offspring, or find every parent pair for the Pal you want.",
+  "datePublished":"2026-11-11",
+  "dateModified":"2026-11-11"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the Palworld breeding calculator work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pick two parent Pals and the calculator shows the exact offspring. It checks the 164 fixed special combinations first, then the same-species rule, and otherwise averages both parents' hidden breeding power (CombiRank), rounds up, and returns the closest Pal in the 183-entry formula pool. Reverse lookup lists every parent pair that produces the Pal you pick."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is CombiRank (breeding power)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CombiRank is a hidden number every Pal species carries in Palworld 1.0, from 10 for the rarest Pals to 3100 for the most common. Lower means rarer: for example, Anubis is 480 and Lamball is 3050. It is not a combat stat — it only decides breeding results."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I breed any two Pals together?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Any two Pals that can enter a Breeding Farm can breed together, as long as one is male and one is female. Two Pals that cannot use the Breeding Farm — Panthalus and Astralym — are not listed as parents. You also need 1 Cake in the farm's chest for each egg."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Penking + Bushi give Sibelyx instead of Anubis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Palworld 1.0, released on 10 July 2026, completely rebuilt the breeding table. Penking + Bushi made Anubis in the old Early Access data, but in 1.0 the same pair gives Sibelyx. Older breeding guides and calculators that still use pre-1.0 data will give the wrong answer — this calculator uses verified 1.0 data only."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do I need to breed Pals in Palworld?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unlock the Breeding Farm at Technology Level 19 (100 Wood, 20 Stone, 50 Fiber), place one male and one female Pal in it, and keep at least 1 Cake in the farm's chest. One Cake is used per egg. A Cake is crafted from 5 Flour, 8 Red Berries, 7 Milk, 8 Eggs, and 2 Honey."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Katress + Wixen give two different children?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Katress + Wixen is the one gender-dependent combination in Palworld 1.0. A female Katress with a male Wixen gives Katress Ignis, while a male Katress with a female Wixen gives Wixen Noct. The calculator shows both results and which genders produce each."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this calculator updated for Palworld 1.0?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It uses Palworld 1.0 breeding data: all 299 Pals, the 183-entry formula pool, and all 164 special combinations, with the data last refreshed on 14 July 2026 and this page last reviewed on 11 November 2026. It covers Pocketpair's Palworld on PC and console; Garena's separate mobile game Palworld Online uses different data and is not covered."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <a href="/" class="brand">📍 World Distance Calculator</a>
+      <nav>
+        <a href="/">Distance Calculator</a>
+        <a href="/tools/fuel-cost-calculator.html">Fuel Calculator</a>
+        <a href="/tools/travel-time-calculator.html">Travel Time</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Palworld Breeding Calculator</h1>
+    <p>Pick two parent Pals to see the exact offspring, or pick the Pal you want and find every parent pair that produces it. Built on verified Palworld 1.0 breeding data.</p>
+    <span class="badge">Updated for Palworld 1.0 · Last reviewed: 11 November 2026</span>
+  </section>
+
+  <section class="grid">
+    <div>
+      <div class="card">
+        <h2 style="margin-top:0">Parents &rarr; Child</h2>
+        <label class="label" for="filterA">Search Parent 1</label>
+        <input id="filterA" type="text" placeholder="Type to filter, e.g. lamball" autocomplete="off">
+        <label class="label" for="parentA">Parent 1</label>
+        <select id="parentA" size="8"></select>
+        <label class="label" for="filterB">Search Parent 2</label>
+        <input id="filterB" type="text" placeholder="Type to filter, e.g. bush" autocomplete="off">
+        <label class="label" for="parentB">Parent 2</label>
+        <select id="parentB" size="8"></select>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="calcBtn" type="button">Find Offspring</button>
+          <button class="btn btn-secondary" id="swapBtn" type="button">&lrarr; Swap</button>
+        </div>
+        <div class="result" id="resultBox"></div>
+        <p class="note">297 Pals can enter a Breeding Farm. Panthalus and Astralym cannot use the Breeding Farm, so they are not listed as parents. Each breeding attempt uses 1 Cake.</p>
+      </div>
+
+      <div class="card" style="margin-top:24px">
+        <h2 style="margin-top:0">Child &rarr; Parents (Reverse Lookup)</h2>
+        <label class="label" for="filterT">Search Target Pal</label>
+        <input id="filterT" type="text" placeholder="Type to filter, e.g. anubis" autocomplete="off">
+        <label class="label" for="targetPal">Target Pal</label>
+        <select id="targetPal" size="8"></select>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="revBtn" type="button">Find Parent Pairs</button>
+        </div>
+        <div class="result" id="revBox"></div>
+        <p class="note">Every pair is computed live from the same 1.0 data as the calculator above, so forward and reverse results always agree.</p>
+      </div>
+    </div>
+
+    <div class="card article">
+      <h2 style="margin-top:0">How Palworld breeding works</h2>
+      <p>Every Pal species carries a hidden number called breeding power (CombiRank). In Palworld 1.0 it runs from 10 for the rarest Pals to 3100 for the most common — lower means rarer. Anubis is 480; Lamball is 3050.</p>
+      <p>For an ordinary pair, the game averages both parents' breeding power, rounds up, and picks the Pal in the 183-entry formula pool whose breeding power is closest to that average:</p>
+      <p><strong>Target = (Parent A + Parent B) &divide; 2</strong> (all 1.0 breeding powers are even numbers, so this is exact). The offspring is the pool Pal nearest the target.</p>
+      <p><strong>Special combinations</strong> override the formula: 164 fixed parent pairs always produce one specific child. For example, Relaxaurus + Sparkit always gives Relaxaurus Lux, whatever the formula would say.</p>
+      <p><strong>Same-species pairs always breed true:</strong> two Pals of the same species produce that species. Some Pals, such as Grizzbolt, Faleris and Shadowbeak, can only be bred this way in Palworld 1.0.</p>
+      <p><strong>One gender-dependent pair exists:</strong> Katress + Wixen. A female Katress with a male Wixen gives Katress Ignis; a male Katress with a female Wixen gives Wixen Noct.</p>
+      <h2>What you need to breed</h2>
+      <ul>
+        <li><strong>Breeding Farm</strong> — unlocked at Technology Level 19; costs 100 Wood, 20 Stone and 50 Fiber.</li>
+        <li><strong>One male and one female Pal</strong> assigned to the farm.</li>
+        <li><strong>1 Cake per egg</strong> in the farm's chest. A Cake is crafted from 5 Flour, 8 Red Berries, 7 Milk, 8 Eggs and 2 Honey.</li>
+      </ul>
+      <h2>Try a popular target</h2>
+      <p class="try-links">
+        <a data-target="Anubis">Anubis</a>
+        <a data-target="Sibelyx">Sibelyx</a>
+        <a data-target="Relaxaurus Lux">Relaxaurus Lux</a>
+        <a data-target="Frostallion Noct">Frostallion Noct</a>
+        <a data-target="Katress Ignis">Katress Ignis</a>
+      </p>
+      <h2>About the data</h2>
+      <p>This calculator uses Palworld 1.0 breeding data: all 299 Pals, the 183-entry formula pool, and all 164 special combinations. The data was last refreshed on 14 July 2026 and this page was last reviewed on 11 November 2026. Palworld 1.0 (10 July 2026) completely rebuilt the breeding table, so older breeding guides and calculators that still use pre-1.0 data give wrong answers for many pairs.</p>
+      <p>Breeding data: <a href="https://www.palworldonline.net/data" rel="nofollow">palworldonline.net</a> (free to use, including commercially). Paldeck numbers: Palpedia 1.0.4. This site is not affiliated with Pocketpair. It covers Pocketpair's Palworld on PC and console; Garena's separate mobile game Palworld Online uses different data and is not covered here.</p>
+      <h2>Related tools</h2>
+      <p><a href="/">Main Distance Calculator</a> · <a href="/tools/travel-time-calculator.html">Travel Time Calculator</a> · <a href="/tools/fuel-cost-calculator.html">Fuel Cost Calculator</a> · <a href="/tools/halfway-point-calculator.html">Halfway Point Calculator</a></p>
+    </div>
+  </section>
+
+  <section class="article">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h4>How does the Palworld breeding calculator work?</h4>
+      <p>Pick two parent Pals and the calculator shows the exact offspring. It checks the 164 fixed special combinations first, then the same-species rule, and otherwise averages both parents&#x27; hidden breeding power (CombiRank), rounds up, and returns the closest Pal in the 183-entry formula pool. Reverse lookup lists every parent pair that produces the Pal you pick.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What is CombiRank (breeding power)?</h4>
+      <p>CombiRank is a hidden number every Pal species carries in Palworld 1.0, from 10 for the rarest Pals to 3100 for the most common. Lower means rarer: for example, Anubis is 480 and Lamball is 3050. It is not a combat stat — it only decides breeding results.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Can I breed any two Pals together?</h4>
+      <p>Any two Pals that can enter a Breeding Farm can breed together, as long as one is male and one is female. Two Pals that cannot use the Breeding Farm — Panthalus and Astralym — are not listed as parents. You also need 1 Cake in the farm&#x27;s chest for each egg.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Why does Penking + Bushi give Sibelyx instead of Anubis?</h4>
+      <p>Palworld 1.0, released on 10 July 2026, completely rebuilt the breeding table. Penking + Bushi made Anubis in the old Early Access data, but in 1.0 the same pair gives Sibelyx. Older breeding guides and calculators that still use pre-1.0 data will give the wrong answer — this calculator uses verified 1.0 data only.</p>
+    </div>
+    <div class="faq-item">
+      <h4>What do I need to breed Pals in Palworld?</h4>
+      <p>Unlock the Breeding Farm at Technology Level 19 (100 Wood, 20 Stone, 50 Fiber), place one male and one female Pal in it, and keep at least 1 Cake in the farm&#x27;s chest. One Cake is used per egg. A Cake is crafted from 5 Flour, 8 Red Berries, 7 Milk, 8 Eggs, and 2 Honey.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Why does Katress + Wixen give two different children?</h4>
+      <p>Katress + Wixen is the one gender-dependent combination in Palworld 1.0. A female Katress with a male Wixen gives Katress Ignis, while a male Katress with a female Wixen gives Wixen Noct. The calculator shows both results and which genders produce each.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is this calculator updated for Palworld 1.0?</h4>
+      <p>Yes. It uses Palworld 1.0 breeding data: all 299 Pals, the 183-entry formula pool, and all 164 special combinations, with the data last refreshed on 14 July 2026 and this page last reviewed on 11 November 2026. It covers Pocketpair&#x27;s Palworld on PC and console; Garena&#x27;s separate mobile game Palworld Online uses different data and is not covered.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="/">Home</a> · <a href="/tools/fuel-cost-calculator.html">Fuel Cost Calculator</a> · <a href="/tools/travel-time-calculator.html">Travel Time</a> · <a href="/blog/">Blog</a> · <a href="/how-it-works.html">How It Works</a> · <a href="/faq.html">FAQ</a> · <a href="/about.html">About Us</a> · <a href="/contact.html">Contact</a> · <a href="/privacy-policy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <a href="/disclaimer.html">Disclaimer</a> · <a href="/sitemap.xml">Sitemap</a></p>
+    <p>© 2026 World Distance Calculator · Global Distance & Driving Platform</p>
+  </div>
+</footer>
+
+<script>
+/* Palworld 1.0 breeding data. Source: palworldonline.net (free to use,
+   including commercially; attribution appreciated) + Palpedia 1.0.4
+   Paldeck numbers. Format: [name, paldeckNo, combiRank, flags]
+   flags: 1 = can enter a Breeding Farm (parent), 2 = in the formula pool. */
+var PALS = [["Lamball","1",3050,3],["Cattiva","2",2760,3],["Chikipi","3",3080,3],["Lifmunk","4",3020,3],["Fuack","5",2980,3],["Fuack Ignis","5B",2300,1],["Vixy","6",3060,3],["Celaray","7",2740,3],["Celaray Lux","7B",2380,1],["Cremis","8",2890,3],["Croajiro","9",2600,3],["Croajiro Noct","9B",1860,1],["Herbil","10",2630,3],["Teafant","11",3070,3],["Gumoss","12",2950,3],["Pupperai","13",2930,3],["Clovee","14",2970,3],["Jolthog","15",3030,3],["Jolthog Cryst","15B",2850,1],["Depresso","16",3000,3],["Pengullet","17",2960,3],["Pengullet Lux","17B",2490,1],["Penking","18",2070,3],["Penking Lux","18B",1850,1],["Hoocrates","19",2940,3],["Melpaca","20",2720,3],["Kingpaca","21",2220,3],["Kingpaca Cryst","21B",1530,1],["Daedream","22",2910,3],["Tanzee","23",2900,3],["Tanzee Ignis","23B",2830,1],["Nox","24",2920,3],["Flambelle","25",2700,3],["Rooby","26",2870,3],["Mau","27",3040,3],["Mau Cryst","27B",2750,1],["Rushoar","28",2880,3],["Foxparks","29",2990,3],["Foxparks Cryst","29B",2500,1],["Killamari","30",2770,3],["Killamari Primo","30B",2540,1],["Fuddler","31",2790,3],["Eikthyrdeer","32",2710,3],["Eikthyrdeer Terra","32B",2580,1],["Direhowl","33",2680,3],["Caprity","34",2610,3],["Caprity Noct","34B",1940,1],["Swee","35",2840,3],["Sweepa","36",2150,3],["Turtacle","37",2410,3],["Turtacle Terra","37B",1330,1],["Hangyu","38",2780,3],["Hangyu Cryst","38B",2510,1],["Woolipop","39",2820,3],["Woolipop Terra","39B",2030,1],["Mozzarina","40",2800,3],["Azurobe","41",1830,3],["Azurobe Cryst","41B",1220,1],["Sparkit","42",3010,3],["Kelpsea","43",2810,3],["Kelpsea Ignis","43B",2470,3],["Ribbuny","44",2860,3],["Ribbuny Botan","44B",2460,1],["Jelliette","45",2650,3],["Jellroy","46",2590,3],["Amione","47",2520,3],["Gloopie","48",2530,3],["Gloopie Primo","48B",1630,1],["Galeclaw","49",2570,3],["Wispaw","50",2250,3],["Nitewing","51",2560,3],["Tombat","52",2340,3],["Tocotoco","53",2730,3],["Univolt","54",2270,3],["Univolt Cryst","54B",540,1],["Gobfin","55",2550,3],["Gobfin Ignis","55B",2430,1],["Loupmoon","56",2110,3],["Loupmoon Cryst","56B",1290,1],["Cawgnito","57",2370,3],["Arsox","58",2320,3],["Muffly","59",2480,3],["Bristla","60",2690,3],["Cinnamoth","61",2620,3],["Puffolt","62",2360,3],["Elphidran","63",2280,3],["Elphidran Aqua","63B",1640,1],["Vanwyrm","64",1650,3],["Vanwyrm Cryst","64B",1430,1],["Felbat","65",1570,3],["Vaelet","66",1480,3],["Beegarde","67",2350,3],["Elizabee","68",1790,3],["Lovander","69",2090,3],["Grintale","70",2120,3],["Tarantriss","71",1730,3],["Polapup","72",1660,3],["Polapup Terra","72B",1100,1],["Leezpunk","73",2670,3],["Leezpunk Ignis","73B",2640,1],["Gorirat","74",2140,3],["Gorirat Terra","74B",1880,1],["Surfent","75",2440,3],["Surfent Terra","75B",1840,1],["Robinquill","76",2260,3],["Robinquill Terra","76B",2050,1],["Flopie","77",2660,3],["Wixen","78",2080,3],["Wixen Noct","78B",1490,1],["Katress","79",2040,3],["Katress Ignis","79B",1800,1],["Helzephyr","80",1130,3],["Helzephyr Lux","80B",960,1],["Elgrove","81",2020,3],["Elgrove Cryst","81B",440,1],["Lunaris","82",2010,3],["Fenglope","83",1960,3],["Fenglope Lux","83B",900,1],["Dinossom","84",2100,3],["Dinossom Lux","84B",1890,1],["Bushi","85",1560,3],["Bushi Noct","85B",840,1],["Munchill","86",2130,3],["Mammorest","87",1340,3],["Mammorest Cryst","87B",1070,1],["Finsider","88",2450,3],["Finsider Ignis","88B",2240,1],["Petallia","89",1720,3],["Petallia Ignis","89B",820,1],["Leafan","90",1410,3],["Incineram","91",1470,3],["Incineram Noct","91B",1310,1],["Dazzi","92",2400,3],["Dazzi Noct","92B",1910,1],["Pyrin","93",1980,3],["Pyrin Noct","93B",1870,1],["Relaxaurus","94",1090,3],["Relaxaurus Lux","94B",770,1],["Foxcicle","95",1970,3],["Beakon","96",1690,3],["Beakon Cryst","96B",580,1],["Ghangler","97",880,3],["Ghangler Ignis","97B",720,1],["Rayhound","98",1920,3],["Rayhound Cryst","98B",1600,1],["Menasting","99",1120,3],["Menasting Terra","99B",640,1],["Needoll","100",2420,3],["Needoll Noct","100B",1580,1],["Reindrix","101",1930,3],["Mossanda","102",2060,3],["Mossanda Lux","102B",1440,1],["Chillet","103",2330,3],["Chillet Ignis","103B",1950,1],["Ragnahawk","104",1050,3],["Moldron","105",750,3],["Moldron Cryst","105B",380,1],["Palumba","106",1240,3],["Digtoise","107",1550,3],["Broncherry","108",1380,3],["Broncherry Aqua","108B",1080,1],["Dumud","109",2290,3],["Dumud Gild","109B",1620,1],["Braloha","110",1030,3],["Kitsun","111",1670,3],["Kitsun Noct","111B",800,1],["Blazehowl","112",1360,3],["Blazehowl Noct","112B",1270,1],["Warsect","113",1280,3],["Warsect Terra","113B",630,1],["Frostplume","114",860,3],["Majex","115",1010,3],["Sibelyx","116",1810,3],["Sibelyx Primo","116B",650,1],["Maraith","117",1710,3],["Shroomer","118",1520,3],["Shroomer Noct","118B",1450,3],["Icelyn","119",1260,3],["Gildra","120",1170,3],["Jormuntide","121",590,3],["Jormuntide Ignis","121B",170,1],["Suzaku","122",1200,3],["Suzaku Aqua","122B",740,1],["Dazemu","123",2210,3],["Quivern","124",1210,3],["Quivern Botan","124B",1300,1],["Lullu","125",1990,3],["Kikit","126",2310,3],["Yakumo","127",2230,3],["Skutlass","128",1420,3],["Skutlass Ignis","128B",1590,1],["Reptyro","129",1060,3],["Reptyro Cryst","129B",600,1],["Starryon","130",1150,3],["Starryon Primo","130B",430,1],["Pierdon","131",1110,3],["Pierdon Cryst","131B",460,1],["Cryolinx","132",1040,3],["Cryolinx Terra","132B",470,1],["Snugloo","133",2390,3],["Wumpo","134",830,3],["Wumpo Botan","134B",610,3],["Sootseer","135",980,3],["Carnibora","136",1700,3],["Blazamut","137",410,3],["Blazamut Ryu","137B",100,1],["Dualith","138",510,3],["Dualith Noct","138B",250,1],["Anubis","139",480,3],["Sekhmet","140",870,3],["Prixter","141",1510,3],["Prixter Lux","141B",850,1],["Tetroise","142",790,3],["Tetroise Primo","142B",200,1],["Nyafia","143",1250,3],["Mimog","144",1740,1],["Xenovader","145",1820,1],["Xenogard","146",990,1],["Prunelia","147",1390,3],["Nitemary","148",1230,3],["Nitemary Botan","148B",1320,1],["Smokie","149",1760,3],["Smokie Cryst","149B",1610,1],["Omascul","150",1140,3],["Whalaska","151",710,3],["Whalaska Ignis","151B",370,1],["Verdash","152",1160,3],["Splatterina","153",780,3],["Gildane","154",730,3],["Dogen","155",1460,3],["Bulldosu","156",1190,3],["Celesdir","157",570,1],["Celesdir Noct","157B",270,1],["Astegon","158",490,3],["Knocklem","159",260,3],["Knocklem Ignis","159B",210,1],["Silvegis","160",560,3],["Azurmane","161",420,3],["Valentail","162",1900,3],["Snock","163",1780,3],["Snock Terra","163B",1500,1],["Souffline","164",2000,3],["Lapiron","165",1680,3],["Hoodle","166",1770,3],["Slowatt","167",1750,3],["Bakemi","168",1540,3],["Solmora","169",1370,3],["Solmora Lux","169B",1000,1],["Lapure","170",810,3],["Eidrolon","171",300,3],["Eidrolon Ignis","171B",140,1],["Dynamoff","172",1400,3],["Tropicaw","173",1350,3],["Flaracle","174",390,3],["Ophydia","175",230,3],["Dupin","176",520,3],["Roujay","177",530,3],["Venusa","178",970,3],["Mycora","179",760,3],["Loomen","180",890,3],["Wistella","181",1180,3],["Solenne","182",280,3],["Renjishi","183",290,3],["Aegidron","184",30,3],["Grizzbolt","185",1020,1],["Lyleen","186",240,1],["Lyleen Noct","186B",220,1],["Orserk","187",120,1],["Faleris","188",500,1],["Faleris Aqua","188B",450,1],["Shadowbeak","189",550,1],["Selyne","190",360,1],["Bastigor","191",50,1],["Shaolong","192",40,1],["Silvance","193",80,1],["Dandilord","194",60,1],["Bellanoir","195",620,1],["Bellanoir Libero","195B",130,1],["Xenolord","196",400,1],["Hartalis","197",90,1],["Paladius","198",180,1],["Necromus","199",190,1],["Frostallion","200",150,1],["Frostallion Noct","200B",110,1],["Neptilius","201",160,1],["Jetragon","202",70,1],["Panthalus","203",20,0],["Astralym","204",10,0],["Blue Slime","",3100,1],["Cave Bat","",3100,1],["Demon Eye","",3100,1],["Enchanted Sword","",3100,1],["Eye of Cthulhu","",3100,1],["Green Slime","",3100,1],["Illuminant Bat","",3100,1],["Illuminant Slime","",3100,1],["Purple Slime","",3100,1],["Rainbow Slime","",3100,1],["Red Slime","",3100,1]];
+/* Fixed special combinations: [parentA, parentB, child]. Gender-dependent
+   Katress+Wixen rows are handled separately below. */
+var COMBOS = [["Relaxaurus","Sparkit","Relaxaurus Lux"],["Incineram","Maraith","Incineram Noct"],["Mau","Pengullet","Mau Cryst"],["Vanwyrm","Foxcicle","Vanwyrm Cryst"],["Eikthyrdeer","Hangyu","Eikthyrdeer Terra"],["Elphidran","Surfent","Elphidran Aqua"],["Pyrin","Katress","Pyrin Noct"],["Mammorest","Wumpo","Mammorest Cryst"],["Mossanda","Grizzbolt","Mossanda Lux"],["Dinossom","Rayhound","Dinossom Lux"],["Jolthog","Pengullet","Jolthog Cryst"],["Frostallion","Helzephyr","Frostallion Noct"],["Kingpaca","Reindrix","Kingpaca Cryst"],["Lyleen","Menasting","Lyleen Noct"],["Leezpunk","Flambelle","Leezpunk Ignis"],["Blazehowl","Felbat","Blazehowl Noct"],["Robinquill","Fuddler","Robinquill Terra"],["Broncherry","Fuack","Broncherry Aqua"],["Surfent","Dumud","Surfent Terra"],["Gobfin","Rooby","Gobfin Ignis"],["Suzaku","Jormuntide","Suzaku Aqua"],["Reptyro","Foxcicle","Reptyro Cryst"],["Hangyu","Swee","Hangyu Cryst"],["Jormuntide","Blazehowl","Jormuntide Ignis"],["Bellanoir","Bellanoir Libero","Bellanoir"],["Gorirat","Kikit","Gorirat Terra"],["Chillet","Arsox","Chillet Ignis"],["Quivern","Lullu","Quivern Botan"],["Helzephyr","Beakon","Helzephyr Lux"],["Bushi","Sootseer","Bushi Noct"],["Menasting","Knocklem","Menasting Terra"],["Foxparks","Foxcicle","Foxparks Cryst"],["Dazzi","Omascul","Dazzi Noct"],["Cryolinx","Dazemu","Cryolinx Terra"],["Fenglope","Azurmane","Fenglope Lux"],["Caprity","Tarantriss","Caprity Noct"],["Loupmoon","Sweepa","Loupmoon Cryst"],["Faleris","Jormuntide","Faleris Aqua"],["Ribbuny","Bristla","Ribbuny Botan"],["Warsect","Digtoise","Warsect Terra"],["Kitsun","Nyafia","Kitsun Noct"],["Gildane","Eikthyrdeer Terra","Celesdir"],["Green Slime","Blue Slime","Blue Slime"],["Green Slime","Red Slime","Red Slime"],["Green Slime","Purple Slime","Purple Slime"],["Green Slime","Illuminant Slime","Illuminant Slime"],["Green Slime","Rainbow Slime","Rainbow Slime"],["Green Slime","Enchanted Sword","Enchanted Sword"],["Green Slime","Cave Bat","Rainbow Slime"],["Green Slime","Illuminant Bat","Rainbow Slime"],["Green Slime","Eye of Cthulhu","Eye of Cthulhu"],["Green Slime","Demon Eye","Demon Eye"],["Blue Slime","Red Slime","Purple Slime"],["Blue Slime","Purple Slime","Purple Slime"],["Blue Slime","Illuminant Slime","Illuminant Slime"],["Blue Slime","Rainbow Slime","Rainbow Slime"],["Blue Slime","Enchanted Sword","Enchanted Sword"],["Blue Slime","Cave Bat","Rainbow Slime"],["Blue Slime","Illuminant Bat","Rainbow Slime"],["Blue Slime","Eye of Cthulhu","Eye of Cthulhu"],["Blue Slime","Demon Eye","Demon Eye"],["Red Slime","Purple Slime","Purple Slime"],["Red Slime","Illuminant Slime","Illuminant Slime"],["Red Slime","Rainbow Slime","Rainbow Slime"],["Red Slime","Enchanted Sword","Enchanted Sword"],["Red Slime","Cave Bat","Rainbow Slime"],["Red Slime","Illuminant Bat","Rainbow Slime"],["Red Slime","Eye of Cthulhu","Eye of Cthulhu"],["Red Slime","Demon Eye","Demon Eye"],["Purple Slime","Illuminant Slime","Illuminant Slime"],["Purple Slime","Rainbow Slime","Rainbow Slime"],["Purple Slime","Enchanted Sword","Enchanted Sword"],["Purple Slime","Cave Bat","Illuminant Bat"],["Purple Slime","Illuminant Bat","Illuminant Bat"],["Purple Slime","Eye of Cthulhu","Eye of Cthulhu"],["Purple Slime","Demon Eye","Demon Eye"],["Illuminant Slime","Rainbow Slime","Rainbow Slime"],["Illuminant Slime","Enchanted Sword","Enchanted Sword"],["Illuminant Slime","Cave Bat","Rainbow Slime"],["Illuminant Slime","Illuminant Bat","Rainbow Slime"],["Illuminant Slime","Eye of Cthulhu","Eye of Cthulhu"],["Illuminant Slime","Demon Eye","Demon Eye"],["Rainbow Slime","Enchanted Sword","Rainbow Slime"],["Rainbow Slime","Cave Bat","Rainbow Slime"],["Rainbow Slime","Illuminant Bat","Rainbow Slime"],["Rainbow Slime","Eye of Cthulhu","Eye of Cthulhu"],["Rainbow Slime","Demon Eye","Demon Eye"],["Enchanted Sword","Cave Bat","Enchanted Sword"],["Enchanted Sword","Illuminant Bat","Enchanted Sword"],["Enchanted Sword","Eye of Cthulhu","Eye of Cthulhu"],["Enchanted Sword","Demon Eye","Demon Eye"],["Cave Bat","Illuminant Bat","Illuminant Bat"],["Cave Bat","Eye of Cthulhu","Eye of Cthulhu"],["Cave Bat","Demon Eye","Demon Eye"],["Illuminant Bat","Eye of Cthulhu","Eye of Cthulhu"],["Illuminant Bat","Demon Eye","Demon Eye"],["Eye of Cthulhu","Demon Eye","Eye of Cthulhu"],["Killamari","Ribbuny","Killamari Primo"],["Pengullet","Sparkit","Pengullet Lux"],["Penking","Rayhound","Penking Lux"],["Celaray","Univolt","Celaray Lux"],["Fuack","Flambelle","Fuack Ignis"],["Dumud","Eikthyrdeer Terra","Dumud Gild"],["Turtacle","Digtoise","Turtacle Terra"],["Croajiro","Bushi Noct","Croajiro Noct"],["Azurobe","Frostplume","Azurobe Cryst"],["Whalaska","Chillet Ignis","Whalaska Ignis"],["Ghangler","Sootseer","Ghangler Ignis"],["Finsider","Gobfin Ignis","Finsider Ignis"],["Tanzee","Flambelle","Tanzee Ignis"],["Univolt","Frostplume","Univolt Cryst"],["Rayhound","Foxcicle","Rayhound Cryst"],["Beakon","Frostplume","Beakon Cryst"],["Woolipop","Kikit","Woolipop Terra"],["Prixter","Helzephyr Lux","Prixter Lux"],["Smokie","Munchill","Smokie Cryst"],["Nitemary","Petallia","Nitemary Botan"],["Starryon","Celesdir","Starryon Primo"],["Gloopie","Valentail","Gloopie Primo"],["Sibelyx","Lapure","Sibelyx Primo"],["Knocklem","Ragnahawk","Knocklem Ignis"],["Petallia","Bushi","Petallia Ignis"],["Celesdir","Kitsun Noct","Celesdir Noct"],["Polapup","Surfent Terra","Polapup Terra"],["Solmora","Slowatt","Solmora Lux"],["Dualith","Sootseer","Dualith Noct"],["Tetroise","Celesdir","Tetroise Primo"],["Eidrolon","Suzaku","Eidrolon Ignis"],["Moldron","Reptyro Cryst","Moldron Cryst"],["Pierdon","Wumpo","Pierdon Cryst"],["Skutlass","Gobfin Ignis","Skutlass Ignis"],["Snock","Turtacle Terra","Snock Terra"],["Needoll","Prunelia","Needoll Noct"],["Elgrove","Pierdon Cryst","Elgrove Cryst"]];
+
+var BY_NAME = {};
+PALS.forEach(function (p) { BY_NAME[p[0]] = p; });
+var POOL = PALS.filter(function (p) { return (p[3] & 2) !== 0; })
+  .slice().sort(function (a, b) { return a[2] - b[2]; });
+var SPECIAL = {};
+COMBOS.forEach(function (c) {
+  SPECIAL[c[0] + "|" + c[1]] = c[2];
+  SPECIAL[c[1] + "|" + c[0]] = c[2];
+});
+
+var NEAREST_CACHE = {};
+function nearestPool(target) {
+  if (NEAREST_CACHE[target]) return NEAREST_CACHE[target];
+  var best = null, bestD = null;
+  for (var i = 0; i < POOL.length; i++) {
+    var d = Math.abs(POOL[i][2] - target);
+    if (bestD === null || d < bestD) { best = POOL[i]; bestD = d; }
+  }
+  NEAREST_CACHE[target] = best; /* pool is rank-sorted, so the first minimum wins ties: lower rank */
+  return best;
+}
+
+/* Returns {children:[...], kind, detail} kind: gender|special|same|formula */
+function breedPair(aName, bName) {
+  var a = BY_NAME[aName], b = BY_NAME[bName];
+  if (!a || !b) return null;
+  if ((aName === "Katress" && bName === "Wixen") || (aName === "Wixen" && bName === "Katress")) {
+    return { children: ["Katress Ignis", "Wixen Noct"], kind: "gender",
+      detail: "Gender-dependent: a female Katress with a male Wixen gives Katress Ignis; a male Katress with a female Wixen gives Wixen Noct." };
+  }
+  var sp = SPECIAL[aName + "|" + bName];
+  if (sp) {
+    return { children: [sp], kind: "special",
+      detail: "Special combination — this fixed pair overrides the breeding-power formula." };
+  }
+  if (aName === bName) {
+    return { children: [aName], kind: "same",
+      detail: "Same-species pairs always breed true." };
+  }
+  var target = Math.floor((a[2] + b[2] + 1) / 2);
+  var child = nearestPool(target);
+  return { children: [child[0]], kind: "formula",
+    detail: aName + " (breeding power " + a[2] + ") + " + bName + " (breeding power " + b[2] + ") = target " + target + ". Closest in the formula pool: " + child[0] + " (" + child[2] + ")." };
+}
+
+function palLabel(p) { return (p[1] ? "#" + p[1] + " " : "") + p[0] + "  (power " + p[2] + ")"; }
+
+/* Reverse lookup: every farm-eligible parent pair producing `child`.
+   The full pair map is built ONCE (44,253 pairs) on first use, and every
+   reverse result is read from it, so forward and reverse always agree. */
+var PAIR_MAP = null;
+function buildPairMap() {
+  if (PAIR_MAP) return PAIR_MAP;
+  var map = {};
+  var parents = PALS.filter(function (p) { return (p[3] & 1) !== 0; });
+  for (var i = 0; i < parents.length; i++) {
+    for (var j = i; j < parents.length; j++) {
+      var a = parents[i][0], b = parents[j][0];
+      if ((a === "Katress" && b === "Wixen") || (a === "Wixen" && b === "Katress")) {
+        (map["Katress Ignis"] = map["Katress Ignis"] || []).push({ a: "Katress (female)", b: "Wixen (male)", kind: "gender" });
+        (map["Wixen Noct"] = map["Wixen Noct"] || []).push({ a: "Katress (male)", b: "Wixen (female)", kind: "gender" });
+        continue;
+      }
+      var r = breedPair(a, b);
+      if (r) (map[r.children[0]] = map[r.children[0]] || []).push({ a: a, b: b, kind: r.kind });
+    }
+  }
+  PAIR_MAP = map;
+  return map;
+}
+function reverseLookup(child) {
+  var map = buildPairMap();
+  return map[child] || [];
+}
+
+if (typeof document !== "undefined") { initUI(); }
+
+function fillSelect(sel, list) {
+  sel.innerHTML = "";
+  list.forEach(function (p) {
+    var o = document.createElement("option");
+    o.value = p[0];
+    o.textContent = palLabel(p);
+    sel.appendChild(o);
+  });
+}
+function filterList(input, sel, list) {
+  var q = input.value.trim().toLowerCase();
+  var f = q ? list.filter(function (p) { return p[0].toLowerCase().indexOf(q) !== -1; }) : list;
+  fillSelect(sel, f);
+}
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function initUI() {
+  var parents = PALS.filter(function (p) { return (p[3] & 1) !== 0; });
+  var selA = document.getElementById("parentA"), selB = document.getElementById("parentB");
+  var selT = document.getElementById("targetPal");
+  fillSelect(selA, parents); fillSelect(selB, parents);
+  selA.value = "Lamball"; selB.value = "Cattiva";
+  document.getElementById("filterA").addEventListener("input", function () { filterList(this, selA, parents); });
+  document.getElementById("filterB").addEventListener("input", function () { filterList(this, selB, parents); });
+  /* reverse targets: every Pal reachable as an offspring (all 299 except
+     Panthalus and Astralym, which cannot be bred and cannot use the farm) */
+  var targets = PALS.filter(function (p) { return p[0] !== "Panthalus" && p[0] !== "Astralym"; });
+  fillSelect(selT, targets);
+  selT.value = "Anubis";
+  document.getElementById("filterT").addEventListener("input", function () { filterList(this, selT, targets); });
+
+  document.getElementById("calcBtn").addEventListener("click", function () {
+    var a = selA.value, b = selB.value;
+    var box = document.getElementById("resultBox");
+    if (!a || !b) { box.className = "result show"; box.innerHTML = "<p>Please pick both parents first.</p>"; return; }
+    var r = breedPair(a, b);
+    var h = "<h3>" + esc(r.children.join(" or ")) + "</h3>";
+    h += "<p class=\"math\">" + esc(a) + " &times; " + esc(b) + "</p>";
+    h += "<p class=\"math\">" + esc(r.detail) + "</p>";
+    h += "<span class=\"tag\">" + (r.kind === "gender" ? "Gender-dependent" : r.kind === "special" ? "Special combo" : r.kind === "same" ? "Same species" : "Formula result") + "</span>";
+    h += "<p class=\"math\">Each breeding attempt uses 1 Cake.</p>";
+    box.className = "result show"; box.innerHTML = h;
+  });
+  document.getElementById("swapBtn").addEventListener("click", function () {
+    var t = selA.value; selA.value = selB.value; selB.value = t;
+  });
+  function runReverse() {
+    var t = selT.value;
+    var box = document.getElementById("revBox");
+    if (!t) { box.className = "result show"; box.innerHTML = "<p>Please pick a target Pal first.</p>"; return; }
+    var pairs = reverseLookup(t);
+    var h = "<h3>" + esc(t) + " — " + pairs.length + " parent pair" + (pairs.length === 1 ? "" : "s") + "</h3>";
+    if (!pairs.length) { h += "<p class=\"math\">No breeding pair produces this Pal.</p>"; }
+    else {
+      var shown = pairs.slice(0, 100);
+      h += "<div class=\"pair-list\"><table><tbody>";
+      shown.forEach(function (pr) {
+        h += "<tr><td>" + esc(pr.a) + " &times; " + esc(pr.b) + "</td><td class=\"pair-kind\">" + (pr.kind === "gender" ? "Gender-dependent" : pr.kind === "special" ? "Special combo" : pr.kind === "same" ? "Same species" : "Formula") + "</td></tr>";
+      });
+      h += "</tbody></table></div>";
+      if (pairs.length > 100) {
+        h += "<p class=\"math\">Showing 100 of " + pairs.length + " pairs. <a href=\"#\" id=\"showAllPairs\">Show all</a></p>";
+      }
+    }
+    box.className = "result show"; box.innerHTML = h;
+    var sa = document.getElementById("showAllPairs");
+    if (sa) sa.addEventListener("click", function (e) {
+      e.preventDefault();
+      var h2 = "<h3>" + esc(t) + " — " + pairs.length + " parent pairs</h3><div class=\"pair-list\"><table><tbody>";
+      pairs.forEach(function (pr) {
+        h2 += "<tr><td>" + esc(pr.a) + " &times; " + esc(pr.b) + "</td><td class=\"pair-kind\">" + (pr.kind === "gender" ? "Gender-dependent" : pr.kind === "special" ? "Special combo" : pr.kind === "same" ? "Same species" : "Formula") + "</td></tr>";
+      });
+      h2 += "</tbody></table></div>";
+      box.innerHTML = h2;
+    });
+  }
+  document.getElementById("revBtn").addEventListener("click", runReverse);
+  document.querySelectorAll(".try-links a[data-target]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      selT.value = el.getAttribute("data-target");
+      runReverse();
+      document.getElementById("revBox").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  });
+}
+</script>
+
+</body>
+</html>
