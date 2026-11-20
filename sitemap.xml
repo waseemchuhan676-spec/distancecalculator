@@ -3,7 +3,7 @@
   <!-- Core Main Page -->
   <url>
     <loc>https://distancecalculator-theta.vercel.app/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -90,7 +90,7 @@
   </url>
   <url>
     <loc>https://distancecalculator-theta.vercel.app/tools/flight-distance-calculator.html</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
