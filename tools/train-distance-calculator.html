@@ -7,8 +7,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
 
-<title>Train Travel Distance Calculator – Train Distance Between Cities & Travel Time</title>
-<meta name="description" content="Calculate train travel distance and estimated train travel time between two cities. Rail corridor approximation at express passenger train speed — live timetables are not integrated.">
+<title>Train Distance Calculator – Travel Time by Train</title>
+<meta name="description" content="Calculate train distance and travel time between two cities. Rail corridor estimate at 85 km/h planning speed — live timetables are not integrated.">
 <meta name="keywords" content="train travel distance calculator, train distance calculator, train distance between two cities, train travel time calculator, how far by train">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/train-distance-calculator.html">
@@ -56,7 +56,8 @@ footer a{color:#93c5fd;text-decoration:none}
   "name":"Train Travel Distance Calculator",
   "url":"https://distancecalculator-theta.vercel.app/tools/train-distance-calculator.html",
   "applicationCategory":"TravelApplication",
-  "description":"Calculate train travel distance and estimated train travel time between two cities. Rail corridor approximation at express passenger train speed — live timetables are not integrated."
+  "description":"Calculate train distance and travel time between two cities. Rail corridor estimate at 85 km/h planning speed — live timetables are not integrated.",
+  "dateModified":"2026-11-21"
 }
 </script>
 <script type="application/ld+json">
@@ -84,7 +85,9 @@ footer a{color:#93c5fd;text-decoration:none}
       "name":"Can I calculate train distance between cities in different countries?",
       "acceptedAnswer":{"@type":"Answer","text":"Yes. The calculator supports global locations including cities, towns, and stations worldwide, so you can estimate train travel distance for international city pairs as well."}
     }
-  , { "@type":"Question", "name":"How long does it take to travel by train between cities?", "acceptedAnswer":{"@type":"Answer","text":"Divide the train distance between the two cities by the planning speed of 85 km/h for an estimate — for example, a 340 km rail journey takes about 4 hours at that speed. Actual times vary with stops, the route, and the operator's timetable, so treat it as a planning estimate, not a live schedule."} } , { "@type":"Question", "name":"How does the train distance calculator work?", "acceptedAnswer":{"@type":"Answer","text":"Enter your starting city and destination, open the result with Train mode preselected, and the calculator estimates train travel distance as a rail corridor approximation, with travel time based on an express passenger train speed of 85 km/h. It is a planning estimate — live railway timetables are not integrated."} } ]
+  , { "@type":"Question", "name":"How long does it take to travel by train between cities?", "acceptedAnswer":{"@type":"Answer","text":"Divide the train distance between the two cities by the planning speed of 85 km/h for an estimate — for example, a 340 km rail journey takes about 4 hours at that speed. Actual times vary with stops, the route, and the operator's timetable, so treat it as a planning estimate, not a live schedule."} } , { "@type":"Question", "name":"How does the train distance calculator work?", "acceptedAnswer":{"@type":"Answer","text":"Enter your starting city and destination, open the result with Train mode preselected, and the calculator estimates train travel distance as a rail corridor approximation, with travel time based on an express passenger train speed of 85 km/h. It is a planning estimate — live railway timetables are not integrated."} }
+  , { "@type":"Question", "name":"Does the estimate include station stops?", "acceptedAnswer":{"@type":"Answer","text":"No — the 85 km/h figure is a running average, so station stops are not added to the estimate. As a rough planning guide, allow about 5 minutes per intermediate stop, plus roughly 90 seconds of acceleration and braking time per stop."} }
+  , { "@type":"Question", "name":"Is 85 km/h realistic for a train?", "acceptedAnswer":{"@type":"Answer","text":"Yes, as a conservative global planning average. High-speed corridors are much faster — Beijing–Shanghai averages 307 km/h, Madrid–Barcelona 248 km/h, Paris–Lyon 213 km/h, Tokyo–Osaka 217 km/h, Milan–Rome 197 km/h, London–Edinburgh 145 km/h and Frankfurt–Berlin 139 km/h — while regional services are slower. The 85 km/h figure keeps estimates safe across both fast and slow routes."} } ]
 }
 </script>
 </head>
@@ -107,7 +110,7 @@ footer a{color:#93c5fd;text-decoration:none}
 
 <main class="wrap">
   <section class="hero">
-    <h1>Train Travel Distance Calculator</h1>
+    <h1>Train Distance Calculator</h1>
     <p>Calculate train travel distance and estimated train travel time between two cities. Enter your cities below — the result opens in the main calculator with Train mode already selected.</p>
   </section>
 
@@ -165,6 +168,14 @@ footer a{color:#93c5fd;text-decoration:none}
     <div class="faq-item">
       <h4>How does the train distance calculator work?</h4>
       <p>Enter your starting city and destination, open the result with Train mode preselected, and the calculator estimates train travel distance as a rail corridor approximation, with travel time based on an express passenger train speed of 85 km/h. It is a planning estimate — live railway timetables are not integrated.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Does the estimate include station stops?</h4>
+      <p>No — the 85 km/h figure is a running average, so station stops are not added to the estimate. As a rough planning guide, allow about 5 minutes per intermediate stop, plus roughly 90 seconds of acceleration and braking time per stop.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is 85 km/h realistic for a train?</h4>
+      <p>Yes, as a conservative global planning average. High-speed corridors are much faster — Beijing–Shanghai averages 307 km/h, Madrid–Barcelona 248 km/h, Paris–Lyon 213 km/h, Tokyo–Osaka 217 km/h, Milan–Rome 197 km/h, London–Edinburgh 145 km/h and Frankfurt–Berlin 139 km/h — while regional services are slower. The 85 km/h figure keeps estimates safe across both fast and slow routes.</p>
     </div>
   </section>
 </main>
