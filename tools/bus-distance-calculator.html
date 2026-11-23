@@ -7,8 +7,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3Y265MHF4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F3Y265MHF4');</script>
 
-<title>Bus Travel Distance Calculator – Bus Distance Between Cities & Travel Time</title>
-<meta name="description" content="Calculate bus travel distance and estimated bus travel time between two cities. Road routing geometry at a typical bus cruising speed of 55 km/h — actual bus journey times vary with stops, traffic, and route schedules.">
+<title>Bus Distance Calculator – Travel Time by Bus</title>
+<meta name="description" content="Calculate bus distance and estimated travel time between two cities. Road routing at 55 km/h — actual times vary with stops, traffic and schedules.">
 <meta name="keywords" content="bus travel distance calculator, bus distance calculator, bus distance between two cities, bus travel time calculator, how far by bus">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://distancecalculator-theta.vercel.app/tools/bus-distance-calculator.html">
@@ -56,7 +56,8 @@ footer a{color:#93c5fd;text-decoration:none}
   "name":"Bus Travel Distance Calculator",
   "url":"https://distancecalculator-theta.vercel.app/tools/bus-distance-calculator.html",
   "applicationCategory":"TravelApplication",
-  "description":"Calculate bus travel distance and estimated bus travel time between two cities. Road routing geometry at a typical bus cruising speed of 55 km/h — actual bus journey times vary with stops, traffic, and route schedules."
+  "description":"Calculate bus distance and estimated travel time between two cities. Road routing at 55 km/h — actual times vary with stops, traffic and schedules.",
+  "dateModified":"2026-11-23"
 }
 </script>
 <script type="application/ld+json">
@@ -96,7 +97,7 @@ footer a{color:#93c5fd;text-decoration:none}
         "text": "Yes. The calculator supports global locations including cities and towns worldwide, so you can estimate bus travel distance for international city pairs as well."
       }
     }
-  , { "@type": "Question", "name": "How long does it take to travel by bus between cities?", "acceptedAnswer": { "@type": "Answer", "text": "Divide the bus distance between the two cities by the typical bus cruising speed of 55 km/h for an estimate — for example, a 220 km bus journey takes about 4 hours at that speed. Actual times vary with stops, traffic, and route schedules, so treat it as a planning estimate." } } , { "@type": "Question", "name": "How does the bus distance calculator work?", "acceptedAnswer": { "@type": "Answer", "text": "Enter your starting city and destination, open the result with Bus mode preselected, and the calculator follows road routing geometry, estimating travel time at a typical bus cruising speed of 55 km/h. Actual bus journey times vary with stops, traffic, and route schedules." } } ]
+  , { "@type": "Question", "name": "How long does it take to travel by bus between cities?", "acceptedAnswer": { "@type": "Answer", "text": "Divide the bus distance between the two cities by the typical bus cruising speed of 55 km/h for an estimate — for example, a 220 km bus journey takes about 4 hours at that speed. Actual times vary with stops, traffic, and route schedules, so treat it as a planning estimate." } } , { "@type": "Question", "name": "How does the bus distance calculator work?", "acceptedAnswer": { "@type": "Answer", "text": "Enter your starting city and destination, open the result with Bus mode preselected, and the calculator follows road routing geometry, estimating travel time at a typical bus cruising speed of 55 km/h. Actual bus journey times vary with stops, traffic, and route schedules." } } , { "@type": "Question", "name": "Is 55 km/h realistic for a bus?", "acceptedAnswer": { "@type": "Answer", "text": "As a planning average, yes. Highway coaches cruise at around 80\u201396 km/h (50\u201360 mph) on open motorways, while city buses average far less, so 55 km/h is a deliberately cautious figure that already allows for stops, slower sections and traffic. An express motorway service will usually beat the estimate; a stopping local service will usually be slower. For example, New York to Boston is about 306 km by bus and scheduled coaches cover it in around 4 hours (fastest about 3 hours 55 minutes) — quicker than the 5 hours 30 minutes this cautious 55 km/h figure gives, because it is a direct motorway service with few stops." } } , { "@type": "Question", "name": "Do I need to add extra time for bus stops?", "acceptedAnswer": { "@type": "Answer", "text": "No. The 55 km/h figure is an average that already allows for stops, so adding stop time on top would count the same delay twice. If the service makes many stops or includes a scheduled rest break on a long journey, allow extra time beyond the estimate \u2014 and always check the operator's timetable for exact departures." } } , { "@type": "Question", "name": "Why does a bus take longer than a car?", "acceptedAnswer": { "@type": "Answer", "text": "Buses stop to pick up and drop off passengers, accelerate more slowly, and may include rest breaks on long journeys. Allow extra time over the driving figure and check the operator's timetable." } } ]
 }
 </script>
 </head>
@@ -119,7 +120,7 @@ footer a{color:#93c5fd;text-decoration:none}
 
 <main class="wrap">
   <section class="hero">
-    <h1>Bus Travel Distance Calculator</h1>
+    <h1>Bus Distance Calculator</h1>
     <p>Calculate bus travel distance and estimated bus travel time between two cities. Enter your cities below — the result opens in the main calculator with Bus mode already selected.</p>
   </section>
 
@@ -140,6 +141,7 @@ footer a{color:#93c5fd;text-decoration:none}
     <div class="card article">
       <h2>How bus distance between cities is calculated</h2>
       <p>Bus travel distance follows road routing geometry — the road path a bus would typically follow between the two places. Estimated travel time uses a typical bus cruising speed of 55 km/h.</p>
+      <p><strong>What the 55 km/h figure means:</strong> it is a deliberately cautious planning average, not a top speed. Highway coaches typically cruise much faster — around 80–96 km/h on open motorways — while city buses average far less, so 55 km/h sits between the two and already allows for stops, slower sections and traffic. An express motorway service will usually beat the estimate; a stopping local service will usually be slower. For example, New York to Boston is about 306 km by bus and scheduled coaches cover it in around 4 hours (fastest about 3 hours 55 minutes) — quicker than the 5 hours 30 minutes this cautious 55 km/h figure gives, because it is a direct motorway service with few stops.</p>
       <p><strong>Honest note:</strong> actual bus journey times vary with stops, traffic, and route schedules, so this is a planning estimate, not a timetable lookup.</p>
       <h2>Try a popular bus route</h2>
       <p class="try-links">
@@ -177,6 +179,18 @@ footer a{color:#93c5fd;text-decoration:none}
     <div class="faq-item">
       <h4>How does the bus distance calculator work?</h4>
       <p>Enter your starting city and destination, open the result with Bus mode preselected, and the calculator follows road routing geometry, estimating travel time at a typical bus cruising speed of 55 km/h. Actual bus journey times vary with stops, traffic, and route schedules.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Is 55 km/h realistic for a bus?</h4>
+      <p>As a planning average, yes. Highway coaches cruise at around 80–96 km/h (50–60 mph) on open motorways, while city buses average far less, so 55 km/h is a deliberately cautious figure that already allows for stops, slower sections and traffic. An express motorway service will usually beat the estimate; a stopping local service will usually be slower. For example, New York to Boston is about 306 km by bus and scheduled coaches cover it in around 4 hours (fastest about 3 hours 55 minutes) — quicker than the 5 hours 30 minutes this cautious 55 km/h figure gives, because it is a direct motorway service with few stops.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Do I need to add extra time for bus stops?</h4>
+      <p>No. The 55 km/h figure is an average that already allows for stops, so adding stop time on top would count the same delay twice. If the service makes many stops or includes a scheduled rest break on a long journey, allow extra time beyond the estimate — and always check the operator's timetable for exact departures.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Why does a bus take longer than a car?</h4>
+      <p>Buses stop to pick up and drop off passengers, accelerate more slowly, and may include rest breaks on long journeys. Allow extra time over the driving figure and check the operator's timetable.</p>
     </div>
   </section>
 </main>
