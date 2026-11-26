@@ -39,28 +39,64 @@ footer a{color:#93c5fd;text-decoration:none}
 
 <script type="application/ld+json">
 {
-  "@context":"https://schema.org",
-  "@type":"FAQPage",
-  "mainEntity":[
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@type":"Question",
-      "name":"What is the difference between straight-line distance and driving distance?",
-      "acceptedAnswer":{"@type":"Answer","text":"Straight-line distance (or Great-Circle distance) is the direct theoretical distance across the Earth's spherical surface as the crow flies. Driving distance follows the actual physical road network, making it typically 15% to 35% longer due to terrain, highways, and municipal turns."}
+      "@type": "Question",
+      "name": "What is the difference between straight-line distance and driving distance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Straight-line distance is the direct geodesic distance across the Earth's surface (\"as the crow flies\") calculated via the Haversine formula. Driving distance follows vehicular highways and municipal roads, which are typically 15% to 35% longer due to natural terrain and road geometry."
+      }
     },
     {
-      "@type":"Question",
-      "name":"How are fuel costs calculated?",
-      "acceptedAnswer":{"@type":"Answer","text":"Fuel cost is calculated by dividing total journey distance by your vehicle's fuel economy to find required fuel volume, then multiplying by your local price per unit of fuel."}
+      "@type": "Question",
+      "name": "Why do some cities show different distances on different websites?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Different mapping platforms use different reference anchor points (such as the historic city hall, geographical center, or central post office) and may use different routing algorithms (e.g. prioritizing the shortest distance vs. fastest highway time)."
+      }
     },
     {
-      "@type":"Question",
-      "name":"Does this tool support round-trip calculations?",
-      "acceptedAnswer":{"@type":"Answer","text":"Yes, our calculators feature a one-click One-way vs. Round-trip toggle that automatically doubles mileage and fuel cost estimates for return journeys."}
+      "@type": "Question",
+      "name": "How does the flight arc work on the map?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We render a 100-point Spherical Linear Interpolation (Slerp) curve. On a flat 2D Mercator map, a true straight line across the spherical Earth appears as a curved arc, reflecting actual commercial airline flight corridors."
+      }
     },
     {
-      "@type":"Question",
-      "name":"Do you track or store my device's GPS location?",
-      "acceptedAnswer":{"@type":"Answer","text":"No. When you use the 'My Location' button, coordinates are processed entirely inside your local web browser session and are never sent to or logged on our servers."}
+      "@type": "Question",
+      "name": "How does the calculator handle different fuel economy units?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our tools natively support km/L (Kilometers per Liter), L/100 km (Liters per 100 Kilometers), MPG US, and MPG UK (Imperial) with mathematically verified formulas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I calculate round-trip expenses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Simply select the \"Round-trip (×2)\" option on our calculators to automatically calculate total return distance, fuel consumption, and journey costs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does World Distance Calculator track my location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. When you click the \"GPS\" button, your browser prompts you for permission to access your device's coordinates. This data remains strictly client-side inside your browser and is never stored on our servers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this service free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, World Distance Calculator is 100% free for all users worldwide. No account registration or credit card is ever required."
+      }
     }
   ]
 }
