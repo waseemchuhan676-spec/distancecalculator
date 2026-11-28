@@ -40,6 +40,13 @@ h1{font-size:clamp(28px,4vw,38px);line-height:1.25;margin:0 0 14px;color:#0b1f33
 .tools-banner p{color:#e2e8f0;margin:0 0 18px;font-size:14.5px}
 .btn-cta{display:inline-block;background:#fff;color:var(--blue);font-weight:800;padding:12px 24px;border-radius:10px;text-decoration:none;transition:transform 0.15s}
 .btn-cta:hover{transform:translateY(-2px)}
+.faq-box{margin-top:30px}
+.content table{width:100%;border-collapse:collapse;font-size:15px;margin:16px 0}
+.content th,.content td{border-bottom:1px solid #e2e8f0;padding:8px 6px;text-align:left}
+.content th{background:#f8fafc}
+.faq-item{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:12px}
+.faq-item h4{margin:0 0 8px;font-size:16.5px;color:#0f172a}
+.faq-item p{margin:0;font-size:15px;color:var(--muted)}
 footer{background:#0b1f33;color:#94a3b8;padding:32px 0;text-align:center;font-size:14px;margin-top:50px}
 footer a{color:#93c5fd;text-decoration:none}
 </style>
@@ -53,7 +60,64 @@ footer a{color:#93c5fd;text-decoration:none}
   "author":{"@type":"Organization","name":"World Distance Calculator"},
   "publisher":{"@type":"Organization","name":"World Distance Calculator"},
   "datePublished":"2026-10-28",
+  "dateModified":"2026-11-28",
   "mainEntityOfPage":"https://distancecalculator-theta.vercel.app/blog/how-to-calculate-road-trip-fuel-cost.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I calculate fuel cost for a road trip?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide your total trip distance by your car's fuel economy to get the fuel you need, then multiply by the fuel price: gallons = miles \u00f7 MPG, and cost = gallons \u00d7 price per gallon. For a 540-mile round trip at 30 MPG and $4.20 per gallon, that is 18.0 gallons and $75.60."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much gas will I need for a 500-mile road trip?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide the distance by your MPG: 500 miles \u00f7 30 MPG = 16.7 gallons. At an example price of $4.20 per gallon, that trip costs $70.00 in fuel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate fuel cost in litres using L/100 km?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Multiply the distance in kilometres by your L/100 km rating and divide by 100: for a 500 km trip at 8.0 L/100 km, you need 40.0 litres. At an example price of $1.60 per litre, that costs $64.00."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much extra should I budget on top of the fuel cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Add roughly 10% to 15% on top of the fuel figure for detours, traffic, hills and fuel-price differences along the route, and fill up before long rural stretches."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I work out my car's real MPG?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fill the tank until the pump clicks off and note the odometer reading, drive as normal, then fill up again until it clicks off. Divide the miles driven by the gallons pumped at the second fill-up \u2014 that is your real MPG, which is usually lower than the manufacturer's figure."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate fuel cost for an electric vehicle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Multiply your trip distance by the car's consumption in kWh per mile to get the energy needed, then multiply by the charging price per kWh: cost = miles \u00d7 kWh per mile \u00d7 price per kWh."
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -82,7 +146,7 @@ footer a{color:#93c5fd;text-decoration:none}
   <header class="article-header">
     <span class="article-tag">Fuel & Road Trips</span>
     <h1>How to Calculate Fuel Cost for a Road Trip</h1>
-    <div class="meta">Published on October 28, 2026 · 6 min read</div>
+    <div class="meta">Published on October 28, 2026 · Updated 28 November 2026 · 6 min read</div>
   </header>
 
   <article class="content">
@@ -131,8 +195,36 @@ Total Cost = Gallons Required × Fuel Price per Gallon
       • Total Fuel Expense = 18.0 gallons × $4.20 = <strong>$75.60</strong>
     </div>
 
+    <h3>Worked Example 2: Metric Units (L/100 km)</h3>
+    <p>Suppose the same kind of trip is 500 km in a car rated at 8.0 L/100 km, with fuel at an example price of $1.60 per litre:</p>
+
+    <div class="callout">
+      <strong>Calculation:</strong><br>
+      • Litres Required = 500 km × 8.0 ÷ 100 = <strong>40.0 Litres</strong><br>
+      • Total Fuel Expense = 40.0 litres × $1.60 = <strong>$64.00</strong>
+    </div>
+
     <h2>One-Way vs. Round-Trip Budgeting</h2>
     <p>A frequent mistake travelers make when estimating fuel budgets is computing one-way driving miles and forgetting the return journey. Always check whether your road trip involves returning along the same route (multiply distance by 2) or continuing along a multi-city scenic circuit.</p>
+
+    <h2>Quick Reference: How Many Gallons Will You Need?</h2>
+    <p>Gallons needed for a trip at three common fuel economies — divide your distance by your MPG:</p>
+    <table>
+      <tr><th>Trip distance</th><th>25 MPG</th><th>30 MPG</th><th>35 MPG</th></tr>
+      <tr><td>100 miles</td><td>4.0 gal</td><td>3.3 gal</td><td>2.9 gal</td></tr>
+      <tr><td>300 miles</td><td>12.0 gal</td><td>10.0 gal</td><td>8.6 gal</td></tr>
+      <tr><td>500 miles</td><td>20.0 gal</td><td>16.7 gal</td><td>14.3 gal</td></tr>
+      <tr><td>1,000 miles</td><td>40.0 gal</td><td>33.3 gal</td><td>28.6 gal</td></tr>
+    </table>
+
+    <h2>Budgeting Tips: Cost per Mile, Splitting the Bill and a Safety Buffer</h2>
+    <p>Three shortcuts make the budget easier:</p>
+    <ul>
+      <li><strong>Cost per mile:</strong> Divide the fuel price by your MPG — $4.20 ÷ 30 MPG = $0.14 per mile — then multiply by the trip distance.</li>
+      <li><strong>Splitting the bill:</strong> Divide the total by the number of people sharing the drive: the Los Angeles–Las Vegas example costs $75.60, or $18.90 each for four people.</li>
+      <li><strong>Safety buffer:</strong> Add roughly 10% to 15% on top of the fuel figure for detours, traffic, hills and price differences along the route.</li>
+      <li><strong>Use your real MPG:</strong> The manufacturer's figure comes from lab testing, so work from your own recent fill-ups rather than the brochure number (see the FAQ below for the fill-up method).</li>
+    </ul>
 
     <div class="tools-banner">
       <h3>Automate Your Fuel Calculations</h3>
@@ -143,11 +235,39 @@ Total Cost = Gallons Required × Fuel Price per Gallon
     <h2>4 Factors That Alter Your Actual Fuel Burn</h2>
     <p>Manufacturer EPA or WLTP mileage figures reflect controlled laboratory testing. Real-world fuel consumption will vary based on:</p>
     <ol>
-      <li><strong>Cruising Speed:</strong> Aerodynamic drag increases with the square of velocity. Driving at 75 mph (120 km/h) consumes approximately 20% more fuel than driving at 60 mph (95 km/h).</li>
+      <li><strong>Cruising Speed:</strong> Aerodynamic drag increases with the square of velocity. Driving at 75 mph (121 km/h) instead of 60 mph (97 km/h) can use roughly 20% more fuel — the US Department of Energy's rule of thumb is about a 7% fuel-economy loss for each 5 mph over 60 mph.</li>
       <li><strong>Payload & Roof Racks:</strong> A loaded car trunk, bicycle racks, or roof-mounted luggage carriers introduce substantial wind resistance.</li>
-      <li><strong>Air Conditioning Usage:</strong> Running the A/C continuously in high summer temperatures adds 5% to 10% to fuel consumption.</li>
+      <li><strong>Air Conditioning Usage:</strong> Running the A/C continuously adds about 5% to 10% to fuel consumption on steady highway driving. The US Department of Energy notes it can cut fuel economy by up to 25% on short trips in hot weather.</li>
       <li><strong>Terrain:</strong> Climbing mountain passes increases engine workload, though gentle descents partially recover momentum.</li>
     </ol>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-box">
+      <div class="faq-item">
+        <h4>How do I calculate fuel cost for a road trip?</h4>
+        <p>Divide your total trip distance by your car's fuel economy to get the fuel you need, then multiply by the fuel price: gallons = miles ÷ MPG, and cost = gallons × price per gallon. For a 540-mile round trip at 30 MPG and $4.20 per gallon, that is 18.0 gallons and $75.60.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How much gas will I need for a 500-mile road trip?</h4>
+        <p>Divide the distance by your MPG: 500 miles ÷ 30 MPG = 16.7 gallons. At an example price of $4.20 per gallon, that trip costs $70.00 in fuel.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do I calculate fuel cost in litres using L/100 km?</h4>
+        <p>Multiply the distance in kilometres by your L/100 km rating and divide by 100: for a 500 km trip at 8.0 L/100 km, you need 40.0 litres. At an example price of $1.60 per litre, that costs $64.00.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How much extra should I budget on top of the fuel cost?</h4>
+        <p>Add roughly 10% to 15% on top of the fuel figure for detours, traffic, hills and fuel-price differences along the route, and fill up before long rural stretches.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do I work out my car's real MPG?</h4>
+        <p>Fill the tank until the pump clicks off and note the odometer reading, drive as normal, then fill up again until it clicks off. Divide the miles driven by the gallons pumped at the second fill-up — that is your real MPG, which is usually lower than the manufacturer's figure.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How do I calculate fuel cost for an electric vehicle?</h4>
+        <p>Multiply your trip distance by the car's consumption in kWh per mile to get the energy needed, then multiply by the charging price per kWh: cost = miles × kWh per mile × price per kWh.</p>
+      </div>
+    </div>
 
     <h2>Related Helpful Tools</h2>
     <p>
